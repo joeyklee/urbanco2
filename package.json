@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bootstrap": "^3.3.6",
     "express": "^4.13.3",
-    "express3-handlebars": "^0.5.2"
+    "express-handlebars": "^2.0.1",
+    "jQuery": "^1.7.4"
   }
 }
