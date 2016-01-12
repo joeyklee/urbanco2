@@ -1,20 +1,27 @@
-.page-content{
-	margin-top: 50px;
+.page-content {
+    margin-top: 50px;
 }
 
-.header-content{
-	margin-top: 50px;
+.header-content {
+    margin-top: 50px;
 }
 
-p{
-	font-size: 16px;
+p {
+    font-size: 16px;
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
 }
+
+hr {
+    border-top: 3px solid black;
+}
+
+
+
