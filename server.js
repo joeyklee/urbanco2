@@ -47,6 +47,10 @@ app.get('/', function (req, res) {
     res.render('index');
 });
 
+app.get('/context', function (req, res) {
+    res.render('context');
+});
+
 app.get('/about', function (req, res) {
     res.render('about');
 });
