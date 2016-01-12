@@ -16,7 +16,6 @@
 4. Mobile monitoring has a great potential for quantifying emissions at the city scale.
 [animation of sensors throughout city]
 
-
 ### New Methologies
 5. We develop this new methodology using aerodynamic resistances to determine emissions and measure throughout the city.
 [ explain methodology with images]
