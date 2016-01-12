@@ -17,8 +17,7 @@ I took the setup documentation from:
 * [setup mongodb with homebrew on osx](https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/)
 
 ### On OSX:
-
-#### If you don't have Node.js Installed:
+(IF YOU ALREADY HAVE NODE JS AND MONGODB INSTALLED SKIP TO THE DEPENDENCIES SECTION)
 #### Homebrew
 
 Fire up your terminal:
@@ -64,6 +63,7 @@ brew install mongodb
 ```
 
 Now you will have a mongodb database setup on your computer. 
+
 
 ## Dependencies
 
