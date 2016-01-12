@@ -51,7 +51,14 @@ You can now install node:
 ```
 brew install node
 ```
-Now you're ready to build the project.
+
+Technically now you're ready to build the project, however, let's install a handy Node module that allows us to automagically update our server each time we save our server.js file. This module is called ```nodemon``` and we can install it like so:
+
+```
+npm install -g nodemon
+```
+
+If you're new to node the ```-g``` flag allows you to access that package globally in the terminal. You'll see how this works when we run our server. 
 
 #### Install Mongodb
 
