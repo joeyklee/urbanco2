@@ -77,7 +77,7 @@ app.use('/public', express.static('public'));
 
 var port = Number(process.env.Port || 5000);
 app.listen(port);
-
+console.log('Listening on port', port);
 
 // https://www.youtube.com/watch?v=m5ribwPpIPw
 // http://stackoverflow.com/questions/5178334/folder-structure-for-a-node-js-project
