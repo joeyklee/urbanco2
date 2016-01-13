@@ -20,18 +20,18 @@ var test = db.collection('helloworld');
 // mongoose.connect('mongodb://localhost:5000');
 app.use(bodyParser.json());
 app.get('/api/test', function(req, res){
-	// TODO console.log(req.query.sensor_id)
-	findAll(test, {}, res);
+  // TODO console.log(req.query.sensor_id)
+  findAll(test, {}, res);
 });
 function findAll(collection, query, res) {
-	collection.find(
-		query,
-		function(err, docs) {
-			if (err) { return mongoError(res, err); };
-			// if nothing is found (doc === null) return empty array
-			res.send(docs === null ? [] : docs);
-		}
-	);
+  collection.find(
+    query,
+    function(err, docs) {
+      if (err) { return mongoError(res, err); };
+      // if nothing is found (doc === null) return empty array
+      res.send(docs === null ? [] : docs);
+    }
+  );
 };
 
 function mongoError(res, err) {
@@ -44,23 +44,23 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
-    res.render('index');
+  res.render('index');
 });
 
 app.get('/context', function (req, res) {
-    res.render('context');
+  res.render('context');
 });
 
 app.get('/about', function (req, res) {
-    res.render('about');
+  res.render('about');
 });
 
 app.get('/mobile', function (req, res) {
-    res.render('mobile');
+  res.render('mobile');
 });
 
 app.get('/explore', function (req, res) {
-    res.render('explore');
+  res.render('explore');
 });
 
 
