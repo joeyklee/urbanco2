@@ -1,5 +1,7 @@
 # Urban CO2
 
+[![Join the chat at https://gitter.im/joeyklee/urbanco2](https://badges.gitter.im/joeyklee/urbanco2.svg)](https://gitter.im/joeyklee/urbanco2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## About
 
 This is an interactive web app to communicate the importance of cities as sources of CO2 emissions. In this web experience, we explain what we can do to monitor and reduce the impact of our carbon footprint. The project will highlight the potential and innovative use of mobile CO2 sensors to monitor CO2 in the city and also allow people to access the data that describes the CO2 emissions for the city of Vancouver, BC.
