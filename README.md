@@ -87,7 +87,7 @@ npm install
 
 ## Run 
 
-We will have to do 2 things:
+We will have to do 3 things:
 
 1. Start our mongodb
 2. Run our node server.
@@ -95,12 +95,13 @@ We will have to do 2 things:
 In the terminal. Run:
 
 ```
+mkdip -p /data/db # creates the mongodb data directory if it doesn't already exist
 mongod
 ```
 
 This will start our mongodb database running on our computer. We can then access the running mongodb database we create for the project from our node.js server.
 
-Next in another terminal window, ```cd urbanco2``` and run:
+Next **in another terminal window**, ```cd urbanco2``` and run:
 
 ```
 nodemon server.js
