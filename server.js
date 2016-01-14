@@ -14,7 +14,7 @@ var db = mongojs(MONGOCONNECTION);
 // var points = db.collection('points')
 var test = db.collection('helloworld');
 
-	
+
 
 
 // mongoose.connect('mongodb://localhost:5000');
@@ -47,16 +47,16 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
-app.get('/context', function (req, res) {
-  res.render('context');
+app.get('/cities', function (req, res) {
+  res.render('cities');
 });
 
 app.get('/about', function (req, res) {
   res.render('about');
 });
 
-app.get('/mobile', function (req, res) {
-  res.render('mobile');
+app.get('/monitoring', function (req, res) {
+  res.render('monitoring');
 });
 
 app.get('/explore', function (req, res) {
