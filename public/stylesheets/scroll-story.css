@@ -73,3 +73,33 @@
 	.turnPage{
 		margin-top: 100px;
 	}
+
+
+/* Map properties /*/
+	.stroke {
+	  fill: none;
+	  stroke: #000;
+	  stroke-width: 1px;
+	}
+
+	.fill {
+	  /*fill: #00001a; */
+	  fill: #fff;
+	}
+
+	.graticule {
+	  fill: none;
+	  stroke: #777;
+	  stroke-width: .5px;
+	  stroke-opacity: .15;
+	}
+
+	.land {
+	  fill: #222;
+	}
+
+	.boundary {
+	  fill: none;
+	  stroke: #222;
+	  stroke-width: .5px;
+	}

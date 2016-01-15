@@ -98,6 +98,90 @@ var scrollVis = function() {
         g.selectAll(".openvis-title")
             .attr("opacity", 0);
 
+        // setup the map
+        var projection = d3.geo.orthographic()
+            .scale(175)
+            .translate([width / 2, height / 2])
+            .rotate([ 20, -43])
+            .clipAngle(90)
+            .precision(.1);
+
+        var path = d3.geo.path()
+            .projection(projection)
+            .pointRadius( function(d,i) {
+	    		return 10;
+	    	});
+    	var circle = d3.geo.circle();
+
+        var graticule = d3.geo.graticule();
+
+        var map = g.append("svg")
+        	.attr("class", "map")
+        	.attr("width", width)
+            .attr("height", height)
+            .attr("transform", "translate(0 50)")
+            .attr("opacity", 0);
+
+
+
+        map.append("defs").append("path")
+            .datum({type: "Sphere"})
+            .attr("id", "sphere")
+            .attr("d", path);
+
+        map.append("use")
+            .attr("class", "stroke")
+            .attr("xlink:href", "#sphere");
+
+        map.append("use")
+            .attr("class", "fill")
+            .attr("xlink:href", "#sphere");
+
+        map.append("path")
+            .datum(graticule)
+            .attr("class", "graticule")
+            .attr("d", path);
+
+            map.append("svg:circle")
+            	        .attr('cx', width / 2)
+            	        .attr('cy', height / 2)
+            	        .attr('r', 180)
+        	        .attr('class', 'geo-globe');
+
+
+
+        d3.json("public/data/world-countries-110m.json", function(error, world) {
+          if (error) throw error;
+
+          map.insert("path", ".graticule")
+              .datum(topojson.feature(world, world.objects.land))
+              .attr("class", "land")
+              .attr("d", path);
+
+          map.insert("path", ".graticule")
+              .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
+              .attr("class", "boundary")
+              .attr("d", path);
+
+          d3.csv("public/data/cities.csv", function(data){
+          	map.selectAll("path.point")
+          	    .data(data)
+          	  .enter().append("path")
+          	    .datum(function(d) {
+          	    	// if (d.population > 100000){
+          	       return circle
+          	           .origin([d.longitude, d.latitude])
+          	           .angle(0.4)();
+          	          // }
+          	    })
+          	    .attr("class", "point")
+          	    .attr("fill", "#ffffe5")
+          	    .attr("opacity", "0.45")
+          	    .attr("d", path);
+          });
+
+        });
+
         // urban scale viz
         var urbanScale = g.append("g")
             .attr("class", "urbanscale");
@@ -195,10 +279,43 @@ var scrollVis = function() {
      */
     function showTitle() {
     		// set the title text opacity to 1
-        g.selectAll(".openvis-title")
+        // g.selectAll(".openvis-title")
+        //     .transition()
+        //     .duration(600)
+        //     .attr("opacity", 1.0);
+
+        g.selectAll(".map")
             .transition()
             .duration(600)
             .attr("opacity", 1.0);
+        g.selectAll(".geo-globe")
+            .attr("fill", "red")
+            .attr("stroke", "red")
+            .attr("stroke-opacity", 0.75)
+            .attr("fill-opacity", 0.05)
+            .call(pulse);
+
+        function pulse() {
+        			var circle = d3.select("circle");
+        			(function repeat() {
+        				circle = circle.transition()
+        					.attr("fill", "red")
+        					.attr("stroke", "red")
+        					.attr("stroke-opacity", 0.75)
+        					.attr("fill-opacity", 0.05)
+        					.duration(2000)
+        					.attr("stroke-width", 1)
+        					.attr("r", 185)
+        					.transition()
+        					.duration(2000)
+        					.attr('stroke-width', 1)
+        					.attr("r", 215)
+        					.ease('sine')
+        					.each("end", repeat);
+        			})();
+        		}
+
+
 
         // Make sure the subsequent viz is turn off when scrolling back
         g.selectAll(".inputs")
@@ -221,6 +338,17 @@ var scrollVis = function() {
             .transition()
             .duration(0)
             .attr("opacity", 0);
+        g.selectAll(".map")
+            .transition()
+            .duration(600)
+            .attr("opacity", 0);
+        g.selectAll(".geo-globe")
+            .attr("fill", "red")
+            .attr("stroke", "red")
+            .attr("stroke-opacity", 0)
+            .attr("fill-opacity", 0);
+            // .call(pulse);
+
 
 
         // g.selectAll(".urbanscale")

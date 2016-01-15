@@ -89,12 +89,12 @@ var scrollVis = function() {
 			.attr("class", "title openvis-title")
 			.attr("x", width / 2)
 			.attr("y", height / 3)
-			.text("");
+			.text("Science is hard");
 		g.append("text")
 			.attr("class", "title openvis-title")
 			.attr("x", width / 2)
 			.attr("y", (height / 3) + (height / 5))
-			.text("30-40%");
+			.text("");
 		g.selectAll(".openvis-title")
 			.attr("opacity", 0);
 
@@ -147,13 +147,13 @@ var scrollVis = function() {
 		// activateFunctions are called each
 		// time the active section changes
 		activateFunctions[0] = showTitle;
-		activateFunctions[1] = showUrbanModel;
-		activateFunctions[2] = showEmissionsIllustration;
-		activateFunctions[3] = showEmissionsTransportation;
-		activateFunctions[4] = showEmissionsHvac;
-		activateFunctions[5] = showEmissionsBiological;
-		activateFunctions[6] = showPotential;
-		activateFunctions[7] = showPotential;
+		// activateFunctions[1] = showUrbanModel;
+		// activateFunctions[2] = showEmissionsIllustration;
+		// activateFunctions[3] = showEmissionsTransportation;
+		// activateFunctions[4] = showEmissionsHvac;
+		// activateFunctions[5] = showEmissionsBiological;
+		// activateFunctions[6] = showPotential;
+		// activateFunctions[7] = showPotential;
 		// activateFunctions[8] = triggerPageTurn;
 		// activateFunctions[9] = triggerPageTurn;
 
