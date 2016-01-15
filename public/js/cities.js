@@ -224,66 +224,66 @@ var scrollVis = function() {
             .attr("opacity", 0);
 
 
-        var solutions = g.append("g")
-            .attr("class", "solutions")
-            .attr("width", width + margin.left + margin.right - 100)
-            .attr("height", height + margin.top + margin.bottom - 100)
-            .attr("opacity", 0);
+        // var solutions = g.append("g")
+        //     .attr("class", "solutions")
+        //     .attr("width", width + margin.left + margin.right - 100)
+        //     .attr("height", height + margin.top + margin.bottom - 100)
+        //     .attr("opacity", 0);
 
-        // line chart - solutions
-        d3.csv("public/data/solutions.csv", function(data) {
+        // // line chart - solutions
+        // d3.csv("public/data/solutions.csv", function(data) {
 
-            var x = d3.scale.linear().range([0, width]);
-            var y = d3.scale.linear().range([height, 0]);
+        //     var x = d3.scale.linear().range([0, width]);
+        //     var y = d3.scale.linear().range([height, 0]);
 
 
-            var xAxis = d3.svg.axis()
-                .scale(x)
-                .ticks(0)
-                .orient("bottom");
+        //     var xAxis = d3.svg.axis()
+        //         .scale(x)
+        //         .ticks(0)
+        //         .orient("bottom");
 
-            var yAxis = d3.svg.axis()
-                .scale(y)
-                .ticks(0)
-                .orient("left");
+        //     var yAxis = d3.svg.axis()
+        //         .scale(y)
+        //         .ticks(0)
+        //         .orient("left");
 
-            // Define the line
-            var valueline = d3.svg.line()
-                .interpolate("cardinal")
-                .x(function(d) {
-                    return x(d.id);
-                })
-                .y(function(d) {
-                    return y(d.co2);
-                });
+        //     // Define the line
+        //     var valueline = d3.svg.line()
+        //         .interpolate("cardinal")
+        //         .x(function(d) {
+        //             return x(d.id);
+        //         })
+        //         .y(function(d) {
+        //             return y(d.co2);
+        //         });
 
-            // Scale the range of the data
-            x.domain([1, 43]);
-            y.domain([200, d3.max(data, function(d) {
-                return d.co2;
-            })]);
+        //     // Scale the range of the data
+        //     x.domain([1, 43]);
+        //     y.domain([200, d3.max(data, function(d) {
+        //         return d.co2;
+        //     })]);
 
-            // Add the valueline path.
-            solutions.append("path")
-                .attr("class", "solution-line")
-                // .attr("transform", "translate(0 60 60 0)")
-                .attr("d", valueline(data));
+        //     // Add the valueline path.
+        //     solutions.append("path")
+        //         .attr("class", "solution-line")
+        //         // .attr("transform", "translate(0 60 60 0)")
+        //         .attr("d", valueline(data));
 
-            solutions.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
+        //     solutions.append("g")
+        //         .attr("class", "x axis")
+        //         .attr("transform", "translate(0," + height + ")")
+        //         .call(xAxis);
 
-            solutions.append("g")
-                .attr("class", "y axis")
-                .call(yAxis);
-                // .append("text")
-                // .attr("transform", "rotate(-90)")
-                // .attr("y", 6)
-                // .attr("dy", ".71em")
-                // .style("text-anchor", "end")
-                // .text("CO2");
-        });
+        //     solutions.append("g")
+        //         .attr("class", "y axis")
+        //         .call(yAxis);
+        //     // .append("text")
+        //     // .attr("transform", "rotate(-90)")
+        //     // .attr("y", 6)
+        //     // .attr("dy", ".71em")
+        //     // .style("text-anchor", "end")
+        //     // .text("CO2");
+        // });
 
 
 
@@ -306,7 +306,7 @@ var scrollVis = function() {
         activateFunctions[4] = showEmissionsHvac;
         activateFunctions[5] = showEmissionsBiological;
         activateFunctions[6] = showPotential;
-        activateFunctions[7] = null;
+        activateFunctions[7] = triggerPageTurn;
         // activateFunctions[8] = triggerPageTurn;
         // activateFunctions[9] = triggerPageTurn;
 
@@ -364,7 +364,7 @@ var scrollVis = function() {
             .attr("fill-opacity", 0.05)
             .call(pulse);
 
-            // use the increasing co2 concentrations data from 1950 to 2015***
+        // use the increasing co2 concentrations data from 1950 to 2015***
         function pulse() {
             var circle = d3.select("circle");
             (function repeat() {
@@ -559,16 +559,20 @@ var scrollVis = function() {
         // .duration(600)
         // .attr("opacity", 1);
 
-        g.selectAll(".solutions")
-            .attr("opacity", 1);
+        // g.selectAll(".solutions")
+        //     .attr("opacity", 1);
 
+        g.selectAll(".filler")
+            .attr("opacity", 1)
 
     }
 
     function triggerPageTurn() {
+        g.selectAll(".solutions")
+            .attr("opacity", 0);
         // console.log("hello");
-        // g.selectAll(".filler")
-        // .attr("opacity", 1)
+        g.selectAll(".filler")
+            .attr("opacity", 1)
 
         // g.selectAll(".solutions")
         // 	.attr("opacity", 1);
