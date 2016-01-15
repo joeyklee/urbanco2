@@ -102,22 +102,22 @@ var scrollVis = function() {
         var projection = d3.geo.orthographic()
             .scale(175)
             .translate([width / 2, height / 2])
-            .rotate([ 20, -43])
+            .rotate([20, -43])
             .clipAngle(90)
             .precision(.1);
 
         var path = d3.geo.path()
             .projection(projection)
-            .pointRadius( function(d,i) {
-	    		return 10;
-	    	});
-    	var circle = d3.geo.circle();
+            .pointRadius(function(d, i) {
+                return 10;
+            });
+        var circle = d3.geo.circle();
 
         var graticule = d3.geo.graticule();
 
         var map = g.append("svg")
-        	.attr("class", "map")
-        	.attr("width", width)
+            .attr("class", "map")
+            .attr("width", width)
             .attr("height", height)
             .attr("transform", "translate(0 50)")
             .attr("opacity", 0);
@@ -125,7 +125,9 @@ var scrollVis = function() {
 
 
         map.append("defs").append("path")
-            .datum({type: "Sphere"})
+            .datum({
+                type: "Sphere"
+            })
             .attr("id", "sphere")
             .attr("d", path);
 
@@ -142,43 +144,45 @@ var scrollVis = function() {
             .attr("class", "graticule")
             .attr("d", path);
 
-            map.append("svg:circle")
-            	        .attr('cx', width / 2)
-            	        .attr('cy', height / 2)
-            	        .attr('r', 180)
-        	        .attr('class', 'geo-globe');
+        map.append("svg:circle")
+            .attr('cx', width / 2)
+            .attr('cy', height / 2)
+            .attr('r', 180)
+            .attr('class', 'geo-globe');
 
 
 
         d3.json("public/data/world-countries-110m.json", function(error, world) {
-          if (error) throw error;
+            if (error) throw error;
 
-          map.insert("path", ".graticule")
-              .datum(topojson.feature(world, world.objects.land))
-              .attr("class", "land")
-              .attr("d", path);
+            map.insert("path", ".graticule")
+                .datum(topojson.feature(world, world.objects.land))
+                .attr("class", "land")
+                .attr("d", path);
 
-          map.insert("path", ".graticule")
-              .datum(topojson.mesh(world, world.objects.countries, function(a, b) { return a !== b; }))
-              .attr("class", "boundary")
-              .attr("d", path);
+            map.insert("path", ".graticule")
+                .datum(topojson.mesh(world, world.objects.countries, function(a, b) {
+                    return a !== b;
+                }))
+                .attr("class", "boundary")
+                .attr("d", path);
 
-          d3.csv("public/data/cities.csv", function(data){
-          	map.selectAll("path.point")
-          	    .data(data)
-          	  .enter().append("path")
-          	    .datum(function(d) {
-          	    	// if (d.population > 100000){
-          	       return circle
-          	           .origin([d.longitude, d.latitude])
-          	           .angle(0.4)();
-          	          // }
-          	    })
-          	    .attr("class", "point")
-          	    .attr("fill", "#ffffe5")
-          	    .attr("opacity", "0.45")
-          	    .attr("d", path);
-          });
+            // d3.csv("public/data/cities.csv", function(data) {
+            //     map.selectAll("path.point")
+            //         .data(data)
+            //         .enter().append("path")
+            //         .datum(function(d) {
+            //             // if (d.population > 100000){
+            //             return circle
+            //                 .origin([d.longitude, d.latitude])
+            //                 .angle(0.4)();
+            //             // }
+            //         })
+            //         .attr("class", "point")
+            //         .attr("fill", "#ffffe5")
+            //         .attr("opacity", "0.45")
+            //         .attr("d", path);
+            // });
 
         });
 
@@ -218,6 +222,70 @@ var scrollVis = function() {
         g.selectAll(".filler")
             .attr("opacity", 0);
 
+
+        var solutions = g.append("g")
+            .attr("class", "solutions")
+            .attr("width", width + margin.left + margin.right - 100)
+            .attr("height", height + margin.top + margin.bottom - 100)
+            .attr("opacity", 0);
+
+        // line chart - solutions
+        d3.csv("public/data/solutions.csv", function(data) {
+
+            var x = d3.scale.linear().range([0, width]);
+            var y = d3.scale.linear().range([height, 0]);
+
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .ticks(0)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .ticks(0)
+                .orient("left");
+
+            // Define the line
+            var valueline = d3.svg.line()
+                .interpolate("cardinal")
+                .x(function(d) {
+                    return x(d.id);
+                })
+                .y(function(d) {
+                    return y(d.co2);
+                });
+
+            // Scale the range of the data
+            x.domain([1, 43]);
+            y.domain([200, d3.max(data, function(d) {
+                return d.co2;
+            })]);
+
+            // Add the valueline path.
+            solutions.append("path")
+                .attr("class", "solution-line")
+                // .attr("transform", "translate(0 60 60 0)")
+                .attr("d", valueline(data));
+
+            solutions.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+
+            solutions.append("g")
+                .attr("class", "y axis")
+                .call(yAxis);
+                // .append("text")
+                // .attr("transform", "rotate(-90)")
+                // .attr("y", 6)
+                // .attr("dy", ".71em")
+                // .style("text-anchor", "end")
+                // .text("CO2");
+        });
+
+
+
     }; // end of setup vis
 
     /**
@@ -237,7 +305,7 @@ var scrollVis = function() {
         activateFunctions[4] = showEmissionsHvac;
         activateFunctions[5] = showEmissionsBiological;
         activateFunctions[6] = showPotential;
-        activateFunctions[7] = showPotential;
+        activateFunctions[7] = null;
         // activateFunctions[8] = triggerPageTurn;
         // activateFunctions[9] = triggerPageTurn;
 
@@ -278,7 +346,7 @@ var scrollVis = function() {
      *
      */
     function showTitle() {
-    		// set the title text opacity to 1
+        // set the title text opacity to 1
         // g.selectAll(".openvis-title")
         //     .transition()
         //     .duration(600)
@@ -296,24 +364,24 @@ var scrollVis = function() {
             .call(pulse);
 
         function pulse() {
-        			var circle = d3.select("circle");
-        			(function repeat() {
-        				circle = circle.transition()
-        					.attr("fill", "red")
-        					.attr("stroke", "red")
-        					.attr("stroke-opacity", 0.75)
-        					.attr("fill-opacity", 0.05)
-        					.duration(2000)
-        					.attr("stroke-width", 1)
-        					.attr("r", 185)
-        					.transition()
-        					.duration(2000)
-        					.attr('stroke-width', 1)
-        					.attr("r", 215)
-        					.ease('sine')
-        					.each("end", repeat);
-        			})();
-        		}
+            var circle = d3.select("circle");
+            (function repeat() {
+                circle = circle.transition()
+                    .attr("fill", "red")
+                    .attr("stroke", "red")
+                    .attr("stroke-opacity", 0.75)
+                    .attr("fill-opacity", 0.05)
+                    .duration(2000)
+                    .attr("stroke-width", 1)
+                    .attr("r", 185)
+                    .transition()
+                    .duration(2000)
+                    .attr('stroke-width', 1)
+                    .attr("r", 215)
+                    .ease('sine')
+                    .each("end", repeat);
+            })();
+        }
 
 
 
@@ -333,7 +401,7 @@ var scrollVis = function() {
     }
 
     function showUrbanModel() {
-    		// turn off the previous viz
+        // turn off the previous viz
         g.selectAll(".openvis-title")
             .transition()
             .duration(0)
@@ -347,7 +415,7 @@ var scrollVis = function() {
             .attr("stroke", "red")
             .attr("stroke-opacity", 0)
             .attr("fill-opacity", 0);
-            // .call(pulse);
+        // .call(pulse);
 
 
 
@@ -383,20 +451,20 @@ var scrollVis = function() {
 
     function showEmissionsIllustration() {
         // turns the title from the previous slide off
-  			g.selectAll(".inputs")
-  			    .transition()
-  			    .duration(0)
-  			    .attr("opacity", 0);
-  			g.selectAll(".city-center")
-  			    .transition()
-  			    .duration(0)
-  			    .attr("opacity", 0);
-  			g.selectAll(".waste")
-  			    .transition()
-  			    .duration(0)
-  			    .attr("opacity", 0);
+        g.selectAll(".inputs")
+            .transition()
+            .duration(0)
+            .attr("opacity", 0);
+        g.selectAll(".city-center")
+            .transition()
+            .duration(0)
+            .attr("opacity", 0);
+        g.selectAll(".waste")
+            .transition()
+            .duration(0)
+            .attr("opacity", 0);
 
-  			// add current viz
+        // add current viz
         g.selectAll(".illustration")
             .transition()
             .duration(800)
@@ -470,7 +538,10 @@ var scrollVis = function() {
             .attr("opacity", 1);
 
         g.selectAll(".filler")
-        .attr("opacity", 0);
+            .attr("opacity", 0);
+
+        g.selectAll(".solutions")
+            .attr("opacity", 0);
     }
 
 
@@ -481,14 +552,24 @@ var scrollVis = function() {
             .attr("fill", "#000")
             .attr("opacity", 0);
 
-           g.selectAll(".filler")
-           .attr("opacity", 1);
+        // g.selectAll(".filler")
+        // .transition()
+        // .duration(600)
+        // .attr("opacity", 1);
+
+        g.selectAll(".solutions")
+            .attr("opacity", 1);
+
+
     }
 
     function triggerPageTurn() {
-        console.log("hello");
-       	g.selectAll(".filler")
-       	.attr("opacity", 1)
+        // console.log("hello");
+        // g.selectAll(".filler")
+        // .attr("opacity", 1)
+
+        // g.selectAll(".solutions")
+        // 	.attr("opacity", 1);
     }
 
 
