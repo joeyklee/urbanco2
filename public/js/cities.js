@@ -167,6 +167,7 @@ var scrollVis = function() {
                 .attr("class", "boundary")
                 .attr("d", path);
 
+
             // d3.csv("public/data/cities.csv", function(data) {
             //     map.selectAll("path.point")
             //         .data(data)
@@ -363,6 +364,7 @@ var scrollVis = function() {
             .attr("fill-opacity", 0.05)
             .call(pulse);
 
+            // use the increasing co2 concentrations data from 1950 to 2015***
         function pulse() {
             var circle = d3.select("circle");
             (function repeat() {
