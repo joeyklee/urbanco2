@@ -103,3 +103,12 @@
 	  stroke: #222;
 	  stroke-width: .5px;
 	}
+
+
+/* solution mock graph*/
+
+.solution-line{
+	fill: none;
+	stroke: grey;
+	stroke-width: 2;
+}
