@@ -168,22 +168,43 @@ var scrollVis = function() {
                 .attr("d", path);
 
 
-            // d3.csv("public/data/cities.csv", function(data) {
-            //     map.selectAll("path.point")
-            //         .data(data)
-            //         .enter().append("path")
-            //         .datum(function(d) {
-            //             // if (d.population > 100000){
-            //             return circle
-            //                 .origin([d.longitude, d.latitude])
-            //                 .angle(0.4)();
-            //             // }
-            //         })
-            //         .attr("class", "point")
-            //         .attr("fill", "#ffffe5")
-            //         .attr("opacity", "0.45")
-            //         .attr("d", path);
-            // });
+            d3.csv("public/data/cities.csv", function(data) {
+                //http://bl.ocks.org/sumbera/10463358
+
+                // convert csv input into geojson objects
+                function reformat(array) {
+                    var data = [];
+                    array.map(function(d, i) {
+
+                        data.push({
+                            id: i,
+                            type: "Feature",
+                            geometry: {
+                                coordinates: [+d.longitude, +d.latitude],
+                                type: "Point"
+                            }
+
+
+                        });
+                    });
+                    return data;
+                }
+                var geoData = {
+                    type: "FeatureCollection",
+                    features: reformat(data)
+                };
+
+                // the d3 circle function seems expensive, trying this another way
+                map.selectAll('.point')
+                    .data(geoData.features)
+                    .enter()
+                    .append('path')
+                    .attr('d', path.pointRadius(1))
+                    .attr("opacity", "0.45")
+                    .attr("fill", "#ffffe5")
+                    .attr('class', 'point');
+            });
+
 
         });
 
