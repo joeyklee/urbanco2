@@ -1,4 +1,4 @@
-var MONGOCONNECTION = 'mongodb://localhost:27017/helloworld';
+var MONGOCONNECTION = 'mongodb://localhost:27017/co2webdb';
 
 var express = require('express');
 var app = express();
@@ -11,18 +11,56 @@ var path = require("path");
 var mongojs = require('mongojs');
 var db = mongojs(MONGOCONNECTION);
 
-// var points = db.collection('points')
-var test = db.collection('helloworld');
+
+var points = db.collection('co2points');
+var propertyMap = {
+	'altitude': 'properties.altitude',
+	'datetime': 'properties.datetime',
+	'sid': 'properties.sensorid',
+	'temperature': 'properties.tempout',
+	'co2': 'properties.co2'
+};
 
 
-
-
-// mongoose.connect('mongodb://localhost:5000');
+/* Points API */
 app.use(bodyParser.json());
-app.get('/api/test', function(req, res){
+// get all features - not recommended for points
+app.get('/api/points', function(req, res){
   // TODO console.log(req.query.sensor_id)
   findAll(test, {}, res);
 });
+
+// get points based on property greater than a threshold
+app.get('/api/points/:property/gte/:threshold', function(req, res){
+	// TODO console.log(req.query.sensor_id)
+	var property = propertyMap[req.params.property]
+		, threshold = parseFloat(req.params.threshold);
+	if (!property) return handleError(null, req, res, 404, "doesn't exists");
+	var query = {}, orderby = {};
+	query[property] = { $gte: threshold};
+	orderby[property] = 1;
+	findAll(points, {$query: query, $orderby: orderby}, res);
+});
+
+app.get('/api/points/:property/range/:low/:high', function(req, res){
+	// TODO console.log(req.query.sensor_id)
+	var property = propertyMap[req.params.property]
+		, low = parseInt(req.params.low)
+		, high = parseInt(req.params.high)
+		, query = {};
+	if (!property) return handleError(null, req, res, 404, "doesn't exists");
+	var query = {}, orderby = {};
+	query[property] = { $gte: low, $lte: high};
+	orderby[property] = 1;
+	findAll(points, {$query: query, $orderby: orderby}, res);
+});
+
+
+function mongoError(res, err) {
+  if (err) console.error('mongo error ->', err);
+  return res.status(500).send('internal server error')
+};
+
 function findAll(collection, query, res) {
   collection.find(
     query,
@@ -32,11 +70,6 @@ function findAll(collection, query, res) {
       res.send(docs === null ? [] : docs);
     }
   );
-};
-
-function mongoError(res, err) {
-  if (err) console.error('mongo error ->', err);
-  return res.status(500).send('internal server error')
 };
 
 
@@ -64,16 +97,8 @@ app.get('/explore', function (req, res) {
 });
 
 
-// app.get('/', function(req, res){
-// 	res.send('hello world');
-// });
 
 app.use('/public', express.static('public'));
-// app.use('/views', express.static(__dirname + '/public'));
-// app.use('/views', express.static('public'));
-// app.use("/views/stylesheets",express.static("/views/stylesheets"));
-// app.use("/views/js",express.static("/views/js"));
-
 
 var port = Number(process.env.Port || 5000);
 app.listen(port);
