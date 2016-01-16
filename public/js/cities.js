@@ -4,6 +4,10 @@
  * using reusable charts pattern:
  * http://bost.ocks.org/mike/chart/
  */
+
+var activateFunctions;
+var updateFunctions;
+
 var scrollVis = function() {
     // constants to define the size
     // and margins of the vis area.
@@ -35,12 +39,22 @@ var scrollVis = function() {
     // When scrolling to a new section
     // the activation function for that
     // section is called.
-    var activateFunctions = [];
+    // var activateFunctions = [];
+    activateFunctions = [
+            showTitle,
+            showUrbanModel,
+            showEmissionsIllustration,
+            showEmissionsTransportation,
+            showEmissionsHvac,
+            showEmissionsBiological,
+            showPotential,
+            triggerPageTurn
+        ]
     // If a section has an update function
     // then it is called while scrolling
     // through the section with the current
     // progress through the section.
-    var updateFunctions = [];
+    updateFunctions = [];
 
     /**
      * chart
@@ -52,7 +66,8 @@ var scrollVis = function() {
     var chart = function(selection) {
         selection.each(function(rawData) {
             // create svg and give it a width and height
-            svg = d3.select(this).selectAll("svg").data([0, 1, 2, 3, 4, 5, 6, 7]);
+            // svg = d3.select(this).selectAll("svg").data([0, 1, 2, 3, 4, 5, 6, 7]);
+            svg = d3.select(this).selectAll("svg").data(activateFunctions);
             svg.enter().append("svg").append("g");
 
             svg.attr("width", width + margin.left + margin.right);
@@ -67,7 +82,7 @@ var scrollVis = function() {
 
             setupVis();
 
-            setupSections();
+            // setupSections();
 
         });
     };
@@ -244,105 +259,7 @@ var scrollVis = function() {
         g.selectAll(".filler")
             .attr("opacity", 0);
 
-
-        // var solutions = g.append("g")
-        //     .attr("class", "solutions")
-        //     .attr("width", width + margin.left + margin.right - 100)
-        //     .attr("height", height + margin.top + margin.bottom - 100)
-        //     .attr("opacity", 0);
-
-        // // line chart - solutions
-        // d3.csv("public/data/solutions.csv", function(data) {
-
-        //     var x = d3.scale.linear().range([0, width]);
-        //     var y = d3.scale.linear().range([height, 0]);
-
-
-        //     var xAxis = d3.svg.axis()
-        //         .scale(x)
-        //         .ticks(0)
-        //         .orient("bottom");
-
-        //     var yAxis = d3.svg.axis()
-        //         .scale(y)
-        //         .ticks(0)
-        //         .orient("left");
-
-        //     // Define the line
-        //     var valueline = d3.svg.line()
-        //         .interpolate("cardinal")
-        //         .x(function(d) {
-        //             return x(d.id);
-        //         })
-        //         .y(function(d) {
-        //             return y(d.co2);
-        //         });
-
-        //     // Scale the range of the data
-        //     x.domain([1, 43]);
-        //     y.domain([200, d3.max(data, function(d) {
-        //         return d.co2;
-        //     })]);
-
-        //     // Add the valueline path.
-        //     solutions.append("path")
-        //         .attr("class", "solution-line")
-        //         // .attr("transform", "translate(0 60 60 0)")
-        //         .attr("d", valueline(data));
-
-        //     solutions.append("g")
-        //         .attr("class", "x axis")
-        //         .attr("transform", "translate(0," + height + ")")
-        //         .call(xAxis);
-
-        //     solutions.append("g")
-        //         .attr("class", "y axis")
-        //         .call(yAxis);
-        //     // .append("text")
-        //     // .attr("transform", "rotate(-90)")
-        //     // .attr("y", 6)
-        //     // .attr("dy", ".71em")
-        //     // .style("text-anchor", "end")
-        //     // .text("CO2");
-        // });
-
-
-
     }; // end of setup vis
-
-    /**
-     * setupSections - each section is activated
-     * by a separate function. Here we associate
-     * these functions to the sections based on
-     * the section's index.
-     *
-     */
-    setupSections = function() {
-        // activateFunctions are called each
-        // time the active section changes
-        activateFunctions[0] = showTitle;
-        activateFunctions[1] = showUrbanModel;
-        activateFunctions[2] = showEmissionsIllustration;
-        activateFunctions[3] = showEmissionsTransportation;
-        activateFunctions[4] = showEmissionsHvac;
-        activateFunctions[5] = showEmissionsBiological;
-        activateFunctions[6] = showPotential;
-        activateFunctions[7] = triggerPageTurn;
-        // activateFunctions[8] = triggerPageTurn;
-        // activateFunctions[9] = triggerPageTurn;
-
-
-        // updateFunctions are called while
-        // in a particular section to update
-        // the scroll progress in that section.
-        // Most sections do not need to be updated
-        // for all scrolling and so are set to
-        // no-op functions.
-        for (var i = 0; i < 10; i++) {
-            updateFunctions[i] = function() {};
-        }
-        // updateFunctions[1] = updateUrbanModelInput;
-    };
 
     /**
      * ACTIVATE FUNCTIONS
@@ -359,21 +276,7 @@ var scrollVis = function() {
      *
      */
 
-    /**
-     * showTitle - initial title
-     *
-     * hides: count title
-     * (no previous step to hide)
-     * shows: intro title
-     *
-     */
     function showTitle() {
-        // set the title text opacity to 1
-        // g.selectAll(".openvis-title")
-        //     .transition()
-        //     .duration(600)
-        //     .attr("opacity", 1.0);
-
         g.selectAll(".map")
             .transition()
             .duration(600)
@@ -384,6 +287,20 @@ var scrollVis = function() {
             .attr("stroke-opacity", 0.75)
             .attr("fill-opacity", 0.05)
             .call(pulse);
+
+        // Make sure the subsequent viz is turn off when scrolling back
+        g.selectAll(".inputs")
+            .transition()
+            .duration(0)
+            .attr("opacity", 0);
+        g.selectAll(".city-center")
+            .transition()
+            .duration(0)
+            .attr("opacity", 0);
+        g.selectAll(".waste")
+            .transition()
+            .duration(0)
+            .attr("opacity", 0);
 
         // use the increasing co2 concentrations data from 1950 to 2015***
         function pulse() {
@@ -405,23 +322,8 @@ var scrollVis = function() {
                     .each("end", repeat);
             })();
         }
-
-
-
-        // Make sure the subsequent viz is turn off when scrolling back
-        g.selectAll(".inputs")
-            .transition()
-            .duration(0)
-            .attr("opacity", 0);
-        g.selectAll(".city-center")
-            .transition()
-            .duration(0)
-            .attr("opacity", 0);
-        g.selectAll(".waste")
-            .transition()
-            .duration(0)
-            .attr("opacity", 0);
     }
+
 
     function showUrbanModel() {
         // turn off the previous viz
@@ -438,14 +340,6 @@ var scrollVis = function() {
             .attr("stroke", "red")
             .attr("stroke-opacity", 0)
             .attr("fill-opacity", 0);
-        // .call(pulse);
-
-
-
-        // g.selectAll(".urbanscale")
-        //     .transition()
-        //     .duration(900)
-        //     .attr("opacity", 1);
 
         // add the current viz components
         g.selectAll(".inputs")
@@ -500,7 +394,6 @@ var scrollVis = function() {
 
     }
 
-
     function showEmissionsTransportation() {
         g.selectAll(".illustration")
             .transition()
@@ -533,7 +426,6 @@ var scrollVis = function() {
             .duration(0)
             .attr("opacity", 0.15);
 
-
         g.selectAll(".hvac")
             .transition()
             .duration(600)
@@ -552,7 +444,6 @@ var scrollVis = function() {
             .transition()
             .duration(0)
             .attr("opacity", 0.15);
-
 
         g.selectAll(".biological, .photosynthesis")
             .transition()
@@ -575,14 +466,6 @@ var scrollVis = function() {
             .attr("fill", "#000")
             .attr("opacity", 0);
 
-        // g.selectAll(".filler")
-        // .transition()
-        // .duration(600)
-        // .attr("opacity", 1);
-
-        // g.selectAll(".solutions")
-        //     .attr("opacity", 1);
-
         g.selectAll(".filler")
             .attr("opacity", 0)
 
@@ -594,9 +477,6 @@ var scrollVis = function() {
         // console.log("hello");
         g.selectAll(".filler")
             .attr("opacity", 0)
-
-        // g.selectAll(".solutions")
-        // 	.attr("opacity", 1);
     }
 
 
@@ -641,9 +521,10 @@ var scrollVis = function() {
 function display(data) {
     // create a new plot and
     // display it
+    // console.log(data);
     var plot = scrollVis();
     d3.select("#vis")
-        .datum([0, 1, 2, 3, 4, 5, 6, 7])
+        .datum(activateFunctions)
         .call(plot);
 
     // setup scroll functionality
@@ -665,9 +546,11 @@ function display(data) {
         plot.activate(index);
     });
 
-    scroll.on('progress', function(index, progress) {
-        plot.update(index, progress);
-    });
+    // scroll.on('progress', function(index, progress) {
+    // 	console.log(index);
+    // 	console.log(progress);
+    //     plot.update(activateFunctions[index], progress);
+    // });
 }
 
 // load data and display
