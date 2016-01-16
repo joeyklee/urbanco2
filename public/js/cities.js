@@ -563,7 +563,7 @@ var scrollVis = function() {
         //     .attr("opacity", 1);
 
         g.selectAll(".filler")
-            .attr("opacity", 1)
+            .attr("opacity", 0)
 
     }
 
@@ -572,7 +572,7 @@ var scrollVis = function() {
             .attr("opacity", 0);
         // console.log("hello");
         g.selectAll(".filler")
-            .attr("opacity", 1)
+            .attr("opacity", 0)
 
         // g.selectAll(".solutions")
         // 	.attr("opacity", 1);
