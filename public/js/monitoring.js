@@ -89,7 +89,7 @@ var scrollVis = function() {
 			.attr("class", "title openvis-title")
 			.attr("x", width / 2)
 			.attr("y", height / 3)
-			.text("Science is hard");
+			.text("");
 		g.append("text")
 			.attr("class", "title openvis-title")
 			.attr("x", width / 2)
@@ -146,7 +146,7 @@ var scrollVis = function() {
 	setupSections = function() {
 		// activateFunctions are called each
 		// time the active section changes
-		activateFunctions[0] = showTitle;
+		// activateFunctions[0] = showTitle;
 		// activateFunctions[1] = showUrbanModel;
 		// activateFunctions[2] = showEmissionsIllustration;
 		// activateFunctions[3] = showEmissionsTransportation;
