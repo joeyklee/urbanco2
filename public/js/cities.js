@@ -99,6 +99,7 @@ var scrollVis = function() {
      */
     setupVis = function() {
 
+
         // count openvis title
         g.append("text")
             .attr("class", "title openvis-title")
@@ -112,6 +113,13 @@ var scrollVis = function() {
             .text("30-40%");
         g.selectAll(".openvis-title")
             .attr("opacity", 0);
+
+
+        // queue call for map
+        queue()
+        	.defer(d3.json, 'public/data/world-countries-110m.json')
+        	.defer(d3.csv, 'public/data/cities.csv')
+        	.await(makeGlobe);
 
         // setup the map
         var projection = d3.geo.orthographic()
@@ -136,8 +144,6 @@ var scrollVis = function() {
             .attr("height", height)
             .attr("transform", "translate(0 50)")
             .attr("opacity", 0);
-
-
 
         map.append("defs").append("path")
             .datum({
@@ -166,90 +172,88 @@ var scrollVis = function() {
             .attr('class', 'geo-globe');
 
 
+        function makeGlobe(error, world, cities){
+        	if (error) throw error;
 
-        d3.json("public/data/world-countries-110m.json", function(error, world) {
-            if (error) throw error;
+        	map.insert("path", ".graticule")
+        	    .datum(topojson.feature(world, world.objects.land))
+        	    .attr("class", "land")
+        	    .attr("d", path);
 
-            map.insert("path", ".graticule")
-                .datum(topojson.feature(world, world.objects.land))
-                .attr("class", "land")
-                .attr("d", path);
+        	map.insert("path", ".graticule")
+        	    .datum(topojson.mesh(world, world.objects.countries, function(a, b) {
+        	        return a !== b;
+        	    }))
+        	    .attr("class", "boundary")
+        	    .attr("d", path);
 
-            map.insert("path", ".graticule")
-                .datum(topojson.mesh(world, world.objects.countries, function(a, b) {
-                    return a !== b;
-                }))
-                .attr("class", "boundary")
-                .attr("d", path);
-
-
-            d3.csv("public/data/cities.csv", function(data) {
-                //http://bl.ocks.org/sumbera/10463358
-
-                // convert csv input into geojson objects
-                function reformat(array) {
-                    var data = [];
-                    array.map(function(d, i) {
-
-                        data.push({
-                            id: i,
-                            type: "Feature",
-                            geometry: {
-                                coordinates: [+d.longitude, +d.latitude],
-                                type: "Point"
-                            }
-
-
-                        });
-                    });
-                    return data;
-                }
-                var geoData = {
-                    type: "FeatureCollection",
-                    features: reformat(data)
-                };
-
-                // the d3 circle function seems expensive, trying this another way
-                map.selectAll('.point')
-                    .data(geoData.features)
-                    .enter()
-                    .append('path')
-                    .attr('d', path.pointRadius(1))
-                    .attr("opacity", "0.45")
-                    .attr("fill", "#ffffe5")
-                    .attr('class', 'point');
-            });
+        	// convert csv input into geojson objects
+        	function reformat(array) {
+        	    var data = [];
+        	    array.map(function(d, i) {
+        	    	//http://bl.ocks.org/sumbera/10463358
+        	        data.push({
+        	            id: i,
+        	            type: "Feature",
+        	            geometry: {
+        	                coordinates: [+d.longitude, +d.latitude],
+        	                type: "Point"
+        	            }
+        	        });
+        	    });
+        	    return data;
+        	}
+        	var geoData = {
+        	    type: "FeatureCollection",
+        	    features: reformat(cities)
+        	};
+        	// the d3 circle function seems expensive, trying this another way
+        	map.selectAll('.point')
+        	    .data(geoData.features)
+        	    .enter()
+        	    .append('path')
+        	    .attr('d', path.pointRadius(1))
+        	    .attr("opacity", "0.45")
+        	    .attr("fill", "#ffffe5")
+        	    .attr('class', 'point');
+        }
 
 
-        });
+        queue()
+        	.defer(d3.xml, "public/images/Figure-7-edited.svg")
+        	.await(addUrbanScale)
 
         // urban scale viz
         var urbanScale = g.append("g")
             .attr("class", "urbanscale");
         // read in the svg
-        d3.xml("public/images/Figure-7-edited.svg", "image/svg+xml", function(xml) {
-            var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
-            items.forEach(function(val) {
-                urbanScale.node().appendChild(val);
-            });
-            // set the opacity
-            g.selectAll('.inputs, .city-center, .waste')
-                .attr("opacity", 0)
-        });
 
+        function addUrbanScale(error, xml){
+        	var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
+        	items.forEach(function(val) {
+        	    urbanScale.node().appendChild(val);
+        	});
+        	// set the opacity
+        	g.selectAll('.inputs, .city-center, .waste')
+        	    .attr("opacity", 0)
+        }
 
+        queue()
+        	.defer(d3.xml, "public/images/co2-emissions-model.svg")
+        	.await(addEmissionsIllustration)
         // urban box model
         var emissionsIllustration = g.append("g")
             .attr("class", "illustration")
             .attr("opacity", 0)
             .attr("transform", "translate(90), scale(2.5)");
-        d3.xml("public/images/co2-emissions-model.svg", "image/svg+xml", function(xml) {
-            // emissionsIllustration.node().appendChild(xml.getElementsByTagName("svg")[0]);
-            var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
-            items.forEach(function(val) {
-                emissionsIllustration.node().appendChild(val);
-            });
-        });
+
+        function addEmissionsIllustration(error, xml){
+    	    var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
+        	    items.forEach(function(val) {
+        	        emissionsIllustration.node().appendChild(val);
+    	    });
+
+        }
 
         g.append("text")
             .attr("class", "title filler")
