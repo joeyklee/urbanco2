@@ -2,11 +2,11 @@ var MONGOCONNECTION = 'mongodb://localhost:27017/co2webdb';
 
 var express = require('express');
 var app = express();
-var exphbs  = require('express-handlebars');
+var exphbs = require('express-handlebars');
 
 
 var bodyParser = require('body-parser');
-var  _ = require('underscore');
+var _ = require('underscore');
 var path = require("path");
 var mongojs = require('mongojs');
 var db = mongojs(MONGOCONNECTION);
@@ -14,57 +14,74 @@ var db = mongojs(MONGOCONNECTION);
 
 var points = db.collection('co2points');
 var propertyMap = {
-	'altitude': 'properties.altitude',
-	'datetime': 'properties.datetime',
-	'sid': 'properties.sensorid',
-	'temperature': 'properties.tempout',
-	'co2': 'properties.co2'
+    'altitude': 'properties.altitude',
+    'datetime': 'properties.datetime',
+    'sid': 'properties.sensorid',
+    'temperature': 'properties.tempout',
+    'co2': 'properties.co2'
 };
 
 
 /* Points API */
 app.use(bodyParser.json());
 // get all features - not recommended for points
-app.get('/api/points', function(req, res){
-  // TODO console.log(req.query.sensor_id)
-  findAll(test, {}, res);
+app.get('/api/points', function(req, res) {
+    // TODO console.log(req.query.sensor_id)
+    findAll(points, {}, res);
 });
 
 // get points based on property greater than a threshold
-app.get('/api/points/:property/gte/:threshold', function(req, res){
-	// TODO console.log(req.query.sensor_id)
-	var property = propertyMap[req.params.property]
-		, threshold = parseFloat(req.params.threshold);
-	if (!property) return handleError(null, req, res, 404, "doesn't exists");
-	var query = {}, orderby = {};
-	query[property] = { $gte: threshold};
-	orderby[property] = 1;
-	findAll(points, {$query: query, $orderby: orderby}, res);
+app.get('/api/points/:property/gte/:threshold', function(req, res) {
+    // TODO console.log(req.query.sensor_id)
+    var property = propertyMap[req.params.property],
+        threshold = parseFloat(req.params.threshold);
+    if (!property) return handleError(null, req, res, 404, "doesn't exists");
+    var query = {},
+        orderby = {};
+    query[property] = {
+        $gte: threshold
+    };
+    // orderby[property] = 1;
+    findAll(points, {
+        $query: query,
+        // orderby only returns 1000 - change to property:1
+        property: 1
+    }, res);
 });
 
-app.get('/api/points/:property/range/:low/:high', function(req, res){
-	// TODO console.log(req.query.sensor_id)
-	var property = propertyMap[req.params.property]
-		, low = parseInt(req.params.low)
-		, high = parseInt(req.params.high)
-		, query = {};
-	if (!property) return handleError(null, req, res, 404, "doesn't exists");
-	var query = {}, orderby = {};
-	query[property] = { $gte: low, $lte: high};
-	orderby[property] = 1;
-	findAll(points, {$query: query, $orderby: orderby}, res);
+app.get('/api/points/:property/range/:low/:high', function(req, res) {
+    // TODO console.log(req.query.sensor_id)
+    var property = propertyMap[req.params.property],
+        low = parseInt(req.params.low),
+        high = parseInt(req.params.high),
+        query = {};
+    if (!property) return handleError(null, req, res, 404, "doesn't exists");
+    var query = {},
+        orderby = {};
+    query[property] = {
+        $gte: low,
+        $lte: high
+    };
+    orderby[property] = 1;
+    findAll(points, {
+        $query: query,
+        // orderby only returns 1000 - change to property:1
+        property: 1
+    }, res);
 });
 
+// app.get('/api/points/test', function(req, res){
+// 	findAll(points, {"properties.sensorid": 0108}, res);
+// });
 
 function mongoError(res, err) {
-  if (err) console.error('mongo error ->', err);
-  return res.status(500).send('internal server error')
+    if (err) console.error('mongo error ->', err);
+    return res.status(500).send('internal server error')
 };
 
 function findAll(collection, query, res) {
   collection.find(
-    query,
-    function(err, docs) {
+    query, function(err, docs) {
       if (err) { return mongoError(res, err); };
       // if nothing is found (doc === null) return empty array
       res.send(docs === null ? [] : docs);
@@ -73,27 +90,29 @@ function findAll(collection, query, res) {
 };
 
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main'
+}));
 app.set('view engine', 'handlebars');
 
-app.get('/', function (req, res) {
-  res.render('index');
+app.get('/', function(req, res) {
+    res.render('index');
 });
 
-app.get('/cities', function (req, res) {
-  res.render('cities');
+app.get('/cities', function(req, res) {
+    res.render('cities');
 });
 
-app.get('/about', function (req, res) {
-  res.render('about');
+app.get('/about', function(req, res) {
+    res.render('about');
 });
 
-app.get('/monitoring', function (req, res) {
-  res.render('monitoring');
+app.get('/monitoring', function(req, res) {
+    res.render('monitoring');
 });
 
-app.get('/explore', function (req, res) {
-  res.render('explore');
+app.get('/explore', function(req, res) {
+    res.render('explore');
 });
 
 
