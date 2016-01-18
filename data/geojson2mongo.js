@@ -29,7 +29,7 @@ if (args.length === 3 || args.length === 4) {
 
   // for each feature enable the time functionality
   _.each(features, function(feature){
-    feature.properties.dateTime_gmt = new Date(feature.properties.dateTime_gmt);
+    feature.properties.datetime = new Date(feature.properties.datetime);
   });
 
   // insert all the features into the selected collection
