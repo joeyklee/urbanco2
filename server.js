@@ -30,6 +30,18 @@ app.get('/api/points', function(req, res) {
     findAll(points, {}, res);
 });
 
+// TODO check whether this really works = is everyting within that day
+app.get('/api/points/sid/:sensornum', function(req, res){
+	// TODO console.log(req.query.sensor_id)
+	var sensorid = parseInt(req.params.sensornum);
+	findAll(
+		points,
+		{$query:{"properties.sensorid": sensorid}, "properties.datetime":1},
+		res
+	);
+});
+
+
 // get points based on property greater than a threshold
 app.get('/api/points/:property/gte/:threshold', function(req, res) {
     // TODO console.log(req.query.sensor_id)
@@ -48,6 +60,7 @@ app.get('/api/points/:property/gte/:threshold', function(req, res) {
         property: 1
     }, res);
 });
+
 
 app.get('/api/points/:property/range/:low/:high', function(req, res) {
     // TODO console.log(req.query.sensor_id)
