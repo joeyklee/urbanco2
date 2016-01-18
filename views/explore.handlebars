@@ -1,22 +1,76 @@
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
 <link rel="stylesheet" type="text/css" href="public/stylesheets/explore.css">
 
-<div >
-
-		{{!-- <div class="header-content">
-			<h4 class="text-center">Section 3</h4>
-			<h1 class="text-center">Exploring Future Possibilities</h1>
-		</div> --}}
 
 
-    <div id="map"></div>
+{{!-- <div class="header-content">
+	<h4 class="text-center">Section 3</h4>
+	<h1 class="text-center">Exploring Future Possibilities</h1>
+</div> --}}
 
+<div id="map"></div>
+
+
+<!-- Trigger the modal-->
+<button type="button" class="btn btn-info btn-lg" id="myBtn">Start Options</button>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="vertical-alignment-helper">
+         <div class="modal-dialog vertical-align-center">
+             <!-- Modal content-->
+                  <div class="modal-content text-center">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Choose your adventure</h4>
+                    </div>
+                    <div class="modal-body col-md-12">
+                      <div class="col-md-6">
+
+                      	<button id="showProcess1" type="button" class="btn btn-success" data-dismiss="modal">Show me the process</button>
+                      </div>
+
+                      <div class="cold-md-6">
+
+                      	<button id="showData" type="button" class="btn btn-warning" data-dismiss="modal">I just want to see the data</button>
+                      </div>
+
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+         </div>
+     </div>
+ </div>
+
+<div id="towerInfo" class="hidden">
+	 <h4>1. Sunset Urban Climate Tower</h4>
+	<p><a href='http://ibis.geog.ubc.ca/~achristn/data/sunset.html' target='blank'>The 30m height tower</a> is gathering data about the CO<sub>2</sub> concentrations above the urban canopy layer.</p>
+	<br>
+	<button id='towerNext' class='btn btn-default'> Next </button>
+</div>
+
+<div id="meetupInfo" class="hidden">
+	 <h4>2. Vehicle Meetup Spot</h4>
+	 <p>Five volunteers meet, install the CO<sub>2</sub> sensors, and calibrate them before driving throughout the city.</p>
+	 <br><button id='meetingNext' class='btn btn-default'> Next </button>
+</div>
+
+<div id="traverseInfo" class="hidden">
+	 <h4>3. Data Collection</h4>
+	 <p>The sensors collect CO<sub>2</sub> data across the city.</p>
+	 <br><button id='animNext' class='btn btn-default'> Next </button>
 </div>
 
 
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+{{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+ --}}
+
+<script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
 <script type="text/javascript" src="public/js/explore.js"></script>
+
