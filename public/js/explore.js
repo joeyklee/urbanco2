@@ -65,7 +65,9 @@ $(document).ready(function() {
     var processFunctions = [
     	showTower,
     	showMeetup,
-    	showTraverse
+    	showTraverse,
+    	showTraffic,
+    	showGrid
     ];
 
 
@@ -141,6 +143,51 @@ $(document).ready(function() {
 	    }
     }
 
+    function showGrid(){
+    	var text = $('#gridInfo').html();
+    	animText = L.divIcon({
+    	  // Specify a class name we can refer to in CSS.
+    	  className: 'css-icon',
+    	  // Set marker width and height
+    	  iconSize: 250,
+    	  html: text
+    	});
+
+    	L.marker([49.294306, -123.205491], {icon: animText}).addTo(map);
+
+    	d3.json("api/grid", function(data){
+    		console.log(data);
+    		var test = L.geoJson().addTo(map);
+
+    		data.forEach(function(item){
+    			test.addData(item);
+    		})
+    		// L.geoJson(data).addTo(map);
+    	})
+    }
+
+    function showTraffic(){
+    	var text = $('#trafficInfo').html();
+    	animText = L.divIcon({
+    	  // Specify a class name we can refer to in CSS.
+    	  className: 'css-icon',
+    	  // Set marker width and height
+    	  iconSize: 250,
+    	  html: text
+    	});
+
+    	L.marker([49.294306, -123.205491], {icon: animText}).addTo(map);
+
+    	d3.json("api/traffic", function(data){
+    		console.log(data);
+    		var test = L.geoJson().addTo(map);
+
+    		data.forEach(function(item){
+    			test.addData(item);
+    		})
+    		// L.geoJson(data).addTo(map);
+    	})
+    }
 
     $("#showProcess1").click(function() {
     	processFunctions[0]();
@@ -153,6 +200,15 @@ $(document).ready(function() {
     $(document).on('click', '#meetingNext', function () {
          processFunctions[2]();
     });
+
+    $(document).on('click', '#animNext', function () {
+         processFunctions[3]();
+    });
+    $(document).on('click', '#trafficNext', function () {
+         processFunctions[4]();
+    });
+
+
 
 
     $("#showData").click(function() {
