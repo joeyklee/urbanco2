@@ -14,6 +14,7 @@ var db = mongojs(MONGOCONNECTION);
 
 var points = db.collection('co2points');
 var grid = db.collection('co2grid');
+var traffic = db.collection('traffic');
 var propertyMap = {
     'altitude': 'properties.altitude',
     'datetime': 'properties.datetime',
@@ -33,6 +34,11 @@ app.get('/api/grid', function(req, res) {
     findAll(grid, {}, res);
 });
 
+// grid data
+app.get('/api/traffic', function(req, res) {
+    // TODO console.log(req.query.sensor_id)
+    findAll(traffic, {}, res);
+});
 
 // get all features - not recommended for points
 app.get('/api/points', function(req, res) {
