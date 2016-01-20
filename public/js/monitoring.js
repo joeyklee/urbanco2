@@ -4,8 +4,8 @@
  * using reusable charts pattern:
  * http://bost.ocks.org/mike/chart/
  */
-var activateFunctions;
-var updateFunctions;
+// var activateFunctions;
+// var updateFunctions;
 
 var scrollVis = function() {
     // constants to define the size
@@ -89,16 +89,25 @@ var scrollVis = function() {
 		g.selectAll(".openvis-title")
 			.attr("opacity", 0);
 
-		// add image
-		var sensorimage = g.append("g").attr("class", "sensorsImg")
+		// // add image
+		// var sensorimage = g.append("g")
+		// .attr("class", "sensorsImgs")
+		// .attr("opacity", 0);
 
-		sensorimage.append("svg:image")
+		// sensorimage.append("svg:image")
+		// 	.attr("width", "400")
+  //           .attr("height", "500")
+  //           .att("class", "sensorImg")
+  //           .attr("opacity", 1)
+  //           .attr("xlink:href", "public/images/sensorlineup.JPG");
 
+  		// add image
+		g.append("g").attr("class", "sensorsImg").attr("opacity", 0)
+		.append("image")
 			.attr("width", "400")
             .attr("height", "500")
             .attr("opacity", 1)
             .attr("xlink:href", "public/images/sensorlineup.JPG");
-
 
 		queue()
 			.defer(d3.xml, "public/images/resistance-approach-2.svg")
@@ -191,6 +200,8 @@ var scrollVis = function() {
 		g.selectAll(".sensorsImg")
 			.attr("opacity", 0);
 
+		g.selectAll(".sensorsImgs")
+			.attr("opacity", 0);
 
 
 	}
@@ -203,9 +214,7 @@ var scrollVis = function() {
 			.attr("opacity", 0);
 
 		g.selectAll(".sensorsImg")
-			.transition()
-			.duration(600)
-			.attr("opacity", 1);
+		.attr("opacity", 1);
 
 			// add the current viz components
 			g.selectAll(".emissions")
@@ -386,7 +395,7 @@ function display(data) {
     // console.log(data);
     var plot = scrollVis();
     d3.select("#vis")
-        .datum(activateFunctions)
+        // .datum(activateFunctions)
         .call(plot);
 
     // setup scroll functionality

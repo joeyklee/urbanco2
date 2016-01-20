@@ -5,8 +5,8 @@
  * http://bost.ocks.org/mike/chart/
  */
 
-var activateFunctions;
-var updateFunctions;
+// var activateFunctions;
+// var updateFunctions;
 
 var scrollVis = function() {
     // constants to define the size
@@ -101,18 +101,18 @@ var scrollVis = function() {
 
 
         // count openvis title
-        g.append("text")
-            .attr("class", "title openvis-title")
-            .attr("x", width / 2)
-            .attr("y", height / 3)
-            .text("");
-        g.append("text")
-            .attr("class", "title openvis-title")
-            .attr("x", width / 2)
-            .attr("y", (height / 3) + (height / 5))
-            .text("30-40%");
-        g.selectAll(".openvis-title")
-            .attr("opacity", 0);
+        // g.append("text")
+        //     .attr("class", "title openvis-title")
+        //     .attr("x", width / 2)
+        //     .attr("y", height / 3)
+        //     .text("");
+        // g.append("text")
+        //     .attr("class", "title openvis-title")
+        //     .attr("x", width / 2)
+        //     .attr("y", (height / 3) + (height / 5))
+        //     .text("30-40%");
+        // g.selectAll(".openvis-title")
+        //     .attr("opacity", 0);
 
 
         // queue call for map
@@ -138,12 +138,15 @@ var scrollVis = function() {
 
         var graticule = d3.geo.graticule();
 
-        var map = g.append("svg")
-            .attr("class", "map")
+        var map = g.append("g")
+	        .attr("class", "map")
+        	.attr("opacity", 0)
+
+        map
             .attr("width", width)
             .attr("height", height)
             .attr("transform", "translate(0 50)")
-            .attr("opacity", 0);
+            .attr("opacity", 1);
 
         map.append("defs").append("path")
             .datum({
@@ -528,7 +531,7 @@ function display(data) {
     // console.log(data);
     var plot = scrollVis();
     d3.select("#vis")
-        .datum(activateFunctions)
+        // .datum(activateFunctions)
         .call(plot);
 
     // setup scroll functionality
