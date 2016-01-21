@@ -48,175 +48,284 @@ d3.json(studyarea, function(data) {
     }).addTo(map);
 });
 
+// var ourCustomControl = L.Control.extend({
+
+//     options: {
+//         position: 'topleft'
+//             //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
+//     },
+
+//     onAdd: function(map) {
+//         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+
+//         container.style.backgroundImage = "url(public/images/glyphicons-83-roundabout.png)";
+//         // container.style["background-size"]= "24px";
+//         container.style.backgroundColor = 'white';
+//         container.style.width = '26px';
+//         container.style.height = '26px';
+
+//         container.onclick = function() {
+//             // console.log('buttonClicked');
+//             $("#myModal").modal();
+//         }
+//         return container;
+//     }
+
+// });
+// map.addControl(new ourCustomControl());
 
 
 $(document).ready(function() {
+    // call modal on page load
     $("#myModal").modal();
-    $("#myBtn").click(function() {
-        // console.log("clicked");
-        $("#myModal").modal();
+
+    var tower,
+        meetingPoint,
+        vehicles,
+        trafficCounts,
+        grid;
+    // slider
+    $(function() {
+        var a = "A,B,C,D,E,F";
+        var arr = a.split(",");
+        var total = arr.length;
+
+        // if showProcess is selected then call function at first
+        $("#showProcess1").click(function() {
+            var h = 2;
+            var hs = $('#slider-range-max').slider();
+            hs.slider('option', 'value', h);
+            hs.slider('option', 'slide')
+                .call(hs, null, {
+                    handle: $('.ui-slider-handle', hs),
+                    value: h
+                });
+        });
+
+        // if showData is selected then call function at last step
+        $("#showData").click(function() {
+            console.log("just showing the data");
+            var h = 6;
+            var hs = $('#slider-range-max').slider();
+            hs.slider('option', 'value', h);
+            hs.slider('option', 'slide')
+                .call(hs, null, {
+                    handle: $('.ui-slider-handle', hs),
+                    value: h
+                });
+        });
+
+        // the slider will call functions sequentially
+        $("#slider-range-max").slider({
+            range: "min",
+            min: 1,
+            max: total,
+            value: 1,
+            slide: function(event, ui) {
+                $(".ui-slider-handle").text(arr[ui.value - 1]);
+                console.log(ui.value);
+
+                if (ui.value == 1) {
+                    $("#myModal").modal();
+                } else if (ui.value == 2) {
+                    showTower();
+
+                } else if (ui.value == 3) {
+                    showMeetup();
+
+                } else if (ui.value == 4) {
+                    showTraverse();
+
+                } else if (ui.value == 5) {
+                    showTraffic()
+
+                } else if (ui.value == 6) {
+                    showGrid()
+                }
+
+            }
+        });
+        $(".ui-slider-handle").text(arr[$("#slider-range-max").slider("value") - 1]);
+
+        // add slider dots
+        // var foo = total;
+        // var mar = $(".ui-slider").width() / foo;
+        // for (var x = 0; x < foo; x++) {
+        //     $(".ui-slider").append("<span class='dots' style='left:" + x * mar + "px'></span>");
+        // }
     });
 
-    // for testing purposes
-    // $("#showProcess").click();
 
-    var counter = 0;
-
-    var processFunctions = [
-    	showTower,
-    	showMeetup,
-    	showTraverse,
-    	showTraffic,
-    	showGrid
-    ];
-
-
-    var tower, meetingPoint, animText;
-    function showTower(){
-    	tower = L.circle([49.226493, -123.079078], 100).addTo(map);
-    	var text = $('#towerInfo').html();
-    	tower.bindPopup(text);
-    	tower.openPopup();
-    	map.setView([49.226493, -123.079078], 15);
+    function showTower() {
+        if (tower != null) map.removeLayer(tower);
+        if (tower != null) map.removeLayer(meetingPoint);
+        tower = L.circle([49.226493, -123.079078], 100).addTo(map);
+        var text = $('#towerInfo').html();
+        tower.bindPopup(text);
+        // tower.openPopup();
+        map.setView([49.226493, -123.079078], 15);
     }
 
-    function showMeetup(){
-    	tower.closePopup();
-    	map.setView([49.221352, -123.070012], 15);
+    function showMeetup() {
+        if (meetingPoint != null) map.removeLayer(meetingPoint);
+        // if (trafficCounts != null) map.removeLayer(trafficCounts);
+        // tower.closePopup();
+        map.setView([49.221352, -123.070012], 15);
 
-    	var meetingPoint_bounds = [
-    	    [49.220406, -123.071846],
-    	    [49.221735, -123.069197]
-    	];
-    	meetingPoint = L.rectangle(meetingPoint_bounds, {
-    	    color: "#ff7800",
-    	    weight: 1
-    	}).addTo(map);
-    	var text = $('#meetupInfo').html();
-    	meetingPoint.bindPopup(text);
-    	meetingPoint.openPopup();
+        var meetingPoint_bounds = [
+            [49.220406, -123.071846],
+            [49.221735, -123.069197]
+        ];
+        meetingPoint = L.rectangle(meetingPoint_bounds, {
+            color: "#ff7800",
+            weight: 1
+        }).addTo(map);
+        var text = $('#meetupInfo').html();
+        meetingPoint.bindPopup(text);
+        // meetingPoint.openPopup();
     }
 
 
-    function showTraverse(){
-    	meetingPoint.closePopup();
-    	map.setView([49.260538, -123.108692], 12);
+    function showTraverse() {
+        // meetingPoint.closePopup();
+        if (trafficCounts != null) map.removeLayer(trafficCounts);
 
-    	var text = $('#traverseInfo').html();
-    	animText = L.divIcon({
-    	  // Specify a class name we can refer to in CSS.
-    	  className: 'css-icon',
-    	  // Set marker width and height
-    	  iconSize: 250,
-    	  html: text
-    	});
+        map.setView([49.260538, -123.108692], 12);
 
-    	L.marker([49.294306, -123.205491], {icon: animText}).addTo(map);
-
-        // animatePoints('api/points/sid/0108', "red");
-        // animatePoints('api/points/sid/1641', "blue");
+        vehicles = L.layerGroup([]).addTo(map);
+        animatePoints('api/points/sid/0108', "red");
+        animatePoints('api/points/sid/1641', "blue");
         // animatePoints('api/points/sid/0205', "green");
         // animatePoints('api/points/sid/0150', "orange");
         // animatePoints('api/points/sid/0151', "purple");
 
 
         //'/api/points/sid/0108'
-	    function animatePoints(sensorreq, linecol) {
-	        d3.json(sensorreq, function(data) {
+        function animatePoints(sensorreq, linecol) {
+            d3.json(sensorreq, function(data) {
 
-	            var polyline = L.polyline([], {
-	                color: linecol,
-	                opacity: 0.5,
-	                weight:1
-	            }).addTo(map);
+                var animMarkers = L.polyline([], {
+                    color: linecol,
+                    opacity: 0.5,
+                    weight: 1
+                }).addTo(vehicles);
 
-	            var i = 0;
-	            setInterval(function() {
-	                var item = data[i++];
-	                var coords = item.geometry.coordinates;
-	                polyline.addLatLng(
-	                    L.latLng(coords[1], coords[0]));
+                var i = 0;
+                setInterval(function() {
+                    var item = data[i++];
+                    var coords = item.geometry.coordinates;
+                    animMarkers.addLatLng(
+                        L.latLng(coords[1], coords[0]));
 
-	                if (i >= data.length) i = 0;
-	            }, 1);
-	        });
-	    }
+                    if (i >= data.length) i = 0;
+                }, 1);
+            });
+        }
     }
 
-    function showGrid(){
-    	var text = $('#gridInfo').html();
-    	animText = L.divIcon({
-    	  // Specify a class name we can refer to in CSS.
-    	  className: 'css-icon',
-    	  // Set marker width and height
-    	  iconSize: 250,
-    	  html: text
-    	});
+    function showTraffic() {
+        if (vehicles != null) map.removeLayer(vehicles);
+        if (grid != null) map.removeLayer(grid);
 
-    	L.marker([49.294306, -123.205491], {icon: animText}).addTo(map);
+        d3.json("api/traffic", function(data) {
 
-    	d3.json("api/grid", function(data){
-    		console.log(data);
-    		var test = L.geoJson().addTo(map);
+            var min = d3.min(data, function(d) {
+                return d.properties.h_10_TO_14
+            });
+            var max = d3.max(data, function(d) {
+                return d.properties.h_10_TO_14
+            });
+            var med = d3.median(data, function(d) {
+                return d.properties.h_10_TO_14
+            });
 
-    		data.forEach(function(item){
-    			test.addData(item);
-    		})
-    		// L.geoJson(data).addTo(map);
-    	})
+            var color = d3.scale.linear()
+                .domain([min, med, max])
+                .range(["white", "orange", "red"]);
+            var linewt = d3.scale.linear()
+                .domain([min, med, max])
+                .range([0.5, 1, 5])
+
+            function myStyle(feature) {
+                // console.log(color(feature.properties['h_10_TO_14']));
+                return {
+                    "color": color(feature.properties['h_10_TO_14']),
+                    "weight": linewt(feature.properties['h_10_TO_14']),
+                    "opacity": 0.65
+                };
+            };
+
+            trafficCounts = L.geoJson(null, {
+                style: myStyle
+            }).addTo(map);
+
+            data.forEach(function(item) {
+                    trafficCounts.addData(item);
+                });
+        })
     }
 
-    function showTraffic(){
-    	var text = $('#trafficInfo').html();
-    	animText = L.divIcon({
-    	  // Specify a class name we can refer to in CSS.
-    	  className: 'css-icon',
-    	  // Set marker width and height
-    	  iconSize: 250,
-    	  html: text
-    	});
 
-    	L.marker([49.294306, -123.205491], {icon: animText}).addTo(map);
+    function showGrid() {
+        // if(trafficMarkers != null) map.removeLayer(trafficMarkers);
+        if (trafficCounts != null) map.removeLayer(trafficCounts);
 
-    	d3.json("api/traffic", function(data){
-    		console.log(data);
-    		var test = L.geoJson().addTo(map);
+        d3.json("api/grid", function(data) {
+            var min = d3.min(data, function(d) {
+                return d.properties.co2_avg_e
+            });
+            var max = d3.max(data, function(d) {
+                return d.properties.co2_avg_e
+            });
+            var med = d3.median(data, function(d) {
+                return d.properties.co2_avg_e
+            });
 
-    		data.forEach(function(item){
-    			test.addData(item);
-    		})
-    		// L.geoJson(data).addTo(map);
-    	})
+            var color = d3.scale.linear()
+                .domain([min, max])
+                .range(["orange", "red"]);
+
+
+            function myStyle(feature) {
+                // console.log(color(feature.properties['h_10_TO_14']));
+                return {
+                    "fillColor": color(feature.properties['h_10_TO_14']),
+                    "weight": 0,
+                    "fillOpacity": 0.85
+                };
+            };
+
+            grid = L.geoJson(null, {
+                style: myStyle
+            }).addTo(map);
+
+            data.forEach(function(item) {
+                    // console.log(item);
+                    grid.addData(item);
+                })
+        })
     }
 
-    $("#showProcess1").click(function() {
-    	processFunctions[0]();
-    });
-
-    $(document).on('click', '#towerNext', function () {
-         processFunctions[1]();
-    });
-
-    $(document).on('click', '#meetingNext', function () {
-         processFunctions[2]();
-    });
-
-    $(document).on('click', '#animNext', function () {
-         processFunctions[3]();
-    });
-    $(document).on('click', '#trafficNext', function () {
-         processFunctions[4]();
-    });
 
 
+    // $("#showProcess1").click(function() {
+    //     processFunctions[0]();
+    // });
 
+    // $(document).on('click', '#towerNext', function() {
+    //     processFunctions[1]();
+    // });
 
-    $("#showData").click(function() {
-        console.log("just showing the data");
-    });
+    // $(document).on('click', '#meetingNext', function() {
+    //     processFunctions[2]();
+    // });
 
-
-
+    // $(document).on('click', '#animNext', function() {
+    //     processFunctions[3]();
+    // });
+    // $(document).on('click', '#trafficNext', function() {
+    //     processFunctions[4]();
+    // });
 
 });
 
