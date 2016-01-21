@@ -237,9 +237,16 @@ $(document).ready(function() {
                 return d.properties.h_10_TO_14
             });
 
-            var color = d3.scale.linear()
-                .domain([min, med, max])
-                .range(["white", "orange", "red"]);
+            // var color = d3.scale.linear()
+            //     .domain([min, med, max])
+            //     .range(["white", "orange", "red"]);
+            var color = d3.scale.quantize()
+                .domain([min, max])
+                // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+                // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
+                .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
+                // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+
             var linewt = d3.scale.linear()
                 .domain([min, med, max])
                 .range([0.5, 1, 5])
@@ -281,15 +288,22 @@ $(document).ready(function() {
                 return d.properties.co2_avg_e
             });
 
-            var color = d3.scale.linear()
+            // var color = d3.scale.linear()
+            //     .domain([min, max])
+            //     .range(["orange", "red"]);
+
+            var color = d3.scale.quantize()
                 .domain([min, max])
-                .range(["orange", "red"]);
+                // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+                // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
+                .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
+                // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
 
             function myStyle(feature) {
                 // console.log(color(feature.properties['h_10_TO_14']));
                 return {
-                    "fillColor": color(feature.properties['h_10_TO_14']),
+                    "fillColor": color(feature.properties['co2_avg_e']),
                     "weight": 0,
                     "fillOpacity": 0.85
                 };
