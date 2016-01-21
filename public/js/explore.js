@@ -1,7 +1,7 @@
 var map = L.map('map', {
-    fullscreenControl: {
-        pseudoFullscreen: false // if true, fullscreen to page width and height
-    }
+    // fullscreenControl: {
+    //     pseudoFullscreen: false // if true, fullscreen to page width and height
+    // }
 }).setView([49.25, -123.1], 12);
 
 // var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
@@ -23,13 +23,13 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 
 
 // `fullscreenchange` Event that's fired when entering or exiting fullscreen.
-map.on('fullscreenchange', function() {
-    if (map.isFullscreen()) {
-        console.log('entered fullscreen');
-    } else {
-        console.log('exited fullscreen');
-    }
-});
+// map.on('fullscreenchange', function() {
+//     if (map.isFullscreen()) {
+//         console.log('entered fullscreen');
+//     } else {
+//         console.log('exited fullscreen');
+//     }
+// });
 
 
 var studyarea = 'public/data/studyarea.geojson';
@@ -60,7 +60,7 @@ $(document).ready(function() {
         grid;
     // slider
     $(function() {
-        var a = "A,B,C,D,E,F";
+        var a = "0,1,2,3,4,5";
         var arr = a.split(",");
         var total = arr.length;
 
@@ -181,6 +181,7 @@ $(document).ready(function() {
 
 
     function showTraverse() {
+
     	if (vehicles != null) map.removeLayer(vehicles);
         // meetingPoint.closePopup();
         if (trafficCounts != null) map.removeLayer(trafficCounts);
@@ -219,6 +220,8 @@ $(document).ready(function() {
     }
 
     function showTraffic() {
+    	if (tower != null) map.removeLayer(tower);
+        if (tower != null) map.removeLayer(meetingPoint);
         if (vehicles != null) map.removeLayer(vehicles);
         if (grid != null) map.removeLayer(grid);
 
@@ -262,7 +265,9 @@ $(document).ready(function() {
 
 
     function showGrid() {
-        // if(trafficMarkers != null) map.removeLayer(trafficMarkers);
+    	if (tower != null) map.removeLayer(tower);
+        if (tower != null) map.removeLayer(meetingPoint);
+        if (vehicles != null) map.removeLayer(vehicles);
         if (trafficCounts != null) map.removeLayer(trafficCounts);
 
         d3.json("api/grid", function(data) {
