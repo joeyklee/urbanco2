@@ -14,10 +14,11 @@ html, body{
 	z-index: -100;
 }
 
-#myBtn{
+/*#myBtn{
 	z-index: 1000;
 	margin-left:85%;
 }
+*/
 
 .modal {
 }
@@ -43,4 +44,70 @@ html, body{
   background-color: white;
   border-radius: 15px;
 }
+
+/* slider */
+#slider-range-max{
+	top: 20px;
+	z-index: 1000;
+	width:33%;
+	left: 33%;
+	/*margin-left: 50%*/
+}
+
+.dots{
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 5px;
+    display: block;
+    position: absolute;
+    top: 2px;
+}
+
+.ui-slider-handle{
+    -webkit-border-radius: 50%;
+    color: #ecf0f1  !important;
+    line-height: 40px  !important;
+    top: -15px !important;
+    width: 40px !important;
+    height: 40px !important;
+    background:#16a085 !important;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    margin-left: -20px !important;
+    border: none !important;
+    -webkit-transition:background .25s ease-in;
+   -moz-transition:background .25s ease-in;
+   -o-transition:background .25s ease-in;
+   transition:background .25s ease-in;
+    -webkit-backface-visibility: hidden !important;
+    cursor: pointer!important;
+}
+
+.ui-slider-handle:hover{
+    background:#2fe2bf !important;
+}
+
+.ui-slider-handle:active{
+   background:#16a085 !important;
+}
+
+.ui-slider-handle:focus{
+   outline: none !important;
+}
+
+.ui-slider-range {
+    background:#1abc9c !important;
+    border: none !important;
+    -webkit-border-radius: 10px !important;
+}
+
+.ui-slider{
+    -webkit-border-radius: 10px !important;
+    border: none !important;
+    background:#e8edf2 !important;
+}
+
+
 
