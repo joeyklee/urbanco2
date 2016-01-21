@@ -67,10 +67,10 @@ html, body{
 .ui-slider-handle{
     -webkit-border-radius: 50%;
     color: #ecf0f1  !important;
-    line-height: 40px  !important;
-    top: -15px !important;
-    width: 40px !important;
-    height: 40px !important;
+    line-height: 30px  !important;
+    top: -10px !important;
+    width: 30px !important;
+    height: 30px !important;
     background:#16a085 !important;
     text-decoration: none;
     text-align: center;
