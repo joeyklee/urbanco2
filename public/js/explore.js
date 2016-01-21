@@ -48,32 +48,6 @@ d3.json(studyarea, function(data) {
     }).addTo(map);
 });
 
-// var ourCustomControl = L.Control.extend({
-
-//     options: {
-//         position: 'topleft'
-//             //control position - allowed: 'topleft', 'topright', 'bottomleft', 'bottomright'
-//     },
-
-//     onAdd: function(map) {
-//         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-
-//         container.style.backgroundImage = "url(public/images/glyphicons-83-roundabout.png)";
-//         // container.style["background-size"]= "24px";
-//         container.style.backgroundColor = 'white';
-//         container.style.width = '26px';
-//         container.style.height = '26px';
-
-//         container.onclick = function() {
-//             // console.log('buttonClicked');
-//             $("#myModal").modal();
-//         }
-//         return container;
-//     }
-
-// });
-// map.addControl(new ourCustomControl());
-
 
 $(document).ready(function() {
     // call modal on page load
@@ -153,6 +127,25 @@ $(document).ready(function() {
         // for (var x = 0; x < foo; x++) {
         //     $(".ui-slider").append("<span class='dots' style='left:" + x * mar + "px'></span>");
         // }
+
+        // Get the options for this slider (specified above)
+        // var opt = $("#slider-range-max").slider("option","value");
+        // var opt = $("#slider-range-max").slider("values");
+
+        // Get the number of possible values
+        var vals = 5
+        // console.log(vals)
+
+        // Position the labels
+        for (var i = 0; i < vals; i++) {
+
+            // Create a new element and position it with percentages
+            // var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+            var el = "<span class='dots' style='left:" + i/vals * 100 + "%'></span>";
+            // Add the element inside #slider
+            $(".ui-slider").append(el);
+
+        }
     });
 
 
@@ -167,6 +160,7 @@ $(document).ready(function() {
     }
 
     function showMeetup() {
+    	if (vehicles != null) map.removeLayer(vehicles);
         if (meetingPoint != null) map.removeLayer(meetingPoint);
         // if (trafficCounts != null) map.removeLayer(trafficCounts);
         // tower.closePopup();
@@ -187,6 +181,7 @@ $(document).ready(function() {
 
 
     function showTraverse() {
+    	if (vehicles != null) map.removeLayer(vehicles);
         // meetingPoint.closePopup();
         if (trafficCounts != null) map.removeLayer(trafficCounts);
 
