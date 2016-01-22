@@ -45,15 +45,34 @@ html, body{
   border-radius: 15px;
 }
 
-/* slider */
-#slider-range-max{
-	top: 20px;
-	/*top:90%;*/
-	z-index: 1000;
-	width:33%;
-	left: 33%;
-	/*margin-left: 50%*/
+header {
+    background: #666;
+    color: #fff;
+    height: 20px;
+    position: relative;
+    padding: 10px;
+
+
 }
+
+
+#sliderContainer{
+	/*top:85%;*/ /* why do I have to specify from top?*/
+	z-index: 1000;
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 5px;
+	padding: 20px;
+	padding-left: 25px;
+	padding-right: 25px;
+	position: absolute;
+	bottom: 40px;
+
+
+	/*-webkit-transition: bottom 2s;  Safari
+    transition: bottom 2s;*/
+}
+
+
 
 .dots{
     width: 8px;
@@ -112,12 +131,12 @@ html, body{
 
 
 /* #infoContainer*/
-#infoContainer{
+/*#infoContainer{
 	background-color: rgba(255, 255, 255, 0.85);
 	z-index: 1000;
 	bottom: 20px;
 	position: absolute;
-}
+}*/
 
 .processText{
 	visibility:hidden;
