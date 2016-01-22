@@ -1,17 +1,17 @@
+$(document).ready(function() {
+
+// vars
+var studyArea,
+	tower,
+    meetingPoint,
+    vehicles,
+    trafficCounts,
+    grid;
+
+// Map
 var map = L.map('map', {
-    // fullscreenControl: {
-    //     pseudoFullscreen: false // if true, fullscreen to page width and height
-    // }
     attributionControl: false
 }).setView([49.25, -123.1], 12);
-
-// var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
-// 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-// 	subdomains: 'abcd',
-// 	minZoom: 0,
-// 	maxZoom: 20,
-// 	ext: 'png'
-// }).addTo(map);
 
 var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -26,277 +26,344 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 }).addTo(map);
 L.control.attribution({position:"bottomright"}).addTo(map);
 
-// `fullscreenchange` Event that's fired when entering or exiting fullscreen.
-// map.on('fullscreenchange', function() {
-//     if (map.isFullscreen()) {
-//         console.log('entered fullscreen');
-//     } else {
-//         console.log('exited fullscreen');
-//     }
-// });
+// var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+// 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+// 	subdomains: 'abcd',
+// 	minZoom: 0,
+// 	maxZoom: 20,
+// 	ext: 'png'
+// }).addTo(map);
 
 
-var studyarea = 'public/data/studyarea.geojson';
-d3.json(studyarea, function(data) {
-    function style(feature) {
-        return {
-            weight: 0.5,
-            color: "#FF3300",
-            opacity: 0.5,
-            fillOpacity: 0
-        };
-    };
-
-    L.geoJson(data, {
-        style: style
-    }).addTo(map);
-});
 
 
-$(document).ready(function() {
-    // call modal on page load
-    $("#myModal").modal();
+function toggler(divId) {
+    $("#" + divId).toggle();
+}
 
-    var tower,
-        meetingPoint,
-        vehicles,
-        trafficCounts,
-        grid;
-    // slider
-    $(function() {
-        var a = "0,1,2,3,4,5";
-        var arr = a.split(",");
-        var total = arr.length;
+function infoToggle(divId){
+	$("#infoContainer").css("display", "block")
+	$("#infoBlob").children().css("display", "none");
+	$("#infoBlob").find("." + divId).css("display", "block");
+}
 
-        // if showProcess is selected then call function at first
-        $("#showProcess1").click(function() {
-            var h = 2;
-            var hs = $('#slider-range-max').slider();
-            hs.slider('option', 'value', h);
-            hs.slider('option', 'slide')
-                .call(hs, null, {
-                    handle: $('.ui-slider-handle', hs),
-                    value: h
-                });
-        });
 
-        // if showData is selected then call function at last step
-        $("#showData").click(function() {
-            console.log("just showing the data");
-            var h = 6;
-            var hs = $('#slider-range-max').slider();
-            hs.slider('option', 'value', h);
-            hs.slider('option', 'slide')
-                .call(hs, null, {
-                    handle: $('.ui-slider-handle', hs),
-                    value: h
-                });
-        });
+$("#closeInfo").click(function(){
+	toggler("infoContainer");
+})
 
-        // the slider will call functions sequentially
-        $("#slider-range-max").slider({
-            range: "min",
-            min: 1,
-            max: total,
-            value: 1,
-            slide: function(event, ui) {
-                $(".ui-slider-handle").text(arr[ui.value - 1]);
-                console.log(ui.value);
 
-                if (ui.value == 1) {
-                    $("#myModal").modal();
-                } else if (ui.value == 2) {
-                    showTower();
+// call modal on page load
+$("#myModal").modal();
 
-                } else if (ui.value == 3) {
-                    showMeetup();
 
-                } else if (ui.value == 4) {
-                    showTraverse();
+// slider
+$(function() {
+    var a = "1,2,3,4,5,6";
+    var arr = a.split(",");
+    var total = arr.length;
 
-                } else if (ui.value == 5) {
-                    showTraffic()
-
-                } else if (ui.value == 6) {
-                    showGrid()
-                }
-
-            }
-        });
-        $(".ui-slider-handle").text(arr[$("#slider-range-max").slider("value") - 1]);
-
-        // Get the number of possible values
-        var vals = 5
-        // Position the labels
-        for (var i = 0; i < vals; i++) {
-            // Create a new element and position it with percentages
-            // var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
-            var el = "<span class='dots' style='left:" + i/vals * 100 + "%'></span>";
-            // Add the element inside #slider
-            $(".ui-slider").append(el);
-        }
+    // if showProcess is selected then call function at first
+    $("#showProcess").click(function() {
+        var h = 1;
+        var hs = $('#slider-range-max').slider();
+        hs.slider('option', 'value', h);
+        hs.slider('option', 'slide')
+            .call(hs, null, {
+                handle: $('.ui-slider-handle', hs),
+                value: h
+            });
     });
 
-
-    function showTower() {
-        if (tower != null) map.removeLayer(tower);
-        if (tower != null) map.removeLayer(meetingPoint);
-        if (vehicles != null) map.removeLayer(vehicles);
-        tower = L.circle([49.226493, -123.079078], 100).addTo(map);
-        var text = $('#towerInfo').html();
-        tower.bindPopup(text);
-        // tower.openPopup();
-        map.setView([49.226493, -123.079078], 15);
-    }
-
-    function showMeetup() {
-    	if (vehicles != null) map.removeLayer(vehicles);
-        if (meetingPoint != null) map.removeLayer(meetingPoint);
-        // if (trafficCounts != null) map.removeLayer(trafficCounts);
-        // tower.closePopup();
-        map.setView([49.221352, -123.070012], 15);
-
-        var meetingPoint_bounds = [
-            [49.220406, -123.071846],
-            [49.221735, -123.069197]
-        ];
-        meetingPoint = L.rectangle(meetingPoint_bounds, {
-            color: "#ff7800",
-            weight: 1
-        }).addTo(map);
-        var text = $('#meetupInfo').html();
-        meetingPoint.bindPopup(text);
-        // meetingPoint.openPopup();
-    }
-
-
-    function showTraverse() {
-    	if (vehicles != null) map.removeLayer(vehicles);
-        if (trafficCounts != null) map.removeLayer(trafficCounts);
-        map.setView([49.260538, -123.108692], 12);
-
-        vehicles = L.layerGroup([]).addTo(map);
-        animatePoints('api/points/sid/0108', "red");
-        animatePoints('api/points/sid/1641', "blue");
-        // animatePoints('api/points/sid/0205', "green");
-        // animatePoints('api/points/sid/0150', "orange");
-        // animatePoints('api/points/sid/0151', "purple");
-
-
-        //'/api/points/sid/0108'
-        function animatePoints(sensorreq, linecol) {
-            d3.json(sensorreq, function(data) {
-
-                var animMarkers = L.polyline([], {
-                    color: linecol,
-                    opacity: 0.5,
-                    weight: 1
-                }).addTo(vehicles);
-
-                var i = 0;
-                setInterval(function() {
-                    var item = data[i++];
-                    var coords = item.geometry.coordinates;
-                    animMarkers.addLatLng(
-                        L.latLng(coords[1], coords[0]));
-
-                    if (i >= data.length) i = 0;
-                }, 1);
+    // if showData is selected then call function at last step
+    $("#showData").click(function() {
+        console.log("just showing the data");
+        var h = 6;
+        var hs = $('#slider-range-max').slider();
+        hs.slider('option', 'value', h);
+        hs.slider('option', 'slide')
+            .call(hs, null, {
+                handle: $('.ui-slider-handle', hs),
+                value: h
             });
+    });
+
+    // the slider will call functions sequentially
+    $("#slider-range-max").slider({
+        range: "min",
+        min: 0,
+        max: total,
+        value: 0,
+        slide: function(event, ui) {
+            $(".ui-slider-handle").text(ui.value);
+            if(ui.value == 0){
+            	showModal();
+            }
+            else if (ui.value == 1) {
+            	showStudyArea();
+            } else if (ui.value == 2) {
+                showTower();
+
+            } else if (ui.value == 3) {
+                showMeetup();
+
+            } else if (ui.value == 4) {
+                showTraverse();
+
+            } else if (ui.value == 5) {
+                showTraffic()
+
+            } else if (ui.value == 6) {
+                showGrid()
+            }
+
         }
+    });
+    // set the inital number
+    $(".ui-slider-handle").text($("#slider-range-max").slider("value"));
+
+    // Get the number of possible values
+    var vals = 6
+    // Position the labels
+    for (var i = 0; i < vals; i++) {
+        // Create a new element and position it with percentages
+        // var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
+        var el = "<span class='dots' style='left:" + i/vals * 100 + "%'></span>";
+        $(".ui-slider").append(el);
     }
+});
 
-    function showTraffic() {
-    	if (tower != null) map.removeLayer(tower);
-        if (tower != null) map.removeLayer(meetingPoint);
-        if (vehicles != null) map.removeLayer(vehicles);
-        if (grid != null) map.removeLayer(grid);
+function showModal(){
+	if (studyArea != null) map.removeLayer(studyArea);
+	if (tower != null) map.removeLayer(tower);
+    if (meetingPoint != null) map.removeLayer(meetingPoint);
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
 
-        d3.json("api/traffic", function(data) {
+	$("#myModal").modal();
 
-            var min = d3.min(data, function(d) {
-                return d.properties.h_10_TO_14
-            });
-            var max = d3.max(data, function(d) {
-                return d.properties.h_10_TO_14
-            });
-            var med = d3.median(data, function(d) {
-                return d.properties.h_10_TO_14
-            });
+}
 
-            var color = d3.scale.quantize()
-                .domain([min, max])
-                // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
-                // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
-                .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
-                // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+function showStudyArea(){
+	infoToggle("areaText");
 
-            var linewt = d3.scale.linear()
-                .domain([min, med, max])
-                .range([0.5, 1, 5])
+	if (studyArea != null) map.removeLayer(studyArea);
+	if (tower != null) map.removeLayer(tower);
+    if (meetingPoint != null) map.removeLayer(meetingPoint);
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
 
-            function myStyle(feature) {
-                return {
-                    "color": color(feature.properties['h_10_TO_14']),
-                    "weight": linewt(feature.properties['h_10_TO_14']),
-                    "opacity": 0.65
-                };
+	map.setView([49.25, -123.1], 11);
+	var filepath = 'public/data/studyarea.geojson';
+	d3.json(filepath, function(data) {
+	    function style(feature) {
+	        return {
+	            weight: 1,
+	            color: "#FF3300",
+	            opacity: 0.8,
+	            fillOpacity: 0
+	        };
+	    }
+
+	    function onEachFeature(feature,layer){
+	    	layer.bindPopup("Hello");
+	    }
+
+	    studyArea = L.geoJson(data, {
+	        style: style,
+	        onEachFeature: onEachFeature
+	    }).addTo(map);
+
+
+
+	});
+
+
+}
+
+
+function showTower() {
+    infoToggle("towerText");
+
+	if (tower != null) map.removeLayer(tower);
+    if (meetingPoint != null) map.removeLayer(meetingPoint);
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
+
+    tower = L.circle([49.226493, -123.079078], 100).addTo(map);
+    var text = $('#towerInfo').html();
+    tower.bindPopup("Hi! I'm an urban climate tower!");
+    tower.openPopup();
+    map.setView([49.226493, -123.079078], 15);
+
+
+}
+
+function showMeetup() {
+
+
+    if (meetingPoint != null) map.removeLayer(meetingPoint);
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
+    // if (trafficCounts != null) map.removeLayer(trafficCounts);
+    // tower.closePopup();
+    map.setView([49.221352, -123.070012], 15);
+
+    var meetingPoint_bounds = [
+        [49.220406, -123.071846],
+        [49.221735, -123.069197]
+    ];
+    meetingPoint = L.rectangle(meetingPoint_bounds, {
+        color: "#ff7800",
+        weight: 1
+    }).addTo(map);
+    var text = $('#meetupInfo').html();
+    meetingPoint.bindPopup("It sure is important to calibrate sensors before doing experiments.");
+    meetingPoint.openPopup();
+
+    infoToggle("meetText");
+}
+
+
+function showTraverse() {
+
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
+    map.setView([49.260538, -123.108692], 12);
+
+    vehicles = L.layerGroup([]).addTo(map);
+    animatePoints('api/points/sid/0108', "red");
+    animatePoints('api/points/sid/1641', "blue");
+    // animatePoints('api/points/sid/0205', "green");
+    // animatePoints('api/points/sid/0150', "orange");
+    // animatePoints('api/points/sid/0151', "purple");
+
+    infoToggle("animText");
+    meetingPoint.closePopup();
+    //'/api/points/sid/0108'
+    function animatePoints(sensorreq, linecol) {
+        d3.json(sensorreq, function(data) {
+
+            var animMarkers = L.polyline([], {
+                color: linecol,
+                opacity: 0.5,
+                weight: 2
+            }).addTo(vehicles);
+
+            var i = 0;
+            setInterval(function() {
+                var item = data[i++];
+                var coords = item.geometry.coordinates;
+                animMarkers.addLatLng(
+                    L.latLng(coords[1], coords[0]));
+
+                if (i >= data.length) i = 0;
+            }, 1);
+        });
+    }
+}
+
+function showTraffic() {
+	if (tower != null) map.removeLayer(tower);
+    if (meetingPoint != null) map.removeLayer(meetingPoint);
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
+    infoToggle("trafficText");
+
+    d3.json("api/traffic", function(data) {
+
+        var min = d3.min(data, function(d) {
+            return d.properties.h_10_TO_14
+        });
+        var max = d3.max(data, function(d) {
+            return d.properties.h_10_TO_14
+        });
+        var med = d3.median(data, function(d) {
+            return d.properties.h_10_TO_14
+        });
+
+        var color = d3.scale.quantize()
+            .domain([min, max])
+            // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+            // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
+            .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
+            // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+
+        var linewt = d3.scale.linear()
+            .domain([min, med, max])
+            .range([0.5, 1, 5])
+
+        function myStyle(feature) {
+            return {
+                "color": color(feature.properties['h_10_TO_14']),
+                "weight": linewt(feature.properties['h_10_TO_14']),
+                "opacity": 0.65
             };
+        };
 
-            trafficCounts = L.geoJson(null, {
-                style: myStyle
-            }).addTo(map);
+        trafficCounts = L.geoJson(null, {
+            style: myStyle
+        }).addTo(map);
 
-            data.forEach(function(item) {
-                    trafficCounts.addData(item);
-                });
-        })
-    }
-
-
-    function showGrid() {
-    	if (tower != null) map.removeLayer(tower);
-        if (tower != null) map.removeLayer(meetingPoint);
-        if (vehicles != null) map.removeLayer(vehicles);
-        if (trafficCounts != null) map.removeLayer(trafficCounts);
-
-        d3.json("api/grid", function(data) {
-            var min = d3.min(data, function(d) {
-                return d.properties.co2_avg_e
+        data.forEach(function(item) {
+                trafficCounts.addData(item);
             });
-            var max = d3.max(data, function(d) {
-                return d.properties.co2_avg_e
-            });
-            var med = d3.median(data, function(d) {
-                return d.properties.co2_avg_e
-            });
+    })
+}
 
-            var color = d3.scale.quantize()
-                .domain([min, max])
-                // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
-                // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
-                .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
-                // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
-            function myStyle(feature) {
-                // console.log(color(feature.properties['h_10_TO_14']));
-                return {
-                    "fillColor": color(feature.properties['co2_avg_e']),
-                    "weight": 0,
-                    "fillOpacity": 0.85
-                };
+function showGrid() {
+	if (tower != null) map.removeLayer(tower);
+    if (meetingPoint != null) map.removeLayer(meetingPoint);
+    if (vehicles != null) map.removeLayer(vehicles);
+    if (grid != null) map.removeLayer(grid);
+    if (trafficCounts != null) map.removeLayer(trafficCounts);
+
+    infoToggle("gridText");
+
+    d3.json("api/grid", function(data) {
+        var min = d3.min(data, function(d) {
+            return d.properties.co2_avg_e
+        });
+        var max = d3.max(data, function(d) {
+            return d.properties.co2_avg_e
+        });
+        var med = d3.median(data, function(d) {
+            return d.properties.co2_avg_e
+        });
+
+        var color = d3.scale.quantize()
+            .domain([min, max])
+            // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
+            // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
+            .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
+            // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
+
+        function myStyle(feature) {
+            // console.log(color(feature.properties['h_10_TO_14']));
+            return {
+                "fillColor": color(feature.properties['co2_avg_e']),
+                "weight": 0,
+                "fillOpacity": 0.85
             };
+        };
 
-            grid = L.geoJson(null, {
-                style: myStyle
-            }).addTo(map);
+        grid = L.geoJson(null, {
+            style: myStyle
+        }).addTo(map);
 
-            data.forEach(function(item) {
-                    // console.log(item);
-                    grid.addData(item);
-                })
-        })
-    }
+        data.forEach(function(item) {
+                // console.log(item);
+                grid.addData(item);
+            })
+    })
+}
 
 
 
