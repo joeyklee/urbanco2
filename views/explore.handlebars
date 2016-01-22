@@ -10,9 +10,11 @@
 	<h1 class="text-center">Exploring Future Possibilities</h1>
 </div> --}}
 
-<div id="map"></div>
+<div id="map">
+	<div id="slider-range-max"></div>
+</div>
 
-<div id="slider-range-max"></div>
+
 
 <!-- Trigger the modal-->
 {{!-- <button type="button" class="btn btn-info btn-lg" id="myBtn">Start Options</button> --}}
@@ -49,7 +51,15 @@
      </div>
  </div>
 
-<div id="towerInfo" class="hidden">
+ <div  visibility="visible" >
+ 	<div id="infoContainer" class="col-md-6 col-xs-12">
+ 		<h3 id="processTitle" class="processText">Here's a title</h3>
+	 	<p id="towerText" class="processText"><a href='http://ibis.geog.ubc.ca/~achristn/data/sunset.html' target='blank'>The 30m height tower</a> is gathering data about the CO<sub>2</sub> concentrations above the urban canopy layer.</p>
+ 	</div>
+
+ </div>
+
+{{!-- <div id="towerInfo" class="hidden">
 	 <h4>1. Sunset Urban Climate Tower</h4>
 	<p><a href='http://ibis.geog.ubc.ca/~achristn/data/sunset.html' target='blank'>The 30m height tower</a> is gathering data about the CO<sub>2</sub> concentrations above the urban canopy layer.</p>
 	<br>
@@ -78,7 +88,7 @@
 	 <h4>5. Gridded Emissions</h4>
 	 <p>The data is gridded into 100m x 100m grid cells in order to capture the areal averages.</p>
 	 <br><button id='gridNext' class='btn btn-default'> Next </button>
-</div>
+</div> --}}
 
 
 
