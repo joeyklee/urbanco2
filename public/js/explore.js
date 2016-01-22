@@ -2,6 +2,7 @@ var map = L.map('map', {
     // fullscreenControl: {
     //     pseudoFullscreen: false // if true, fullscreen to page width and height
     // }
+    attributionControl: false
 }).setView([49.25, -123.1], 12);
 
 // var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
@@ -12,15 +13,18 @@ var map = L.map('map', {
 // 	ext: 'png'
 // }).addTo(map);
 
-
+var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="http://mapbox.com">Mapbox</a>';
 var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
         'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    id: 'mapbox.run-bike-hike'
+    id: 'mapbox.run-bike-hike',
+    opacity: 0.35
 }).addTo(map);
-
+L.control.attribution({position:"bottomright"}).addTo(map);
 
 // `fullscreenchange` Event that's fired when entering or exiting fullscreen.
 // map.on('fullscreenchange', function() {
@@ -36,7 +40,7 @@ var studyarea = 'public/data/studyarea.geojson';
 d3.json(studyarea, function(data) {
     function style(feature) {
         return {
-            weight: 4,
+            weight: 0.5,
             color: "#FF3300",
             opacity: 0.5,
             fillOpacity: 0
@@ -121,30 +125,15 @@ $(document).ready(function() {
         });
         $(".ui-slider-handle").text(arr[$("#slider-range-max").slider("value") - 1]);
 
-        // add slider dots
-        // var foo = total;
-        // var mar = $(".ui-slider").width() / foo;
-        // for (var x = 0; x < foo; x++) {
-        //     $(".ui-slider").append("<span class='dots' style='left:" + x * mar + "px'></span>");
-        // }
-
-        // Get the options for this slider (specified above)
-        // var opt = $("#slider-range-max").slider("option","value");
-        // var opt = $("#slider-range-max").slider("values");
-
         // Get the number of possible values
         var vals = 5
-        // console.log(vals)
-
         // Position the labels
         for (var i = 0; i < vals; i++) {
-
             // Create a new element and position it with percentages
             // var el = $('<label>' + (i + opt.min) + '</label>').css('left', (i/vals*100) + '%');
             var el = "<span class='dots' style='left:" + i/vals * 100 + "%'></span>";
             // Add the element inside #slider
             $(".ui-slider").append(el);
-
         }
     });
 
@@ -182,11 +171,8 @@ $(document).ready(function() {
 
 
     function showTraverse() {
-
     	if (vehicles != null) map.removeLayer(vehicles);
-        // meetingPoint.closePopup();
         if (trafficCounts != null) map.removeLayer(trafficCounts);
-
         map.setView([49.260538, -123.108692], 12);
 
         vehicles = L.layerGroup([]).addTo(map);
@@ -238,9 +224,6 @@ $(document).ready(function() {
                 return d.properties.h_10_TO_14
             });
 
-            // var color = d3.scale.linear()
-            //     .domain([min, med, max])
-            //     .range(["white", "orange", "red"]);
             var color = d3.scale.quantize()
                 .domain([min, max])
                 // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
@@ -253,7 +236,6 @@ $(document).ready(function() {
                 .range([0.5, 1, 5])
 
             function myStyle(feature) {
-                // console.log(color(feature.properties['h_10_TO_14']));
                 return {
                     "color": color(feature.properties['h_10_TO_14']),
                     "weight": linewt(feature.properties['h_10_TO_14']),
@@ -289,17 +271,12 @@ $(document).ready(function() {
                 return d.properties.co2_avg_e
             });
 
-            // var color = d3.scale.linear()
-            //     .domain([min, max])
-            //     .range(["orange", "red"]);
-
             var color = d3.scale.quantize()
                 .domain([min, max])
                 // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
                 // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
                 .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
                 // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
-
 
             function myStyle(feature) {
                 // console.log(color(feature.properties['h_10_TO_14']));
