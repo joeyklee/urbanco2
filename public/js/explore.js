@@ -152,6 +152,7 @@ $(document).ready(function() {
     function showTower() {
         if (tower != null) map.removeLayer(tower);
         if (tower != null) map.removeLayer(meetingPoint);
+        if (vehicles != null) map.removeLayer(vehicles);
         tower = L.circle([49.226493, -123.079078], 100).addTo(map);
         var text = $('#towerInfo').html();
         tower.bindPopup(text);
