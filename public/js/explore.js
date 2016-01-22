@@ -203,8 +203,7 @@ function showTower() {
 }
 
 function showMeetup() {
-
-
+	if (tower != null) tower.closePopup();
     if (meetingPoint != null) map.removeLayer(meetingPoint);
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
@@ -230,7 +229,7 @@ function showMeetup() {
 
 
 function showTraverse() {
-
+	if(meetingPoint != null) meetingPoint.closePopup();
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
     if (trafficCounts != null) map.removeLayer(trafficCounts);
@@ -244,10 +243,14 @@ function showTraverse() {
     // animatePoints('api/points/sid/0151', "purple");
 
     infoToggle("animText");
-    meetingPoint.closePopup();
+
+    // $(".time").empty()
+    // $(".animText").append("<h4 class='time'>Time:</h4><p class='time'></p>")
     //'/api/points/sid/0108'
     function animatePoints(sensorreq, linecol) {
         d3.json(sensorreq, function(data) {
+
+
 
             var animMarkers = L.polyline([], {
                 color: linecol,
@@ -259,6 +262,9 @@ function showTraverse() {
             setInterval(function() {
                 var item = data[i++];
                 var coords = item.geometry.coordinates;
+                // var timestamp = item.properties.datetime;
+                // $(".animText").find(".time").text(timestamp);
+
                 animMarkers.addLatLng(
                     L.latLng(coords[1], coords[0]));
 
@@ -319,8 +325,7 @@ function showTraffic() {
 
 
 function showGrid() {
-	if (tower != null) map.removeLayer(tower);
-    if (meetingPoint != null) map.removeLayer(meetingPoint);
+
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
     if (trafficCounts != null) map.removeLayer(trafficCounts);
