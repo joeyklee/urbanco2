@@ -1,3 +1,15 @@
 node_modules/
 private/*
 public/data/world-countries-50m.json
+
+data/all_20150528.geojson
+
+data/gridded-emissions-100m.geojson
+
+public/images/city-scales.svg
+
+public/images/emissions-map.pdf
+
+public/images/glyphicons-83-roundabout.png
+
+public/images/resistance-approach copy.svg

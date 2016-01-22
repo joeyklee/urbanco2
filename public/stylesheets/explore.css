@@ -131,13 +131,42 @@ header {
 
 
 /* #infoContainer*/
-/*#infoContainer{
+#infoContainer{
 	background-color: rgba(255, 255, 255, 0.85);
 	z-index: 1000;
-	bottom: 20px;
-	position: absolute;
-}*/
-
-.processText{
-	visibility:hidden;
+	border-radius: 15px;
+	margin-right: 10px;
+	margin-top:10px;
+	display:none;
 }
+
+
+
+.closeButton{
+	padding: 5px;
+	margin-top: 10px;
+	margin-right:10px;
+	background-color: white;
+}
+
+.towerText{
+	display: none;
+}
+
+.meetText{
+	display: none;
+}
+
+.animText{
+	display: none;
+}
+.trafficText{
+	display: none;
+}
+.gridText{
+	display: none;
+}
+.areaText{
+	display: none;
+}
+
