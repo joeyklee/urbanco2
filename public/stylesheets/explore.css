@@ -48,6 +48,7 @@ html, body{
 /* slider */
 #slider-range-max{
 	top: 20px;
+	/*top:90%;*/
 	z-index: 1000;
 	width:33%;
 	left: 33%;
@@ -55,22 +56,22 @@ html, body{
 }
 
 .dots{
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     background: black;
     border-radius: 5px;
     display: block;
     position: absolute;
-    top: 2px;
+    top: 1px;
 }
 
 .ui-slider-handle{
     -webkit-border-radius: 50%;
     color: #ecf0f1  !important;
-    line-height: 30px  !important;
-    top: -10px !important;
-    width: 30px !important;
-    height: 30px !important;
+    line-height: 40px  !important;
+    top: -15px !important;
+    width: 40px !important;
+    height: 40px !important;
     background:#16a085 !important;
     text-decoration: none;
     text-align: center;
@@ -110,4 +111,14 @@ html, body{
 }
 
 
+/* #infoContainer*/
+#infoContainer{
+	background-color: rgba(255, 255, 255, 0.85);
+	z-index: 1000;
+	bottom: 20px;
+	position: absolute;
+}
 
+.processText{
+	visibility:hidden;
+}
