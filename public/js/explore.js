@@ -36,7 +36,7 @@ L.control.attribution({position:"bottomright"}).addTo(map);
 
 
 $("#sliderContainer").animate({
-	bottom: "30px",
+	top: "60px",
 	opacity: "1"
 }, 1000, "linear");
 

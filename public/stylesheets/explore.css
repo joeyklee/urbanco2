@@ -65,9 +65,10 @@ header {
 	padding-left: 25px;
 	padding-right: 25px;
 	position: absolute;
-	bottom: 0px;
+	top: 0px;
+	right:0;
 	opacity:0;
-
+	margin-right: 10px;
 
 	/*-webkit-transition: bottom 2s;  Safari
     transition: bottom 2s;*/
@@ -130,16 +131,14 @@ header {
 }
 
 
-/* #infoContainer*/
+/* #infoContainer -- top */
 #infoContainer{
 	background-color: rgba(255, 255, 255, 0.85);
 	z-index: 1000;
 	border-radius: 15px;
 	margin-right: 10px;
-	margin-top:10px;
+	margin-top:70px;
 	display:none;
-	/*max-height: 200px;*/
-	/*overflow-y: scroll;*/
 }
 
 
