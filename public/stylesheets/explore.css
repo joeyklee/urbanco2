@@ -65,7 +65,7 @@ header {
 	padding-left: 25px;
 	padding-right: 25px;
 	position: absolute;
-	top: 0px;
+	bottom: 0px;
 	right:0;
 	opacity:0;
 	margin-right: 10px;
@@ -137,7 +137,7 @@ header {
 	z-index: 1000;
 	border-radius: 15px;
 	margin-right: 10px;
-	margin-top:70px;
+	margin-top:10px;
 	display:none;
 }
 
