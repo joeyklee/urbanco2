@@ -58,7 +58,7 @@ $("#closeInfo").click(function(){
 
 
 // call modal on page load
-$("#myModal").modal();
+// $("#myModal").modal();
 
 
 // slider
@@ -326,7 +326,12 @@ function showTraffic() {
         data.forEach(function(item) {
                 trafficCounts.addData(item);
             });
-    })
+
+
+       });
+
+
+
 }
 
 
