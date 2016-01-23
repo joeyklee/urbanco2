@@ -171,3 +171,16 @@ header {
 	display: none;
 }
 
+#legendContainer{
+	z-index: 1000;
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 5px;
+	padding: 20px;
+	padding-left: 25px;
+	padding-right: 25px;
+	position: absolute;
+	bottom: 90px;
+	right:0;
+	opacity:1;
+	margin-right: 10px;
+}
