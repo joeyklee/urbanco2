@@ -65,7 +65,8 @@ header {
 	padding-left: 25px;
 	padding-right: 25px;
 	position: absolute;
-	bottom: 40px;
+	bottom: 0px;
+	opacity:0;
 
 
 	/*-webkit-transition: bottom 2s;  Safari
@@ -137,6 +138,8 @@ header {
 	margin-right: 10px;
 	margin-top:10px;
 	display:none;
+	/*max-height: 200px;*/
+	/*overflow-y: scroll;*/
 }
 
 
