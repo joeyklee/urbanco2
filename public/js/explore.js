@@ -100,7 +100,7 @@ $(function() {
             	showModal();
             }
             else if (ui.value == 1) {
-            	showStudyArea();
+            	panStudyArea();
             } else if (ui.value == 2) {
                 showTower();
 
@@ -145,48 +145,43 @@ function showModal(){
 
 }
 
-function showStudyArea(){
+(function showStudyArea(){
+		if (studyArea != null) map.removeLayer(studyArea);
+		if (tower != null) map.removeLayer(tower);
+	    if (meetingPoint != null) map.removeLayer(meetingPoint);
+	    if (vehicles != null) map.removeLayer(vehicles);
+	    if (grid != null) map.removeLayer(grid);
+	    if (trafficCounts != null) map.removeLayer(trafficCounts);
+
+
+		var filepath = 'public/data/studyarea.geojson';
+		d3.json(filepath, function(data) {
+			console.log(data);
+		    var  style = {
+		            weight: 1,
+		            color: "#FF3300",
+		            opacity: 0.8,
+		            fillOpacity: 0
+		        }
+
+		    studyArea = L.polygon([], style).addTo(map);
+
+		    data.features[0].geometry.coordinates[0].forEach(function(d){
+		    	studyArea.addLatLng([d[1], d[0]])
+		    });
+		    studyArea.bindPopup("Hello, I'm the study area. This is where the magic happens.");
+		});
+	})();
+
+function panStudyArea(){
 	infoToggle("areaText");
-
-	if (studyArea != null) map.removeLayer(studyArea);
-	if (tower != null) map.removeLayer(tower);
-    if (meetingPoint != null) map.removeLayer(meetingPoint);
-    if (vehicles != null) map.removeLayer(vehicles);
-    if (grid != null) map.removeLayer(grid);
-    if (trafficCounts != null) map.removeLayer(trafficCounts);
-
 	map.setView([49.25, -123.1], 11);
-	var filepath = 'public/data/studyarea.geojson';
-	d3.json(filepath, function(data) {
-	    function style(feature) {
-	        return {
-	            weight: 1,
-	            color: "#FF3300",
-	            opacity: 0.8,
-	            fillOpacity: 0
-	        };
-	    }
-
-	    function onEachFeature(feature,layer){
-	    	layer.bindPopup("Hello");
-	    }
-
-	    studyArea = L.geoJson(data, {
-	        style: style,
-	        onEachFeature: onEachFeature
-	    }).addTo(map);
-
-
-
-	});
-
-
+	studyArea.openPopup();
 }
-
 
 function showTower() {
     infoToggle("towerText");
-
+    studyArea.closePopup();
 	if (tower != null) map.removeLayer(tower);
     if (meetingPoint != null) map.removeLayer(meetingPoint);
     if (vehicles != null) map.removeLayer(vehicles);
