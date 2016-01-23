@@ -66,8 +66,9 @@ header {
 	padding-right: 25px;
 	position: absolute;
 	bottom: 0px;
+	right:0;
 	opacity:0;
-
+	margin-right: 10px;
 
 	/*-webkit-transition: bottom 2s;  Safari
     transition: bottom 2s;*/
@@ -130,7 +131,7 @@ header {
 }
 
 
-/* #infoContainer*/
+/* #infoContainer -- top */
 #infoContainer{
 	background-color: rgba(255, 255, 255, 0.85);
 	z-index: 1000;
@@ -138,8 +139,6 @@ header {
 	margin-right: 10px;
 	margin-top:10px;
 	display:none;
-	/*max-height: 200px;*/
-	/*overflow-y: scroll;*/
 }
 
 
@@ -172,3 +171,16 @@ header {
 	display: none;
 }
 
+#legendContainer{
+	z-index: 1000;
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 5px;
+	padding: 20px;
+	padding-left: 25px;
+	padding-right: 25px;
+	position: absolute;
+	bottom: 90px;
+	right:0;
+	opacity:1;
+	margin-right: 10px;
+}

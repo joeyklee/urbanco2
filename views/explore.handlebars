@@ -5,6 +5,65 @@
 {{!-- map --}}
 <div id="map"></div>
 {{!-- map elements --}}
+
+<div id="legendContainer" class="col-md-3 col-xs-10 ">
+    <h5>Legend</h5>
+    <p>...</p>
+</div>
+
+<div id="sliderContainer" class="col-md-3 col-xs-10">
+    <div id="slider-range-max"></div>
+</div>
+
+
+
+{{!-- 		<div class="pull-right">
+
+			<button id="closeInfo" class="btn closeButton pull-right"><a class="glyphicon glyphicon-info-sign"></a> </button>
+		</div> --}}
+
+<div class="col-md-3 col-xs-10 pull-right">
+
+	<div id="infoContainer"  class="row">
+		<div id= "infoBlob" class="col-md-12">
+			<div class="helpText">
+				<h3>Help</h3>
+				<ul>
+					<li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
+					<li>Toggle the data layers to explore the different aspects of the data.</li>
+				</ul>
+			</div>
+			<div class="areaText">
+				<h3>Study Area</h3>
+				<p>The study defined here is roughly 13 km<sup>2</sup>. We designed our sampling campaign to measure within these bounds in order to: <br>1. Maintain our sampling density - to ensure we cover nearly all the navigable roads in a 3.5 hour time window. <br> 2. Utilize external datasets - to cross-validate our calculated emissions with existing CO<sub>2</sub> emissions inventories that were provided for this study area.
+
+				</p>
+
+			</div>
+			<div class="towerText">
+				<h3>Urban Climate Tower</h3>
+				<p><a href='http://ibis.geog.ubc.ca/~achristn/data/sunset.html' target='blank'>The 30m height tower</a> is gathering data about the CO<sub>2</sub> concentrations above the <a href="">urban canopy layer</a>. We assume that the CO<sub>2</sub> mixing ratios measured here are <a href="">representative</a> of a well-mixed atmosphere.</p>
+			</div>
+
+			<div class="meetText">
+				<h3>Sensor Calibration</h3>
+				<p >Five volunteers meet at a calm low-traffic area, install the CO<sub>2</sub> sensors, and calibrate them before driving throughout the city. This is necessary to adjust for any possible sensor drift that occurs during the experiment.</p>
+			</div>
+			<div class="animText">
+				<h3>Data Collection</h3>
+				<p>After the calibration period, the vehicles begin driving on pre-defined routes throughout the city to ensure extensive and representative spatial sampling. Our goal was to simulate the coverage in possible future scenarios if sensors are ubiqitously distributed.</p>
+			</div>
+			<div class="trafficText">
+				<h3>Traffic Counts</h3>
+				<p >The traffic counts for the transect are modelled based on data provided by the city of Vancouver. The traffic data is later used to cross-validate the emissions calculations. It is clear to see that the main arterial roads are heavily used. </p>
+			</div>
+			<div class="gridText">
+				<h3> Data Output</h3>
+				<p >In a 3.5 hour measurement period, over 40,000 data points are collected. These data are then aggregated to a 100 m × 100 m grid cells to account for the horizontal transport of CO<sub>2</sub> in an area. Explore this gridded data to learn more about the data available in the study area.</p>
+			</div>
+		</div>
+</div>
+{{!--
 <div id="sliderContainer" class="col-md-4 col-md-offset-4 col-xs-8 col-xs-offset-2">
     <div id="slider-range-max"></div>
 </div>
@@ -54,6 +113,7 @@
 			</div>
 		</div>
 </div>
+ --}}
 
 
 
