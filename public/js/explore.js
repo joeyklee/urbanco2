@@ -35,6 +35,10 @@ L.control.attribution({position:"bottomright"}).addTo(map);
 // }).addTo(map);
 
 
+$("#sliderContainer").animate({
+	bottom: "30px",
+	opacity: "1"
+}, 1000, "linear");
 
 
 function toggler(divId) {
@@ -134,7 +138,7 @@ $(function() {
 });
 
 function showModal(){
-	if (studyArea != null) map.removeLayer(studyArea);
+	if (studyArea != null) studyArea.closePopup();
 	if (tower != null) map.removeLayer(tower);
     if (meetingPoint != null) map.removeLayer(meetingPoint);
     if (vehicles != null) map.removeLayer(vehicles);
@@ -181,7 +185,7 @@ function panStudyArea(){
 
 function showTower() {
     infoToggle("towerText");
-    studyArea.closePopup();
+    if(studyArea !=null) studyArea.closePopup();
 	if (tower != null) map.removeLayer(tower);
     if (meetingPoint != null) map.removeLayer(meetingPoint);
     if (vehicles != null) map.removeLayer(vehicles);
@@ -270,6 +274,7 @@ function showTraverse() {
 }
 
 function showTraffic() {
+	studyArea.off('click');
 	if (tower != null) map.removeLayer(tower);
     if (meetingPoint != null) map.removeLayer(meetingPoint);
     if (vehicles != null) map.removeLayer(vehicles);
@@ -278,7 +283,7 @@ function showTraffic() {
     infoToggle("trafficText");
 
     d3.json("api/traffic", function(data) {
-
+    	console.log(data)
         var min = d3.min(data, function(d) {
             return d.properties.h_10_TO_14
         });
@@ -298,7 +303,7 @@ function showTraffic() {
 
         var linewt = d3.scale.linear()
             .domain([min, med, max])
-            .range([0.5, 1, 5])
+            .range([0, 2, 7])
 
         function myStyle(feature) {
             return {
@@ -306,10 +311,16 @@ function showTraffic() {
                 "weight": linewt(feature.properties['h_10_TO_14']),
                 "opacity": 0.65
             };
-        };
+        }
+
+        function onEachFeature(feature, layer){
+        	layer.bindPopup("Traffic Counts 10 AM - 2:00 PM: <br>" + feature.properties.h_10_TO_14 );
+        }
+
 
         trafficCounts = L.geoJson(null, {
-            style: myStyle
+            style: myStyle,
+            onEachFeature: onEachFeature
         }).addTo(map);
 
         data.forEach(function(item) {
@@ -320,7 +331,7 @@ function showTraffic() {
 
 
 function showGrid() {
-
+	studyArea.off('click');
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
     if (trafficCounts != null) map.removeLayer(trafficCounts);
@@ -345,6 +356,11 @@ function showGrid() {
             .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
             // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
+        function onEachFeature(feature, layer){
+        	layer.bindPopup("Avg CO<sub>2</sub> Mixing Ratio (ppm): <br>" + feature.properties.co2_avg + "<br>" +
+        		"Avg Emissions kgCO<sub>2</sub>hr<sup>-1</sup>: <br>" + feature.properties.co2_avg_e)
+        }
+
         function myStyle(feature) {
             // console.log(color(feature.properties['h_10_TO_14']));
             return {
@@ -355,7 +371,8 @@ function showGrid() {
         };
 
         grid = L.geoJson(null, {
-            style: myStyle
+            style: myStyle,
+            onEachFeature: onEachFeature
         }).addTo(map);
 
         data.forEach(function(item) {
