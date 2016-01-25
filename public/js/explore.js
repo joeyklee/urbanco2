@@ -330,6 +330,7 @@ function showTraffic() {
             });
 
 
+
         	if($("#tl")) d3.select("#tl").remove()
        		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "110px");
        		svg.append("g")
@@ -342,13 +343,14 @@ function showTraffic() {
        		  .shapeWidth(10)
        		  .shapeHeight(10)
        		  .scale(color)
-       		  // .labelDelimiter("-")
        	  	.labelOffset(10)
        	  	// .shapeHeight(10)
        	  	.orient('vertical');
 
        		svg.select(".legendQuant")
        		  .call(legend);
+
+       		$("#tlegendTitle").css("visibility", "visible");
 
 
        });
@@ -409,6 +411,7 @@ function showGrid() {
             })
 
 
+
         if($("#gl")) d3.select("#gl").remove()
     	var svg = d3.select("#gridLegend").append("svg").attr("id","gl").attr("width", "100%").attr("height", "110px");
     	svg.append("g")
@@ -417,41 +420,21 @@ function showGrid() {
 
     	var legend = d3.legend.color()
     	  .labelFormat(d3.format(".0f"))
-    	  // .useClass(true)
     	  .shapeWidth(10)
     	  .shapeHeight(10)
     	  .scale(color)
-    	  // .labelDelimiter("-")
       	.labelOffset(10)
-      	// .shapeHeight(10)
       	.orient('vertical');
 
     	svg.select(".legendQuant")
     	  .call(legend);
 
+    	$("#glegendTitle").css("visibility", "visible");
+
+
     })
 }
 
-
-
-    // $("#showProcess1").click(function() {
-    //     processFunctions[0]();
-    // });
-
-    // $(document).on('click', '#towerNext', function() {
-    //     processFunctions[1]();
-    // });
-
-    // $(document).on('click', '#meetingNext', function() {
-    //     processFunctions[2]();
-    // });
-
-    // $(document).on('click', '#animNext', function() {
-    //     processFunctions[3]();
-    // });
-    // $(document).on('click', '#trafficNext', function() {
-    //     processFunctions[4]();
-    // });
 
 });
 
