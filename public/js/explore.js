@@ -11,7 +11,7 @@ var studyArea,
 // Map
 var map = L.map('map', {
     attributionControl: false,
-    zoomControl:false
+    zoomControl:true
 }).setView([49.25, -123.1], 12);
 
 var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -60,7 +60,7 @@ $("#closeInfo").click(function(){
 
 
 // call modal on page load
-// $("#myModal").modal();
+$("#myModal").modal();
 
 
 // slider
