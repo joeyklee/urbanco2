@@ -193,6 +193,7 @@ header {
 	margin-top: 10px;
 	margin-right:10px;
 	background-color: white;
+	z-index: 2000;
 }
 
 .towerText{
@@ -219,6 +220,9 @@ header {
 .helpText{
 	display: none;
 	background-color: rgba(255, 255, 255, 0.85);
+	margin-right: 10px;
+	margin-top:10px;
+	z-index: 1000;
 }
 
 #legendContainer{
@@ -228,4 +232,19 @@ header {
 	max-height:100px;
 }
 
+
+#glegendTitle{
+	visibility: hidden;
+	z-index: 2000;
+}
+#tlegendTitle{
+	visibility: hidden;
+	z-index: 2000;
+}
+/*#gridLegend{
+	display: none;
+}
+#trafficLegend{
+	display: none;
+}*/
 
