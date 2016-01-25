@@ -10,7 +10,8 @@ var studyArea,
 
 // Map
 var map = L.map('map', {
-    attributionControl: false
+    attributionControl: false,
+    zoomControl:true
 }).setView([49.25, -123.1], 12);
 
 var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -24,7 +25,7 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
     id: 'mapbox.run-bike-hike',
     opacity: 0.35
 }).addTo(map);
-L.control.attribution({position:"bottomright"}).addTo(map);
+// L.control.attribution({position:"bottomright"}).addTo(map);
 
 // var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
 // 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -35,10 +36,10 @@ L.control.attribution({position:"bottomright"}).addTo(map);
 // }).addTo(map);
 
 
-$("#sliderContainer").animate({
-	bottom: "30px",
-	opacity: "1"
-}, 1000, "linear");
+// $("#sliderContainer").animate({
+// 	bottom: "30px",
+// 	opacity: "1"
+// }, 1000, "linear");
 
 
 function toggler(divId) {
@@ -49,11 +50,12 @@ function infoToggle(divId){
 	$("#infoContainer").css("display", "block")
 	$("#infoBlob").children().css("display", "none");
 	$("#infoBlob").find("." + divId).css("display", "block");
+	$("#legendContainer").css("display", "block");
 }
 
 
 $("#closeInfo").click(function(){
-	toggler("infoContainer");
+	$("." + "helpText").toggle();
 })
 
 
@@ -298,7 +300,7 @@ function showTraffic() {
             .domain([min, max])
             // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
             // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
-            .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
+            .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
             // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
         var linewt = d3.scale.linear()
@@ -326,7 +328,35 @@ function showTraffic() {
         data.forEach(function(item) {
                 trafficCounts.addData(item);
             });
-    })
+
+
+
+        	if($("#tl")) d3.select("#tl").remove()
+       		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "110px");
+       		svg.append("g")
+       		  .attr("class", "legendQuant")
+       		  .attr("transform", "translate(0,0)");
+
+       		var legend = d3.legend.color()
+       		  .labelFormat(d3.format(".0f"))
+       		  // .useClass(true)
+       		  .shapeWidth(10)
+       		  .shapeHeight(10)
+       		  .scale(color)
+       	  	.labelOffset(10)
+       	  	// .shapeHeight(10)
+       	  	.orient('vertical');
+
+       		svg.select(".legendQuant")
+       		  .call(legend);
+
+       		$("#tlegendTitle").css("visibility", "visible");
+
+
+       });
+
+
+
 }
 
 
@@ -379,29 +409,32 @@ function showGrid() {
                 // console.log(item);
                 grid.addData(item);
             })
+
+
+
+        if($("#gl")) d3.select("#gl").remove()
+    	var svg = d3.select("#gridLegend").append("svg").attr("id","gl").attr("width", "100%").attr("height", "110px");
+    	svg.append("g")
+    	  .attr("class", "legendQuant")
+    	  .attr("transform", "translate(0,0)");
+
+    	var legend = d3.legend.color()
+    	  .labelFormat(d3.format(".0f"))
+    	  .shapeWidth(10)
+    	  .shapeHeight(10)
+    	  .scale(color)
+      	.labelOffset(10)
+      	.orient('vertical');
+
+    	svg.select(".legendQuant")
+    	  .call(legend);
+
+    	$("#glegendTitle").css("visibility", "visible");
+
+
     })
 }
 
-
-
-    // $("#showProcess1").click(function() {
-    //     processFunctions[0]();
-    // });
-
-    // $(document).on('click', '#towerNext', function() {
-    //     processFunctions[1]();
-    // });
-
-    // $(document).on('click', '#meetingNext', function() {
-    //     processFunctions[2]();
-    // });
-
-    // $(document).on('click', '#animNext', function() {
-    //     processFunctions[3]();
-    // });
-    // $(document).on('click', '#trafficNext', function() {
-    //     processFunctions[4]();
-    // });
 
 });
 

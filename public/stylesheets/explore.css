@@ -14,6 +14,39 @@ html, body{
 	z-index: -100;
 }
 
+/* zoomers*/
+.leaflet-top, .leaflet-left{
+	transform: rotate(90deg);
+	margin-left: 25px;
+	margin-top: -10px;
+}
+
+.leaflet-bar {
+    box-shadow: 0 0px 0px rgba(0,0,0,0.65);
+    border-radius: 0px;
+}
+
+.leaflet-bar a:last-child {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-bottom: none;
+    transform: rotate(90deg);
+     width:30px;
+    height: 30px;
+
+}
+.leaflet-bar a:first-child {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+        border-bottom: none;
+    transform: rotate(90deg);
+    width:30px;
+    height: 30px;
+
+}
+
+
+
 /*#myBtn{
 	z-index: 1000;
 	margin-left:85%;
@@ -59,18 +92,20 @@ header {
 #sliderContainer{
 	/*top:85%;*/ /* why do I have to specify from top?*/
 	z-index: 1000;
-	background-color: rgba(255, 255, 255, 0.85);
+	/*background-color: rgba(255, 255, 255, 0.85);*/
 	border-radius: 5px;
 	padding: 20px;
 	padding-left: 25px;
 	padding-right: 25px;
-	position: absolute;
-	bottom: 0px;
-	opacity:0;
+	/*position: absolute;*/
+	/*bottom: 0px;*/
+	/*right:0;*/
+	opacity:1;
+	/*margin-right: 10px;*/
+}
 
-
-	/*-webkit-transition: bottom 2s;  Safari
-    transition: bottom 2s;*/
+#sliderTitle{
+	/*margin-top: -40px;*/
 }
 
 
@@ -130,25 +165,35 @@ header {
 }
 
 
-/* #infoContainer*/
+/* #infoContainer -- top */
 #infoContainer{
-	background-color: rgba(255, 255, 255, 0.85);
-	z-index: 1000;
-	border-radius: 15px;
-	margin-right: 10px;
-	margin-top:10px;
-	display:none;
-	/*max-height: 200px;*/
-	/*overflow-y: scroll;*/
+	/*background-color: rgba(255, 255, 255, 0.85);*/
+	/*z-index: 1000;*/
+	border-radius: 5px;
+	/*margin-right: 10px;*/
+	/*margin-top:10px;*/
+	display:block;
+
 }
 
+#infoBottom{
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.85);
+	bottom:0;
+	height: 150px;
+	z-index: 1000;
+}
 
+#infoBottom p{
+	font-size: 12px;
+}
 
 .closeButton{
 	padding: 5px;
 	margin-top: 10px;
 	margin-right:10px;
 	background-color: white;
+	z-index: 2000;
 }
 
 .towerText{
@@ -171,4 +216,35 @@ header {
 .areaText{
 	display: none;
 }
+
+.helpText{
+	display: none;
+	background-color: rgba(255, 255, 255, 0.85);
+	margin-right: 10px;
+	margin-top:10px;
+	z-index: 1000;
+}
+
+#legendContainer{
+	opacity:1;
+}
+.infos{
+	max-height:100px;
+}
+
+
+#glegendTitle{
+	visibility: hidden;
+	z-index: 2000;
+}
+#tlegendTitle{
+	visibility: hidden;
+	z-index: 2000;
+}
+/*#gridLegend{
+	display: none;
+}
+#trafficLegend{
+	display: none;
+}*/
 
