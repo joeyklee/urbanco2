@@ -60,7 +60,7 @@ $("#closeInfo").click(function(){
 
 
 // call modal on page load
-$("#myModal").modal();
+// $("#myModal").modal();
 
 
 // slider
