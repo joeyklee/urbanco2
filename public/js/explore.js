@@ -10,7 +10,8 @@ var studyArea,
 
 // Map
 var map = L.map('map', {
-    attributionControl: false
+    attributionControl: false,
+    zoomControl:false
 }).setView([49.25, -123.1], 12);
 
 var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -24,7 +25,7 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
     id: 'mapbox.run-bike-hike',
     opacity: 0.35
 }).addTo(map);
-L.control.attribution({position:"bottomright"}).addTo(map);
+// L.control.attribution({position:"bottomright"}).addTo(map);
 
 // var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
 // 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -49,11 +50,12 @@ function infoToggle(divId){
 	$("#infoContainer").css("display", "block")
 	$("#infoBlob").children().css("display", "none");
 	$("#infoBlob").find("." + divId).css("display", "block");
+	$("#legendContainer").css("display", "block");
 }
 
 
 $("#closeInfo").click(function(){
-	toggler("infoContainer");
+	$("." + "helpText").toggle();
 })
 
 

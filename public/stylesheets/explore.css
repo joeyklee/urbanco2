@@ -166,16 +166,26 @@ header {
 
 /* #infoContainer -- top */
 #infoContainer{
-	background-color: rgba(255, 255, 255, 0.85);
-	z-index: 1000;
+	/*background-color: rgba(255, 255, 255, 0.85);*/
+	/*z-index: 1000;*/
 	border-radius: 5px;
-	margin-right: 10px;
-	margin-top:10px;
-	display:none;
+	/*margin-right: 10px;*/
+	/*margin-top:10px;*/
+	display:block;
 
 }
 
+#infoBottom{
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.85);
+	bottom:0;
+	height: 150px;
+	z-index: 1000;
+}
 
+#infoBottom p{
+	font-size: 12px;
+}
 
 .closeButton{
 	padding: 5px;
@@ -205,18 +215,16 @@ header {
 	display: none;
 }
 
-#legendContainer{
-	z-index: 1000;
+.helpText{
+	display: none;
 	background-color: rgba(255, 255, 255, 0.85);
-	border-radius: 5px;
-	padding: 20px;
-	padding-left: 25px;
-	padding-right: 25px;
-	position: absolute;
-	bottom: 90px;
-	right:0;
+}
+
+#legendContainer{
 	opacity:1;
-	margin-right: 10px;
+}
+.infos{
+	max-height:100px;
 }
 
 
