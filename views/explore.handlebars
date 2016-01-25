@@ -46,12 +46,12 @@
 
 <div id="infoBottom" class="col-md-12">
 	<div class="row">
-		<div id="legendContainer" class="col-md-3 infos">
-			<h4>Title</h4>
-			<p>...</p>
-		</div>
-		<div id="sliderContainer" class="col-md-3 col-xs-10">
-		    <div id="slider-range-max"></div>
+
+		<div class="col-md-3 col-xs-10 ">
+			<h4 id="sliderTitle">Process Controller</h4>
+			<div id="sliderContainer">
+			    <div id="slider-range-max"></div>
+			</div>
 		</div>
 
 		<div class="col-md-6 col-xs-10 infos">
@@ -87,8 +87,17 @@
 					</div>
 				</div>
 		</div>
-	</div>
 
+
+	</div>
+	<div id="legendContainer" class="col-md-3 col-xs-10 ">
+		<div id="gridLegend" class="col-md-6">
+			<p class="legendTitle">Grid Emissions</p>
+		</div>
+		<div id="trafficLegend" class="col-md-6">
+			<p class="legendTitle">Traffic Counts</p>
+		</div>
+	</div>
 </div>
 
 
@@ -125,4 +134,5 @@
 <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.min.js"></script>
 <script type="text/javascript" src="public/js/explore.js"></script>
