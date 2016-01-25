@@ -36,10 +36,10 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 // }).addTo(map);
 
 
-$("#sliderContainer").animate({
-	bottom: "30px",
-	opacity: "1"
-}, 1000, "linear");
+// $("#sliderContainer").animate({
+// 	bottom: "30px",
+// 	opacity: "1"
+// }, 1000, "linear");
 
 
 function toggler(divId) {
@@ -300,7 +300,7 @@ function showTraffic() {
             .domain([min, max])
             // .range(["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"]);
             // .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
-            .range(["#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"]);
+            .range(["#f7fcfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b"]);
             // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
         var linewt = d3.scale.linear()
@@ -328,6 +328,27 @@ function showTraffic() {
         data.forEach(function(item) {
                 trafficCounts.addData(item);
             });
+
+
+        	if($("#tl")) d3.select("#tl").remove()
+       		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "110px");
+       		svg.append("g")
+       		  .attr("class", "legendQuant")
+       		  .attr("transform", "translate(0,0)");
+
+       		var legend = d3.legend.color()
+       		  .labelFormat(d3.format(".0f"))
+       		  // .useClass(true)
+       		  .shapeWidth(10)
+       		  .shapeHeight(10)
+       		  .scale(color)
+       		  // .labelDelimiter("-")
+       	  	.labelOffset(10)
+       	  	// .shapeHeight(10)
+       	  	.orient('vertical');
+
+       		svg.select(".legendQuant")
+       		  .call(legend);
 
 
        });
@@ -386,6 +407,28 @@ function showGrid() {
                 // console.log(item);
                 grid.addData(item);
             })
+
+
+        if($("#gl")) d3.select("#gl").remove()
+    	var svg = d3.select("#gridLegend").append("svg").attr("id","gl").attr("width", "100%").attr("height", "110px");
+    	svg.append("g")
+    	  .attr("class", "legendQuant")
+    	  .attr("transform", "translate(0,0)");
+
+    	var legend = d3.legend.color()
+    	  .labelFormat(d3.format(".0f"))
+    	  // .useClass(true)
+    	  .shapeWidth(10)
+    	  .shapeHeight(10)
+    	  .scale(color)
+    	  // .labelDelimiter("-")
+      	.labelOffset(10)
+      	// .shapeHeight(10)
+      	.orient('vertical');
+
+    	svg.select(".legendQuant")
+    	  .call(legend);
+
     })
 }
 
