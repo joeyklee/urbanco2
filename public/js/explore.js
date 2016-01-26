@@ -37,10 +37,10 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 // }).addTo(map);
 
 
-// $("#sliderContainer").animate({
-// 	bottom: "30px",
-// 	opacity: "1"
-// }, 1000, "linear");
+$("#sliderBox").animate({
+	bottom: "155px",
+	opacity: "1"
+}, 1000, "linear");
 
 
 drawing = d3.select("#drawing").append("svg")
@@ -78,7 +78,7 @@ $("#closeInfo").click(function(){
 
 
 // call modal on page load
-// $("#myModal").modal();
+$("#myModal").modal();
 
 
 // slider
