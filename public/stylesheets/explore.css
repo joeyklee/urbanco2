@@ -111,7 +111,7 @@ header {
 	/*border-radius: 5px;*/
 	position: absolute;
 	bottom: 155px;
-	left:5px;
+	left:1px;
 }
 
 #sliderBox{
@@ -126,8 +126,19 @@ header {
 	font-size: 10px;
 }
 
+/*
+#forwards{
+	bottom:162px;
+	left: 500px;
+	position: absolute;
 
+}
 
+#backwards{
+	bottom:162px;
+	position: absolute;
+
+}*/
 
 
 .dots{

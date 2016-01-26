@@ -99,6 +99,45 @@ $(function() {
             });
     });
 
+    $("#forwards").click(function(){
+
+    	var hs = $('#slider-range-max').slider();
+    	var h = hs.slider("option", "value") +1;
+    	hs.slider('option', 'value', h);
+    	// console.log(hs.slider("option", "value"))
+    	// hs.slider('option', 'value', h);
+    	hs.slider('option', 'slide')
+    	    .call(hs, null, {
+    	        handle: $('.ui-slider-handle', hs),
+    	        value: h
+    	    });
+
+
+    });
+
+    $("#backwards").click(function(){
+
+
+    	var hs = $('#slider-range-max').slider();
+    	var h = hs.slider("option", "value");
+
+    	if (h !== 0){
+
+	    	hs.slider('option', 'value', h-1);
+	    	// console.log(hs.slider("option", "value"))
+	    	// hs.slider('option', 'value', h);
+	    	hs.slider('option', 'slide')
+	    	    .call(hs, null, {
+	    	        handle: $('.ui-slider-handle', hs),
+	    	        value: h-1
+	    	    });
+
+    	}
+
+    })
+
+
+
     // if showData is selected then call function at last step
     $("#showData").click(function() {
         console.log("just showing the data");
