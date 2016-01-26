@@ -6,7 +6,8 @@ var studyArea,
     meetingPoint,
     vehicles,
     trafficCounts,
-    grid;
+    grid,
+    drawing;
 
 // Map
 var map = L.map('map', {
@@ -42,6 +43,22 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 // }, 1000, "linear");
 
 
+drawing = d3.select("#drawing").append("svg")
+	.attr("width", "100%")
+	.attr("height", "90%")
+
+drawing.append("g")
+	.attr("id", "procedure")
+
+d3.xml("public/images/process-explore.svg", function(xml){
+	drawing.node().appendChild(xml.getElementsByTagName("svg")[0]);
+
+	drawing.attr("transform", "translate(20), scale(1.5)");
+
+	d3.selectAll("#grid, #studyarea, #tower_2_, #driving_2_, #movement_2_").attr("opacity", 0);
+});
+
+
 function toggler(divId) {
     $("#" + divId).toggle();
 }
@@ -55,12 +72,13 @@ function infoToggle(divId){
 
 
 $("#closeInfo").click(function(){
-	$("." + "helpText").toggle();
+	// $("." + "helpText").toggle();
+	$("#helpModal").modal();
 })
 
 
 // call modal on page load
-$("#myModal").modal();
+// $("#myModal").modal();
 
 
 // slider
@@ -101,6 +119,7 @@ $(function() {
         max: total,
         value: 0,
         slide: function(event, ui) {
+            // $(".ui-slider-handle").text(ui.value);
             $(".ui-slider-handle").text(ui.value);
             if(ui.value == 0){
             	showModal();
@@ -180,12 +199,18 @@ function showModal(){
 	})();
 
 function panStudyArea(){
+	d3.selectAll("#studyarea").attr("opacity", 1);
+	d3.selectAll("#tower_2_").attr("opacity", 0);
 	infoToggle("areaText");
 	map.setView([49.25, -123.1], 11);
 	studyArea.openPopup();
+
+
 }
 
 function showTower() {
+	d3.selectAll("#tower_2_").attr("opacity", 1);
+	d3.selectAll("#driving_2_").attr("opacity", 0);
     infoToggle("towerText");
     if(studyArea !=null) studyArea.closePopup();
 	if (tower != null) map.removeLayer(tower);
@@ -204,6 +229,8 @@ function showTower() {
 }
 
 function showMeetup() {
+	d3.selectAll("#driving_2_").attr("opacity", 1);
+	d3.selectAll("#movement_2_").attr("opacity", 0);
 	if (tower != null) tower.closePopup();
     if (meetingPoint != null) map.removeLayer(meetingPoint);
     if (vehicles != null) map.removeLayer(vehicles);
@@ -230,6 +257,8 @@ function showMeetup() {
 
 
 function showTraverse() {
+	d3.selectAll("#movement_2_").attr("opacity", 1);
+	d3.selectAll("#grid").attr("opacity", 0);
 	if(meetingPoint != null) meetingPoint.closePopup();
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
@@ -332,20 +361,20 @@ function showTraffic() {
 
 
         	if($("#tl")) d3.select("#tl").remove()
-       		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "110px");
+       		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "20px");
        		svg.append("g")
        		  .attr("class", "legendQuant")
-       		  .attr("transform", "translate(0,0)");
+       		  .attr("transform", "translate(30,0)");
 
        		var legend = d3.legend.color()
        		  .labelFormat(d3.format(".0f"))
-       		  // .useClass(true)
-       		  .shapeWidth(10)
-       		  .shapeHeight(10)
-       		  .scale(color)
-       	  	.labelOffset(10)
-       	  	// .shapeHeight(10)
-       	  	.orient('vertical');
+    	  .shapeWidth(50)
+    	  .shapeHeight(7)
+    	  .scale(color)
+      	.labelOffset(5)
+      	.labelDelimiter("-")
+      	.labelAlign("middle")
+      	.orient('horizontal');
 
        		svg.select(".legendQuant")
        		  .call(legend);
@@ -361,6 +390,7 @@ function showTraffic() {
 
 
 function showGrid() {
+	d3.selectAll("#grid, #studyarea, #tower_2_, #driving_2_, #movement_2_").attr("opacity", 1);
 	studyArea.off('click');
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
@@ -387,8 +417,8 @@ function showGrid() {
             // .range(d3.range(9).map(function(i) { return "q" + i + "-9"; }));
 
         function onEachFeature(feature, layer){
-        	layer.bindPopup("Avg CO<sub>2</sub> Mixing Ratio (ppm): <br>" + feature.properties.co2_avg + "<br>" +
-        		"Avg Emissions kgCO<sub>2</sub>hr<sup>-1</sup>: <br>" + feature.properties.co2_avg_e)
+        	layer.bindPopup("Avg CO<sub>2</sub> Mixing Ratio (ppm): <br>" + Math.round(feature.properties.co2_avg) + "<br>" +
+        		"Avg Emissions kgCO<sub>2</sub>hr<sup>-1</sup>: <br>" + Math.round(feature.properties.co2_avg_e) )
         }
 
         function myStyle(feature) {
@@ -413,18 +443,22 @@ function showGrid() {
 
 
         if($("#gl")) d3.select("#gl").remove()
-    	var svg = d3.select("#gridLegend").append("svg").attr("id","gl").attr("width", "100%").attr("height", "110px");
+    	var svg = d3.select("#gridLegend").append("svg")
+    			.attr("id","gl")
+    			.attr("width", "100%").attr("height", "20px");
     	svg.append("g")
     	  .attr("class", "legendQuant")
-    	  .attr("transform", "translate(0,0)");
+    	  .attr("transform", "translate(70,0)");
 
     	var legend = d3.legend.color()
     	  .labelFormat(d3.format(".0f"))
-    	  .shapeWidth(10)
-    	  .shapeHeight(10)
+    	  .shapeWidth(40)
+    	  .shapeHeight(7)
     	  .scale(color)
-      	.labelOffset(10)
-      	.orient('vertical');
+      	.labelOffset(5)
+      	.labelDelimiter("-")
+      	.labelAlign("middle")
+      	.orient('horizontal');
 
     	svg.select(".legendQuant")
     	  .call(legend);

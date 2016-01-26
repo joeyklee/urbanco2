@@ -1,142 +1,141 @@
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
-<link rel="stylesheet" type="text/css" href="public/stylesheets/explore.css">
-{{!-- map --}}
+<link rel="stylesheet" type="text/css" href="public/stylesheets/explore.css">{{!-- map --}}
 <div id="map"></div>
 {{!-- map elements --}}
+<div id="closeInfo">
+    <button class="btn btn-default">
+        <a class="glyphicon glyphicon-info-sign"></a>
+    </button>
+</div>
 
 
-
-{{!-- <div id="legendContainer" class="col-md-3 col-xs-10 ">
- <div class="panel-group">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-        <a data-toggle="collapse" href="#collapse1">select & explore</a>
-      </h4>
+<div id="sliderBox" class="col-md-4 col-xs-12">
+    <div id="sliderContainer">
+        <div id="slider-range-max"></div>
     </div>
-    <div id="collapse1" class="panel-collapse collapse">
-      <div class="panel-body">Panel Body</div>
-      <div class="panel-body">Panel Footer</div>
-    </div>
-  </div>
 </div>
-</div> --}}
-
-{{!-- <div id="sliderContainer" class="col-md-3 col-xs-10">
-    <div id="slider-range-max"></div>
-</div> --}}
-
-
-
-<div class="pull-right">
-
-	<button id="closeInfo" class="btn closeButton pull-right"><a class="glyphicon glyphicon-info-sign"></a> </button>
-</div>
-
-<div class="helpText pull-right col-md-3">
-	<h4>Help</h4>
-	<ul>
-		<li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
-		<li>Toggle the data layers to explore the different aspects of the data.</li>
-	</ul>
-</div>
-
-
 <div id="infoBottom" class="col-md-12">
-	<div class="row">
+    <div class="row">
+        {{!-- <div id="sliderBox" class="col-md-4 col-xs-12">
+            <h4>Monitoring CO<sub>2</sub> in Vancouver</h4>
+            <div id="sliderContainer">
+                <div id="slider-range-max"></div>
+            </div>
+            <p class="text-center">Use the slider to see the experiment process.</p>
+            <p class="">Learn about the process of monitoring of CO<sub>2</sub> mobile sensors deployed on cars and bikes in the city of Vancouver by dragging the slider above. Data gathered by <a href="">UBC Micromet</a>, May 2015.</p>
+        </div>
+		 --}}
 
-		<div class="col-md-3 col-xs-10 ">
-			<h4 id="sliderTitle">Process Controller</h4>
-			<div id="sliderContainer">
-			    <div id="slider-range-max"></div>
-			</div>
-			<p>Use the slider to see the experiment process.</p>
-		</div>
-
-		<div class="col-md-6 col-xs-12 infos">
-			<div id="infoContainer"  class="row">
-				<div id= "infoBlob" class="col-md-12">
-					<div class="aboutText">
-						<h4>The Process of Measuring CO<sub>2</sub> in Cities</h4>
-						<p>Learn about the process of experimental monitoring of CO<sub>2</sub> in cities using mobile sensors deployed on cars and bikes in the city of Vancouver. This experiment took place in May 2015.
-						</p>
-					</div>
-					<div class="areaText">
-						<h4>Study Area</h4>
-						<p>The study defined here is roughly 13 km<sup>2</sup>. We designed our sampling campaign to measure within these bounds in order to: <br>1. Maintain our sampling density - to ensure we cover nearly all the navigable roads in a 3.5 hour time window. <br> 2. Utilize external datasets - to cross-validate our calculated emissions with existing CO<sub>2</sub> emissions inventories that were provided for this study area.
-						</p>
-					</div>
-					<div class="towerText">
-						<h4>Urban Climate Tower</h4>
-						<p><a href='http://ibis.geog.ubc.ca/~achristn/data/sunset.html' target='blank'>The 30m height tower</a> is gathering data about the CO<sub>2</sub> concentrations above the <a href="">urban canopy layer</a>. We assume that the CO<sub>2</sub> mixing ratios measured here are <a href="">representative</a> of a well-mixed atmosphere.</p>
-					</div>
-
-					<div class="meetText">
-						<h4>Sensor Calibration</h4>
-						<p >Five volunteers meet at a calm low-traffic area, install the CO<sub>2</sub> sensors, and calibrate them before driving throughout the city. This is necessary to adjust for any possible sensor drift that occurs during the experiment.</p>
-					</div>
-					<div class="animText">
-						<h4>Data Collection</h4>
-						<p>After the calibration period, the vehicles begin driving on pre-defined routes throughout the city to ensure extensive and representative spatial sampling. Our goal was to simulate the coverage in possible future scenarios if sensors are ubiqitously distributed.</p>
-					</div>
-					<div class="trafficText">
-						<h4>Traffic Counts</h4>
-						<p >The traffic counts for the transect are modelled based on data provided by the city of Vancouver. The traffic data is later used to cross-validate the emissions calculations. It is clear to see that the main arterial roads are heavily used. </p>
-					</div>
-					<div class="gridText">
-						<h4> Data Output</h4>
-						<p >In a 3.5 hour measurement period, over 40,000 data points are collected. These data are then aggregated to a 100 m × 100 m grid cells to account for the horizontal transport of CO<sub>2</sub> in an area. Explore this gridded data to learn more about the data available in the study area.</p>
-					</div>
-				</div>
-		</div>
-
-
-	</div>
-	<div id="legendContainer" class="col-md-3 col-xs-12 ">
-		<div id="gridLegend" class="col-md-6 col-xs-6">
-			<p id="glegendTitle">Grid Emissions</p>
-		</div>
-		<div id="trafficLegend" class="col-md-6 col-xs-6">
-			<p id="tlegendTitle">Traffic Counts</p>
-		</div>
-	</div>
-</div>
-
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="vertical-alignment-helper">
-        <div class="modal-dialog vertical-align-center">
-            <!-- Modal content-->
-            <div class="modal-content text-center">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Choose your adventure</h4>
-                </div>
-                <div class="modal-body col-md-12">
-                    <div class="col-md-6">
-                        <button id="showProcess" type="button" class="btn btn-success" data-dismiss="modal">Show me the process</button>
+		 <div class="col-md-4 col-xs-12">
+		 	<div class="col-md-4">
+		 		<h3>Mobile CO<sub>2</sub> Sensing</h3> <span style="font-size:8px">by <a href="">UBC Micromet</a></span>
+		 	</div>
+		 	<div class="col-md-8">
+		 		<p class="aboutText">Learn about the process of monitoring of CO<sub>2</sub> with mobile sensors deployed on cars and bikes in the city of Vancouver, BC. by dragging the slider above. Data gathered by <a href="">UBC Micromet</a>, May 2015.</p>
+		 	</div>
+		 </div>
+		 <div class="col-md-2 col-xs-12 infos">
+		     <div id="drawing">
+		     {{!-- <p id="drawingHeader" class="text-center">Experiment Components</p> --}}
+		     </div>
+		 </div>
+        <div class="col-md-6 col-xs-12 infos">
+            <div id="infoContainer">
+                <div id="infoBlob" class="col-md-12">
+                    <div class="filler text-center">
+                        (use the slider!)
                     </div>
-                    <div class="cold-md-6">
-                        <button id="showData" type="button" class="btn btn-warning" data-dismiss="modal">I just want to see the data</button>
+                    <div class="areaText">
+                        {{!-- <h5>Study Area</h5> --}}
+                        <p><b>Study Area: </b> The study area defined here is roughly 13 km<sup>2</sup>. We designed our sampling campaign to measure within these bounds in order to:
+                            <br>1. Maintain our sampling density - to ensure we cover nearly all the navigable roads in a 3.5 hour time window.
+                            <br> 2. Utilize external datasets - to cross-validate our calculated emissions with existing CO<sub>2</sub> emissions inventories that were provided for this study area.
+                        </p>
+                    </div>
+                    <div class="towerText">
+                        {{!-- <h5>Urban Climate Tower</h5> --}}
+                        <p><b>Urban Climate Tower: </b><a href='http://ibis.geog.ubc.ca/~achristn/data/sunset.html' target='blank'>The 30m height tower</a> is gathering data about the CO<sub>2</sub> concentrations above the <a href="">urban canopy layer</a>. We assume that the CO<sub>2</sub> mixing ratios measured here are <a href="">representative</a> of a well-mixed atmosphere.</p>
+                    </div>
+                    <div class="meetText">
+                        {{!-- <h5>Sensor Calibration</h5> --}}
+                        <p><b>Sensor Calibration: </b> Five volunteers meet at a calm low-traffic area, install the CO<sub>2</sub> sensors, and calibrate them before driving throughout the city. This is necessary to adjust for any possible sensor drift that occurs during the experiment.</p>
+                    </div>
+                    <div class="animText">
+                        {{!-- <h5>Data Collection</h5> --}}
+                        <p><b>Data Collection: </b>After the calibration period, the vehicles begin driving on pre-defined routes throughout the city to ensure extensive and representative spatial sampling. Our goal was to simulate the coverage in possible future scenarios if sensors are ubiqitously distributed.</p>
+                    </div>
+                    <div class="trafficText">
+                        {{!-- <h5>Traffic Counts</h5> --}}
+
+                            {{!-- <p id="tlegendTitle">Traffic Counts</p> --}}
+
+                        <p><b>Traffic Counts: </b>The traffic counts for the transect are modelled based on data provided by the city of Vancouver. The traffic data is used to calculate vehicle related emissions and to cross-validate the "measured" emissions using our approach. </p>
+                        <div id="trafficLegend" class="col-md-12 col-xs-6"> <br></div>
+                    </div>
+                    <div class="gridText">
+                        {{!-- <h5> Average Grid Emissions</h5> --}}
+
+                            {{!-- <p id="glegendTitle">Grid Emissions</p> --}}
+
+                        <p><b>Grid Averaged Emissions: </b>In a 3.5 hour measurement period, over 40,000 data points are collected. These data are then aggregated to a 100 m × 100 m grid cells to account for the horizontal transport of CO<sub>2</sub> in an area. Notice the negative emissions signifying photosynthetic uptake of CO<sub>2</sub>.</p>
+                        <div id="gridLegend" class="col-md-12 col-xs-6"><br></div>
                     </div>
                 </div>
-                <div class="modal-footer">
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <!-- Modal content-->
+                <div class="modal-content text-center">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title">Choose your adventure</h5>
+                    </div>
+                    <div class="modal-body col-md-12">
+                        <div class="col-md-6">
+                            <button id="showProcess" type="button" class="btn btn-success" data-dismiss="modal">Show me the process</button>
+                        </div>
+                        <div class="cold-md-6">
+                            <button id="showData" type="button" class="btn btn-warning" data-dismiss="modal">I just want to see the data</button>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-
-<script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
-<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.min.js"></script>
-<script type="text/javascript" src="public/js/explore.js"></script>
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="vertical-alignment-helper">
+            <div class="modal-dialog vertical-align-center">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title">Help</h5>
+                        <ul>
+                            <li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
+                            <li>Click on the added layers to reveal their data values.</li>
+                            {{!-- <li>Toggle the data layers to explore the different aspects of the data.</li> --}}
+                        </ul>
+                    </div>
+                    <div class="modal-body col-md-12">
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.min.js"></script>
+    <script type="text/javascript" src="public/js/explore.js"></script>
