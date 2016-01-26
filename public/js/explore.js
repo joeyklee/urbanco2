@@ -102,17 +102,18 @@ $(function() {
     $("#forwards").click(function(){
 
     	var hs = $('#slider-range-max').slider();
-    	var h = hs.slider("option", "value") +1;
-    	hs.slider('option', 'value', h);
+    	var h = hs.slider("option", "value");
+    	if (h < 6){
+    	hs.slider('option', 'value', h+1);
     	// console.log(hs.slider("option", "value"))
     	// hs.slider('option', 'value', h);
     	hs.slider('option', 'slide')
     	    .call(hs, null, {
     	        handle: $('.ui-slider-handle', hs),
-    	        value: h
+    	        value: h+1
     	    });
 
-
+    	   }
     });
 
     $("#backwards").click(function(){
