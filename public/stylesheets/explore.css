@@ -106,13 +106,13 @@ header {
 	border-radius: 5px;
 }
 
-/*#sliderBox{
-	background-color: rgba(255, 255, 255, 0.85);
-	border-radius: 5px;
+#sliderBox{
+	/*background-color: rgba(255, 255, 255, 0.85);*/
+	/*border-radius: 5px;*/
 	position: absolute;
 	bottom: 155px;
 	left:5px;
-}*/
+}
 
 #sliderBox{
 	/*background-color: rgba(255, 255, 255, 0.85);*/
@@ -192,7 +192,7 @@ header {
 	/*background-color: rgba(255, 255, 255, 0.85);*/
 	/*z-index: 1000;*/
 	border-radius: 5px;
-	margin-top: 10px;
+	margin-top: 20px;
 	/*margin-right: 10px;*/
 	/*margin-top:10px;*/
 	display:block;
@@ -277,7 +277,7 @@ header {
 }
 
 .aboutText{
-	/*margin-top: 5px;*/
+	margin-top: 20px;
 	/*background-color: rgba(155, 155, 155, 0.10);*/
 	/*padding:5px;*/
 	/*border-radius: 10px;*/
@@ -295,3 +295,8 @@ header {
 	display: block;
 	margin:auto;
 }
+
+/*#drawingHeader{
+	visibility: hidden;
+}
+*/
