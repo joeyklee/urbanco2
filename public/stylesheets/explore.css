@@ -92,9 +92,9 @@ header {
 #sliderContainer{
 	/*top:85%;*/ /* why do I have to specify from top?*/
 	z-index: 1000;
-	/*background-color: rgba(255, 255, 255, 0.85);*/
+	background-color: rgba(255, 255, 255, 0.85);
 
-	padding: 20px;
+	padding: 18px;
 	padding-left: 25px;
 	padding-right: 25px;
 	/*position: absolute;*/
@@ -102,18 +102,31 @@ header {
 	/*right:0;*/
 	opacity:1;
 	/*margin-right: 10px;*/
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 5px;
 }
 
-#sliderBox{
+/*#sliderBox{
 	background-color: rgba(255, 255, 255, 0.85);
 	border-radius: 5px;
 	position: absolute;
 	bottom: 155px;
 	left:5px;
+}*/
+
+#sliderBox{
+	/*background-color: rgba(255, 255, 255, 0.85);*/
+
+	/*position: absolute;*/
+	/*bottom: 155px;*/
+	/*left:5px;*/
+
 }
 #sliderBox p{
 	font-size: 10px;
 }
+
+
 
 
 
@@ -179,10 +192,15 @@ header {
 	/*background-color: rgba(255, 255, 255, 0.85);*/
 	/*z-index: 1000;*/
 	border-radius: 5px;
+	margin-top: 10px;
 	/*margin-right: 10px;*/
 	/*margin-top:10px;*/
 	display:block;
 
+}
+
+#infoContainer h5{
+	font-size: 14px;
 }
 
 #infoBottom{
@@ -198,18 +216,15 @@ header {
 	font-size: 12px;
 }
 
-.closeButton{
-	/*padding: 5px;*/
-	/*background-color: white;*/
-	z-index: 2000;
-}
-
 #closeInfo{
-	margin-top: 50px;
-	margin-left:10px;
+	/*margin-top: 50px;
+	margin-right:10px;*/
 	position: absolute;
-	/*top: 90px;*/
+	/*top: 10px;*/
 	/*left: 10px;*/
+	top:65px;
+	right:8px;
+	z-index: 1000;
 }
 
 .towerText{
@@ -260,13 +275,23 @@ header {
 	visibility: hidden;
 	z-index: 2000;
 }
-/*#gridLegend{
-	display: none;
+
+.aboutText{
+	/*margin-top: 5px;*/
+	/*background-color: rgba(155, 155, 155, 0.10);*/
+	/*padding:5px;*/
+	/*border-radius: 10px;*/
 }
-#trafficLegend{
-	display: none;
-}*/
+
+.filler{
+	margin-top: 40px;
+}
 
 .label{
-	font-size: 55%;
+	font-size: 60%;
+}
+
+#gl{
+	display: block;
+	margin:auto;
 }
