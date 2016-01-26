@@ -182,6 +182,7 @@ header {
 	bottom:0;
 	height: 150px;
 	z-index: 1000;
+	border-top: 3px solid black;
 }
 
 #infoBottom p{
