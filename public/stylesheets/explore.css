@@ -93,7 +93,7 @@ header {
 	/*top:85%;*/ /* why do I have to specify from top?*/
 	z-index: 1000;
 	/*background-color: rgba(255, 255, 255, 0.85);*/
-	border-radius: 5px;
+
 	padding: 20px;
 	padding-left: 25px;
 	padding-right: 25px;
@@ -104,9 +104,17 @@ header {
 	/*margin-right: 10px;*/
 }
 
-#sliderTitle{
-	/*margin-top: -40px;*/
+#sliderBox{
+	background-color: rgba(255, 255, 255, 0.85);
+	border-radius: 5px;
+	position: absolute;
+	bottom: 155px;
+	left:5px;
 }
+#sliderBox p{
+	font-size: 10px;
+}
+
 
 
 .dots{
@@ -165,6 +173,7 @@ header {
 }
 
 
+
 /* #infoContainer -- top */
 #infoContainer{
 	/*background-color: rgba(255, 255, 255, 0.85);*/
@@ -190,11 +199,17 @@ header {
 }
 
 .closeButton{
-	padding: 5px;
-	margin-top: 10px;
-	margin-right:10px;
-	background-color: white;
+	/*padding: 5px;*/
+	/*background-color: white;*/
 	z-index: 2000;
+}
+
+#closeInfo{
+	margin-top: 50px;
+	margin-left:10px;
+	position: absolute;
+	/*top: 90px;*/
+	/*left: 10px;*/
 }
 
 .towerText{
@@ -228,6 +243,9 @@ header {
 
 #legendContainer{
 	opacity:1;
+	background-color: rgba(255, 255, 255, 0.85);
+	position: absolute;
+	bottom: 275px;
 }
 .infos{
 	max-height:100px;
@@ -249,3 +267,6 @@ header {
 	display: none;
 }*/
 
+.label{
+	font-size: 55%;
+}

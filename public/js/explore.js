@@ -55,12 +55,13 @@ function infoToggle(divId){
 
 
 $("#closeInfo").click(function(){
-	$("." + "helpText").toggle();
+	// $("." + "helpText").toggle();
+	$("#helpModal").modal();
 })
 
 
 // call modal on page load
-$("#myModal").modal();
+// $("#myModal").modal();
 
 
 // slider
@@ -332,20 +333,20 @@ function showTraffic() {
 
 
         	if($("#tl")) d3.select("#tl").remove()
-       		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "110px");
+       		var svg = d3.select("#trafficLegend").append("svg").attr("id","tl").attr("width", "100%").attr("height", "20px");
        		svg.append("g")
        		  .attr("class", "legendQuant")
        		  .attr("transform", "translate(0,0)");
 
        		var legend = d3.legend.color()
        		  .labelFormat(d3.format(".0f"))
-       		  // .useClass(true)
-       		  .shapeWidth(10)
-       		  .shapeHeight(10)
-       		  .scale(color)
-       	  	.labelOffset(10)
-       	  	// .shapeHeight(10)
-       	  	.orient('vertical');
+    	  .shapeWidth(50)
+    	  .shapeHeight(5)
+    	  .scale(color)
+      	.labelOffset(5)
+      	.labelDelimiter("-")
+      	.labelAlign("middle")
+      	.orient('horizontal');
 
        		svg.select(".legendQuant")
        		  .call(legend);
@@ -413,18 +414,20 @@ function showGrid() {
 
 
         if($("#gl")) d3.select("#gl").remove()
-    	var svg = d3.select("#gridLegend").append("svg").attr("id","gl").attr("width", "100%").attr("height", "110px");
+    	var svg = d3.select("#gridLegend").append("svg").attr("id","gl").attr("width", "100%").attr("height", "20px");
     	svg.append("g")
     	  .attr("class", "legendQuant")
     	  .attr("transform", "translate(0,0)");
 
     	var legend = d3.legend.color()
     	  .labelFormat(d3.format(".0f"))
-    	  .shapeWidth(10)
-    	  .shapeHeight(10)
+    	  .shapeWidth(40)
+    	  .shapeHeight(5)
     	  .scale(color)
-      	.labelOffset(10)
-      	.orient('vertical');
+      	.labelOffset(5)
+      	.labelDelimiter("-")
+      	.labelAlign("middle")
+      	.orient('horizontal');
 
     	svg.select(".legendQuant")
     	  .call(legend);

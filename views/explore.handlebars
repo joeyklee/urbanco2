@@ -30,39 +30,52 @@
 
 
 
-<div class="pull-right">
-
-	<button id="closeInfo" class="btn closeButton pull-right"><a class="glyphicon glyphicon-info-sign"></a> </button>
+<div id="closeInfo" class="pull-left">
+	<button class="btn closeButton pull-right"><a class="glyphicon glyphicon-info-sign"></a> </button>
 </div>
 
-<div class="helpText pull-right col-md-3">
+
+{{!-- <div class="helpText pull-right col-md-3">
 	<h4>Help</h4>
 	<ul>
 		<li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
 		<li>Toggle the data layers to explore the different aspects of the data.</li>
 	</ul>
 </div>
+ --}}
 
+<div id="sliderBox" class="col-md-3 col-xs-10 text-center">
+	{{!-- <h4 id="sliderTitle">Process Controller</h4> --}}
+	<p>Experiment Process</p>
+	<div id="sliderContainer">
+	    <div id="slider-range-max"></div>
+	</div>
+	<p>Use the slider to see the experiment process.</p>
+</div>
+
+{{!-- <div id="legendContainer" class="col-md-3 col-xs-12 ">
+	<div id="gridLegend" class="col-md-12 col-xs-6">
+		<p id="glegendTitle">Grid Emissions</p>
+	</div>
+	<div id="trafficLegend" class="col-md-12 col-xs-6">
+		<p id="tlegendTitle">Traffic Counts</p>
+	</div>
+</div> --}}
 
 <div id="infoBottom" class="col-md-12">
 	<div class="row">
-
-		<div class="col-md-3 col-xs-10 ">
-			<h4 id="sliderTitle">Process Controller</h4>
-			<div id="sliderContainer">
-			    <div id="slider-range-max"></div>
-			</div>
-			<p>Use the slider to see the experiment process.</p>
+	<div class="col-md-3 col-xs-12 infos">
+		<div class="aboutText">
+			<h4>Measuring CO<sub>2</sub> in Cities</h4>
+			<p>Learn about the process of monitoring of CO<sub>2</sub> mobile sensors deployed on cars and bikes in the city of Vancouver. This experiment was performed by <a href="">The UBC Micromet Group</a> in May 2015.
+			</p>
 		</div>
+	</div>
 
 		<div class="col-md-6 col-xs-12 infos">
 			<div id="infoContainer"  class="row">
 				<div id= "infoBlob" class="col-md-12">
-					<div class="aboutText">
-						<h4>The Process of Measuring CO<sub>2</sub> in Cities</h4>
-						<p>Learn about the process of experimental monitoring of CO<sub>2</sub> in cities using mobile sensors deployed on cars and bikes in the city of Vancouver. This experiment took place in May 2015.
-						</p>
-					</div>
+
 					<div class="areaText">
 						<h4>Study Area</h4>
 						<p>The study defined here is roughly 13 km<sup>2</sup>. We designed our sampling campaign to measure within these bounds in order to: <br>1. Maintain our sampling density - to ensure we cover nearly all the navigable roads in a 3.5 hour time window. <br> 2. Utilize external datasets - to cross-validate our calculated emissions with existing CO<sub>2</sub> emissions inventories that were provided for this study area.
@@ -83,25 +96,24 @@
 					</div>
 					<div class="trafficText">
 						<h4>Traffic Counts</h4>
-						<p >The traffic counts for the transect are modelled based on data provided by the city of Vancouver. The traffic data is later used to cross-validate the emissions calculations. It is clear to see that the main arterial roads are heavily used. </p>
+						<p >The traffic counts for the transect are modelled based on data provided by the city of Vancouver. The traffic data is used to calculate vehicle related emissions and to cross-validate the "measured" emissions using our approach. </p>
+						<div id="trafficLegend" class="col-md-12 col-xs-6">
+							{{!-- <p id="tlegendTitle">Traffic Counts</p> --}}
+						</div>
 					</div>
 					<div class="gridText">
-						<h4> Data Output</h4>
-						<p >In a 3.5 hour measurement period, over 40,000 data points are collected. These data are then aggregated to a 100 m × 100 m grid cells to account for the horizontal transport of CO<sub>2</sub> in an area. Explore this gridded data to learn more about the data available in the study area.</p>
+						<h4> Average Grid Emissions</h4>
+						<p >In a 3.5 hour measurement period, over 40,000 data points are collected. These data are then aggregated to a 100 m × 100 m grid cells to account for the horizontal transport of CO<sub>2</sub> in an area. Notice the negative emissions signifying photosynthetic uptake of CO<sub>2</sub>.</p>
+						<div id="gridLegend" class="col-md-12 col-xs-6">
+							{{!-- <p id="glegendTitle">Grid Emissions</p> --}}
+						</div>
 					</div>
 				</div>
 		</div>
 
 
 	</div>
-	<div id="legendContainer" class="col-md-3 col-xs-12 ">
-		<div id="gridLegend" class="col-md-6 col-xs-6">
-			<p id="glegendTitle">Grid Emissions</p>
-		</div>
-		<div id="trafficLegend" class="col-md-6 col-xs-6">
-			<p id="tlegendTitle">Traffic Counts</p>
-		</div>
-	</div>
+
 </div>
 
 
@@ -134,6 +146,28 @@
     </div>
 </div>
 
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Help</h4>
+                    <ul>
+                    	<li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
+                    	<li>Toggle the data layers to explore the different aspects of the data.</li>
+                    </ul>
+                </div>
+                <div class="modal-body col-md-12">
+
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
 <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
