@@ -45,7 +45,7 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
 
 drawing = d3.select("#drawing").append("svg")
 	.attr("width", "100%")
-	.attr("height", "100%")
+	.attr("height", "90%")
 
 drawing.append("g")
 	.attr("id", "procedure")
@@ -390,7 +390,7 @@ function showTraffic() {
 
 
 function showGrid() {
-	d3.selectAll("#grid").attr("opacity", 1);
+	d3.selectAll("#grid, #studyarea, #tower_2_, #driving_2_, #movement_2_").attr("opacity", 1);
 	studyArea.off('click');
     if (vehicles != null) map.removeLayer(vehicles);
     if (grid != null) map.removeLayer(grid);
