@@ -47,8 +47,8 @@ var scrollVis = function() {
             showEmissionsTransportation,
             showEmissionsHvac,
             showEmissionsBiological,
-            showPotential,
-            triggerPageTurn
+            showActions,
+            showReality
         ]
     // If a section has an update function
     // then it is called while scrolling
@@ -258,6 +258,45 @@ var scrollVis = function() {
 
         }
 
+
+        queue()
+        	.defer(d3.xml, "public/images/actions.svg")
+        	.await(addActionsIllustration)
+        // urban box model
+        var actionsIllustration = g.append("g")
+            .attr("class", "actions")
+            .attr("opacity", 0)
+            .attr("transform", "scale(1.4)");
+            // .attr("transform", "translate(90), scale(2.5)");
+
+        function addActionsIllustration(error, xml){
+    	    var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
+        	    items.forEach(function(val) {
+        	        actionsIllustration.node().appendChild(val);
+    	    });
+
+        }
+
+        queue()
+        	.defer(d3.xml, "public/images/modelvsreality.svg")
+        	.await(addRealityIllustration)
+        // urban box model
+        var realityIllustration = g.append("g")
+            .attr("class", "reality")
+            .attr("opacity", 0)
+            .attr("transform", "scale(0.8)");
+            // .attr("transform", "translate(90), scale(2.5)");
+
+        function addRealityIllustration(error, xml){
+    	    var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
+        	    items.forEach(function(val) {
+        	        realityIllustration.node().appendChild(val);
+    	    });
+
+        }
+
+
+
         g.append("text")
             .attr("class", "title filler")
             .attr("x", width / 2)
@@ -265,6 +304,8 @@ var scrollVis = function() {
             .text("<insert graphic here>");
         g.selectAll(".filler")
             .attr("opacity", 0);
+
+
 
     }; // end of setup vis
 
@@ -458,23 +499,39 @@ var scrollVis = function() {
             // .attr("fill", "#000")
             .attr("opacity", 1);
 
-        g.selectAll(".filler")
-            .attr("opacity", 0);
+        g.selectAll(".actions")
+            .attr("opacity", 0)
 
-        g.selectAll(".solutions")
-            .attr("opacity", 0);
+    }
+
+    function showActions(){
+    	g.selectAll(".illustration")
+    	    .transition()
+    	    .duration(600)
+    	    .attr("fill", "#000")
+    	    .attr("opacity", 0);
+
+        g.selectAll(".reality")
+            .attr("opacity", 0)
+
+    	g.selectAll(".actions")
+	    	.transition()
+            .duration(600)
+    	    .attr("opacity", 1)
     }
 
 
-    function showPotential() {
-        g.selectAll(".illustration")
-            .transition()
-            .duration(600)
-            .attr("fill", "#000")
+    function showReality() {
+        g.selectAll(".actions")
             .attr("opacity", 0);
 
-        g.selectAll(".filler")
-            .attr("opacity", 0)
+        g.selectAll(".reality")
+	        .transition()
+            .duration(600)
+            .attr("opacity", 1)
+
+        // g.selectAll(".techniques")
+        //     .attr("opacity", 1)
 
     }
 
