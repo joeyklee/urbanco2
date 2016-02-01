@@ -47,7 +47,7 @@ var scrollVis = function() {
             showEmissionsTransportation,
             showEmissionsHvac,
             showEmissionsBiological,
-            showActions,
+            showMeasure,
             showReality
         ]
     // If a section has an update function
@@ -277,6 +277,11 @@ var scrollVis = function() {
 
         }
 
+
+
+
+
+
         queue()
         	.defer(d3.xml, "public/images/modelvsreality.svg")
         	.await(addRealityIllustration)
@@ -284,7 +289,7 @@ var scrollVis = function() {
         var realityIllustration = g.append("g")
             .attr("class", "reality")
             .attr("opacity", 0)
-            .attr("transform", "scale(0.8)");
+            .attr("transform", "translate(50), scale(0.85)");
             // .attr("transform", "translate(90), scale(2.5)");
 
         function addRealityIllustration(error, xml){
@@ -292,6 +297,25 @@ var scrollVis = function() {
         	    items.forEach(function(val) {
         	        realityIllustration.node().appendChild(val);
     	    });
+
+        }
+
+
+        queue()
+        	.defer(d3.xml, "public/images/measure.svg")
+        	.await(addMeasure)
+
+        var measure = g.append("g")
+        	.attr("class", "measure")
+        	.attr("opacity", 0)
+        	.attr("transform", "translate(50), scale(0.85)");
+
+        function addMeasure(error, xml){
+        	console.log(xml);
+        	var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
+        	items.forEach(function(val) {
+        	    measure.node().appendChild(val);
+        	});
 
         }
 
@@ -499,7 +523,7 @@ var scrollVis = function() {
             // .attr("fill", "#000")
             .attr("opacity", 1);
 
-        g.selectAll(".actions")
+        g.selectAll(".reality")
             .attr("opacity", 0)
 
     }
@@ -520,28 +544,41 @@ var scrollVis = function() {
     	    .attr("opacity", 1)
     }
 
+    function showMeasure(){
+
+    	g.selectAll(".illustration")
+    	    .attr("fill", "#000")
+    	    .attr("opacity", 0);
+
+    	 g.selectAll(".reality")
+	        .transition()
+            .duration(600)
+            .attr("opacity", 1)
+
+    	g.selectAll(".measure")
+    		.attr("opacity", 0);
+
+    }
+
+
 
     function showReality() {
         g.selectAll(".actions")
             .attr("opacity", 0);
 
         g.selectAll(".reality")
-	        .transition()
+            .attr("opacity", 0)
+
+        g.selectAll(".measure")
+            .transition()
             .duration(600)
-            .attr("opacity", 1)
+			.attr("opacity", 1);
 
         // g.selectAll(".techniques")
         //     .attr("opacity", 1)
 
     }
 
-    function triggerPageTurn() {
-        g.selectAll(".solutions")
-            .attr("opacity", 0);
-        // console.log("hello");
-        g.selectAll(".filler")
-            .attr("opacity", 0)
-    }
 
 
     /**
