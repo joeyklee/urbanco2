@@ -259,23 +259,23 @@ var scrollVis = function() {
         }
 
 
-        queue()
-        	.defer(d3.xml, "public/images/actions.svg")
-        	.await(addActionsIllustration)
-        // urban box model
-        var actionsIllustration = g.append("g")
-            .attr("class", "actions")
-            .attr("opacity", 0)
-            .attr("transform", "scale(1.4)");
-            // .attr("transform", "translate(90), scale(2.5)");
+        // queue()
+        // 	.defer(d3.xml, "public/images/actions.svg")
+        // 	.await(addActionsIllustration)
+        // // urban box model
+        // var actionsIllustration = g.append("g")
+        //     .attr("class", "actions")
+        //     .attr("opacity", 0)
+        //     .attr("transform", "scale(1.4)");
+        //     // .attr("transform", "translate(90), scale(2.5)");
 
-        function addActionsIllustration(error, xml){
-    	    var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
-        	    items.forEach(function(val) {
-        	        actionsIllustration.node().appendChild(val);
-    	    });
+        // function addActionsIllustration(error, xml){
+    	   //  var items = Array.from(xml.getElementsByTagName("svg")[0].childNodes);
+        // 	    items.forEach(function(val) {
+        // 	        actionsIllustration.node().appendChild(val);
+    	   //  });
 
-        }
+        // }
 
 
 
