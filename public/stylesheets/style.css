@@ -27,3 +27,30 @@ hr {
 	.container {
 	  width: 890px;
 	}
+
+.image {
+   position: relative;
+   width: 100%; /* for IE 6 */
+}
+
+#title {
+   position: absolute;
+   top: 80px;
+   left: 100px;
+   width:500px;
+   font-size: 60px;
+   background-color: white;
+   padding:20px;
+
+}
+
+#minititle {
+   position: absolute;
+   top: 425px;
+   left: 100px;
+   width:500px;
+   font-size: 40px;
+   background-color: white;
+   padding:20px;
+
+}
