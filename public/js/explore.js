@@ -15,10 +15,11 @@ var map = L.map('map', {
     zoomControl:true
 }).setView([49.25, -123.1], 12);
 
+// pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ
 var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
         'Imagery © <a href="http://mapbox.com">Mapbox</a>';
-var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6IjZjNmRjNzk3ZmE2MTcwOTEwMGY0MzU3YjUzOWFmNWZhIn0.Y8bhBaUMqFiPrDRW9hieoQ', {
+var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoiam9leWtsZWUiLCJhIjoiMlRDV2lCSSJ9.ZmGAJU54Pa-z8KvwoVXVBw', {
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
         '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -26,7 +27,9 @@ var mapbox_tiles = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}
     id: 'mapbox.run-bike-hike',
     opacity: 0.35
 }).addTo(map);
-// L.control.attribution({position:"bottomright"}).addTo(map);
+L.control.attribution({position:"bottomright"}).addTo(map);
+
+// L.mapbox.accessToken = '';
 
 // var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
 // 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -221,7 +224,7 @@ function showModal(){
 
 		var filepath = 'public/data/studyarea.geojson';
 		d3.json(filepath, function(data) {
-			console.log(data);
+			// console.log(data);
 		    var  style = {
 		            weight: 1,
 		            color: "#FF3300",
@@ -306,11 +309,11 @@ function showTraverse() {
     map.setView([49.260538, -123.108692], 12);
 
     vehicles = L.layerGroup([]).addTo(map);
-    animatePoints('api/points/sid/0108', "red");
-    animatePoints('api/points/sid/1641', "blue");
-    // animatePoints('api/points/sid/0205', "green");
-    // animatePoints('api/points/sid/0150', "orange");
-    // animatePoints('api/points/sid/0151', "purple");
+    animatePoints('api/points/sid/0108', "#FF9933");
+    animatePoints('api/points/sid/1641', "#CC66FF");
+    // animatePoints('api/points/sid/0205', "#2EB8E6");
+    // animatePoints('api/points/sid/0150', "#E3D317");
+    // animatePoints('api/points/sid/0151', "#DE004B");
 
     infoToggle("animText");
 
@@ -324,8 +327,8 @@ function showTraverse() {
 
             var animMarkers = L.polyline([], {
                 color: linecol,
-                opacity: 0.5,
-                weight: 2
+                opacity: 0.95,
+                weight: 4
             }).addTo(vehicles);
 
             var i = 0;
@@ -354,7 +357,7 @@ function showTraffic() {
     infoToggle("trafficText");
 
     d3.json("api/traffic", function(data) {
-    	console.log(data)
+    	// console.log(data)
         var min = d3.min(data, function(d) {
             return d.properties.h_10_TO_14
         });
