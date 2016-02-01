@@ -48,15 +48,19 @@ var scrollVis = function() {
 
     var chart = function(selection) {
         selection.each(function(rawData) {
-            svg = d3.select(this).selectAll("svg").data(activateFunctions);
-            svg.enter().append("svg").append("g");
-
+            // create svg and give it a width and height
+            // svg = d3.select(this).selectAll("svg").data([0, 1, 2, 3, 4, 5, 6, 7]);
+            // svg = d3.select(this).selectAll("svg").data(activateFunctions);
+            // svg.enter().append("svg").append("g");
+            svg = d3.select(this).append("svg");
             svg.attr("width", width + margin.left + margin.right);
             svg.attr("height", height + margin.top + margin.bottom);
+            // svg.attr("viewBox", "0 0 600 500").attr("preserveAspectRatio", "xMinYMin meet");
+
 
             // this group element will be used to contain all
             // other elements.
-            g = svg.select("g")
+            g = svg.append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             setupVis();
