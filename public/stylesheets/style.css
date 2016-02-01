@@ -35,7 +35,7 @@ hr {
 
 #title {
    position: absolute;
-   top: 80px;
+   top: 60px;
    left: 100px;
    width:500px;
    font-size: 60px;
@@ -46,11 +46,17 @@ hr {
 
 #minititle {
    position: absolute;
-   top: 425px;
+   top: 375px;
    left: 100px;
    width:500px;
    font-size: 40px;
    background-color: white;
    padding:20px;
 
+}
+
+#titleimg{
+	margin-top: -110px;
+	width:100%;
+	height:100%;
 }
