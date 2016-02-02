@@ -28,6 +28,13 @@ var propertyMap = {
 
 app.use('/public', express.static('public'));
 
+app.use('*', function(req, res, next) {
+	// set CORS response header
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+	next();
+});
+
 /* Points API */
 app.use(bodyParser.json());
 
