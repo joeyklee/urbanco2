@@ -14,7 +14,7 @@ var MONGOCONNECTION =
 var db = mongojs(MONGOCONNECTION);
 
 
-// var points = db.collection('co2points');
+var points = db.collection('co2points');
 var grid = db.collection('co2grid');
 var traffic = db.collection('traffic');
 var propertyMap = {
@@ -44,10 +44,10 @@ app.get('/api/traffic', function(req, res) {
 });
 
 // get all features - not recommended for points
-// app.get('/api/points', function(req, res) {
-//     // TODO console.log(req.query.sensor_id)
-//     findAll(points, {}, res);
-// });
+app.get('/api/points', function(req, res) {
+    // TODO console.log(req.query.sensor_id)
+    findAll(points, {}, res);
+});
 
 // TODO check whether this really works = is everyting within that day
 app.get('/api/points/sid/:sensornum', function(req, res){
