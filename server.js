@@ -1,4 +1,15 @@
+var PORT = process.env.OPENSHIFT_NODEJS_PORT  || 5000;
+var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
 var MONGOCONNECTION = 'mongodb://localhost:27017/co2webdb';
+
+// if OPENSHIFT env variables are present, use the available connection info:
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+	MONGOCONNECTION = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+										process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+										process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+										process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+										process.env.OPENSHIFT_APP_NAME;
+};
 
 var express = require('express');
 var app = express();
@@ -24,6 +35,7 @@ var propertyMap = {
 };
 
 
+app.use('/public', express.static('public'));
 
 /* Points API */
 app.use(bodyParser.json());
@@ -146,11 +158,15 @@ app.get('/explore', function(req, res) {
 
 
 
-app.use('/public', express.static('public'));
 
-var port = Number(process.env.Port || 5000);
-app.listen(port);
-console.log('Listening on port', port);
+
+// var port = Number(process.env.Port || 5000);
+// app.listen(port);
+// console.log('Listening on port', port);
 
 // https://www.youtube.com/watch?v=m5ribwPpIPw
 // http://stackoverflow.com/questions/5178334/folder-structure-for-a-node-js-project
+/* -- Server -- */
+app.listen(PORT, IPADDRESS, function() {
+	console.log('Serving API on http://%s:%s', IPADDRESS, PORT);
+});
