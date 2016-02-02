@@ -1,14 +1,16 @@
-var MONGOCONNECTION = 'mongodb://localhost:27017/co2webdb';
-
 var express = require('express');
 var app = express();
 var exphbs = require('express-handlebars');
-
-
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var path = require("path");
 var mongojs = require('mongojs');
+
+// Here we find an appropriate database to connect to, defaulting to localhost if we don't find one.
+var MONGOCONNECTION =
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost:27017/co2webdb';
 var db = mongojs(MONGOCONNECTION);
 
 
@@ -24,6 +26,7 @@ var propertyMap = {
 };
 
 
+app.use('/public', express.static('public'));
 
 /* Points API */
 app.use(bodyParser.json());
@@ -145,12 +148,14 @@ app.get('/explore', function(req, res) {
 });
 
 
-
-app.use('/public', express.static('public'));
-
-var port = Number(process.env.Port || 5000);
-app.listen(port);
-console.log('Listening on port', port);
+// var port = Number(process.env.Port || 5000);
+// app.listen(port);
+// console.log('Listening on port', port);
 
 // https://www.youtube.com/watch?v=m5ribwPpIPw
 // http://stackoverflow.com/questions/5178334/folder-structure-for-a-node-js-project
+/* -- Server -- */
+app.set('port', (process.env.PORT || 5000));
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
