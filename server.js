@@ -1,29 +1,20 @@
-var PORT = process.env.OPENSHIFT_NODEJS_PORT  || 5000;
-var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
-var MONGOCONNECTION = 'mongodb://localhost:27017/co2webdb';
-
-// if OPENSHIFT env variables are present, use the available connection info:
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-	MONGOCONNECTION = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-										process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-										process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-										process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-										process.env.OPENSHIFT_APP_NAME;
-};
-
 var express = require('express');
 var app = express();
 var exphbs = require('express-handlebars');
-
-
 var bodyParser = require('body-parser');
 var _ = require('underscore');
 var path = require("path");
 var mongojs = require('mongojs');
+
+// Here we find an appropriate database to connect to, defaulting to localhost if we don't find one.
+var MONGOCONNECTION =
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost:27017/co2webdb';
 var db = mongojs(MONGOCONNECTION);
 
 
-var points = db.collection('co2points');
+// var points = db.collection('co2points');
 var grid = db.collection('co2grid');
 var traffic = db.collection('traffic');
 var propertyMap = {
@@ -53,10 +44,10 @@ app.get('/api/traffic', function(req, res) {
 });
 
 // get all features - not recommended for points
-app.get('/api/points', function(req, res) {
-    // TODO console.log(req.query.sensor_id)
-    findAll(points, {}, res);
-});
+// app.get('/api/points', function(req, res) {
+//     // TODO console.log(req.query.sensor_id)
+//     findAll(points, {}, res);
+// });
 
 // TODO check whether this really works = is everyting within that day
 app.get('/api/points/sid/:sensornum', function(req, res){
@@ -157,9 +148,6 @@ app.get('/explore', function(req, res) {
 });
 
 
-
-
-
 // var port = Number(process.env.Port || 5000);
 // app.listen(port);
 // console.log('Listening on port', port);
@@ -167,6 +155,7 @@ app.get('/explore', function(req, res) {
 // https://www.youtube.com/watch?v=m5ribwPpIPw
 // http://stackoverflow.com/questions/5178334/folder-structure-for-a-node-js-project
 /* -- Server -- */
-app.listen(PORT, IPADDRESS, function() {
-	console.log('Serving API on http://%s:%s', IPADDRESS, PORT);
+app.set('port', (process.env.PORT || 5000));
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
