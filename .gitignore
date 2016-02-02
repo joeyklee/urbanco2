@@ -35,3 +35,9 @@ public/images/measurement-options.svg
 public/images/g-earth.png
 
 export/
+
+data/all_20150528.geojson
+
+data/gridded-emissions-100m.geojson
+
+data/traffic-counts.geojson
