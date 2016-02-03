@@ -13,9 +13,7 @@
     "bootstrap": "^3.3.6",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
-    "jQuery": "^1.7.4",
     "mongojs": "^2.2.2",
-    "mongoose": "^4.3.5",
     "underscore": "^1.8.3"
   }
 }
