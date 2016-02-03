@@ -19,6 +19,54 @@
         <div id="slider-range-max"></div>
     </div>
 </div>
+<div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="vertical-alignment-helper">
+	        <div class="modal-dialog vertical-align-center">
+	            <!-- Modal content-->
+	            <div class="modal-content text-center">
+	                <div class="modal-header">
+	                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                    <h5 class="modal-title">Choose your adventure</h5>
+	                </div>
+	                <div class="modal-body col-md-12">
+	                    <div class="col-md-6">
+	                        <button id="showProcess" type="button" class="btn btn-success" data-dismiss="modal">Show me the process</button>
+	                    </div>
+	                    <div class="cold-md-6">
+	                        <button id="showData" type="button" class="btn btn-warning" data-dismiss="modal">I just want to see the data</button>
+	                    </div>
+	                </div>
+	                <div class="modal-footer">
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="vertical-alignment-helper">
+	        <div class="modal-dialog vertical-align-center">
+	            <!-- Modal content-->
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                    <h5 class="modal-title">Help</h5>
+	                    <ul>
+	                        <li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
+	                        <li>Click on the added layers to reveal their data values.</li>
+	                        {{!-- <li>Toggle the data layers to explore the different aspects of the data.</li> --}}
+	                    </ul>
+	                </div>
+	                <div class="modal-body col-md-12">
+	                </div>
+	                <div class="modal-footer">
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
 <div id="infoBottom" class="col-md-12">
     <div class="row">
         <div class="col-md-4 col-xs-12">
@@ -65,52 +113,6 @@
                         <div id="gridLegend" class="col-md-12 col-xs-6">
                             <br>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="vertical-alignment-helper">
-            <div class="modal-dialog vertical-align-center">
-                <!-- Modal content-->
-                <div class="modal-content text-center">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">Choose your adventure</h5>
-                    </div>
-                    <div class="modal-body col-md-12">
-                        <div class="col-md-6">
-                            <button id="showProcess" type="button" class="btn btn-success" data-dismiss="modal">Show me the process</button>
-                        </div>
-                        <div class="cold-md-6">
-                            <button id="showData" type="button" class="btn btn-warning" data-dismiss="modal">I just want to see the data</button>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="vertical-alignment-helper">
-            <div class="modal-dialog vertical-align-center">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h5 class="modal-title">Help</h5>
-                        <ul>
-                            <li>Use the slider at the bottom of the page to show the process of mapping CO<sub>2</sub> in the city</li>
-                            <li>Click on the added layers to reveal their data values.</li>
-                            {{!-- <li>Toggle the data layers to explore the different aspects of the data.</li> --}}
-                        </ul>
-                    </div>
-                    <div class="modal-body col-md-12">
-                    </div>
-                    <div class="modal-footer">
                     </div>
                 </div>
             </div>
