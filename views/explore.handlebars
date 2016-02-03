@@ -1,40 +1,38 @@
-{{!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" /> --}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
 <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
-<link rel="stylesheet" type="text/css" href="public/stylesheets/explore.css">{{!-- map --}}
+<link rel="stylesheet" type="text/css" href="public/stylesheets/explore.css">
 <div id="map"></div>
-{{!-- map elements --}}
 <div id="closeInfo">
     <button class="btn btn-default">
         <a class="glyphicon glyphicon-info-sign"></a>
     </button>
 </div>
-
-
-
-
 <div id="sliderBox" class="col-md-4 col-xs-12">
-	<button id="backwards" class="btn btn-default"><a href="" class="glyphicon glyphicon-chevron-left"></a> </button>
-	<button id="forwards" class="btn btn-default"><a href="" class="glyphicon glyphicon-chevron-right"></a> </button>
+    <button id="backwards" class="btn btn-default">
+        <a href="" class="glyphicon glyphicon-chevron-left"></a>
+    </button>
+    <button id="forwards" class="btn btn-default">
+        <a href="" class="glyphicon glyphicon-chevron-right"></a>
+    </button>
     <div id="sliderContainer">
         <div id="slider-range-max"></div>
     </div>
 </div>
 <div id="infoBottom" class="col-md-12">
     <div class="row">
-		 <div class="col-md-4 col-xs-12">
-		 	<div class="col-md-4">
-		 		<h3>Mobile CO<sub>2</sub> Sensing</h3> <span style="font-size:8px">by <a href="">UBC Micromet</a></span>
-		 	</div>
-		 	<div class="col-md-8">
-		 		<p class="aboutText">Learn about the process of monitoring of CO<sub>2</sub> with mobile sensors deployed on cars and bikes in the city of Vancouver, BC. by dragging the slider above. Data gathered by <a href="">UBC Micromet</a>, May 2015.</p>
-		 	</div>
-		 </div>
-		 <div class="col-md-2 col-xs-12 infos">
-		     <div id="drawing">
-		     </div>
-		 </div>
+        <div class="col-md-4 col-xs-12">
+            <div class="col-md-4">
+                <h3>Mobile CO<sub>2</sub> Sensing</h3> <span style="font-size:8px">by <a href="">UBC Micromet</a></span>
+            </div>
+            <div class="col-md-8">
+                <p class="aboutText">Learn about the process of monitoring of CO<sub>2</sub> with mobile sensors deployed on cars and bikes in the city of Vancouver, BC. by dragging the slider above. Data gathered by <a href="">UBC Micromet</a>, May 2015.</p>
+            </div>
+        </div>
+        <div class="col-md-2 col-xs-12 infos">
+            <div id="drawing">
+            </div>
+        </div>
         <div class="col-md-6 col-xs-12 infos">
             <div id="infoContainer">
                 <div id="infoBlob" class="col-md-12">
@@ -57,20 +55,20 @@
                         <p><b>Data Collection: </b>After the calibration period, the vehicles begin driving on pre-defined routes throughout the city to ensure extensive and representative spatial sampling. Our goal was to simulate the coverage in possible future scenarios if sensors are ubiqitously distributed.</p>
                     </div>
                     <div class="trafficText">
-
-
                         <p><b>Traffic Counts: </b>The traffic counts for the transect are modelled based on data provided by the city of Vancouver. The traffic data is used to calculate vehicle related emissions and to cross-validate the "measured" emissions using our approach. </p>
-                        <div id="trafficLegend" class="col-md-12 col-xs-6"> <br></div>
+                        <div id="trafficLegend" class="col-md-12 col-xs-6">
+                            <br>
+                        </div>
                     </div>
                     <div class="gridText">
                         <p><b>Grid Averaged Emissions: </b>In a 3.5 hour measurement period, over 40,000 data points are collected. These data are then aggregated to a 100 m × 100 m grid cells to account for the horizontal transport of CO<sub>2</sub> in an area. Notice the negative emissions signifying photosynthetic uptake of CO<sub>2</sub>.</p>
-                        <div id="gridLegend" class="col-md-12 col-xs-6"><br></div>
+                        <div id="gridLegend" class="col-md-12 col-xs-6">
+                            <br>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -118,9 +116,8 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
-    {{!-- // <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script> --}}
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.min.js"></script>
-    <script type="text/javascript" src="public/js/explore.js"></script>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/1.8.0/d3-legend.min.js"></script>
+<script type="text/javascript" src="public/js/explore.js"></script>
