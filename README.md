@@ -4,9 +4,11 @@
 
 ## About
 
-This is an interactive web app to communicate the importance of cities as sources of CO2 emissions. In this web experience, we explain what we can do to monitor and reduce the impact of our carbon footprint. The project will highlight the potential and innovative use of mobile CO2 sensors to monitor CO2 in the city and also allow people to access the data that describes the CO2 emissions for the city of Vancouver, BC.
+![](assets/img/screenshot-1.png)
 
-As part of a Mozilla Science Fellowship Sprint, we are working to help communicate scientific research and to show the process of creating such visualizations.
+This is an interactive web app to communicate the importance of cities as sources of CO2 emissions. The project will highlight the potential use of mobile sensors to monitor CO2 in the city and also allow people to access the data that describes the CO2 emissions for the city of Vancouver, BC.
+
+As part of a Mozilla Science Fellowship Sprint, we are working to help communicate scientific research using visualization and the web.
 
 
 ## Setup
@@ -103,6 +105,20 @@ mongod # run the database
 ```
 
 This will start our mongodb database running on our computer. We can then access the running mongodb database we create for the project from our node.js server.
+
+
+### Import data into your mongodb
+We use a few datasets for this webapp that we store in the mongodb database. In order to get those datasets in, you can use these import commands into your terminal:
+
+```
+cd urbanco2/data
+sh import-traffic.sh
+sh import-points.sh
+sh import-grid.sh
+```
+* ```sh``` invokes a shell script 
+* ```import-traffic.sh``` is the shell script that calls the ```geojson2mongo.js``` node script to take the geojson traffic data and import it into the db. 
+
 
 Next **in another terminal window**, ```cd urbanco2``` and run:
 
