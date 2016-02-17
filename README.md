@@ -1,5 +1,7 @@
 # Urban CO2
 
+See the alpha version at: [https://urbanco2.herokuapp.com/](https://urbanco2.herokuapp.com/)
+
 [![Join the chat at https://gitter.im/joeyklee/urbanco2](https://badges.gitter.im/joeyklee/urbanco2.svg)](https://gitter.im/joeyklee/urbanco2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## About
